@@ -9,15 +9,11 @@
 </head>
 
 <body>
-  <!-- ICON SPRITE (no dependencies, GitHub Pages safe) -->
+  <!-- ICON SPRITE -->
   <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
     <symbol id="i-game" viewBox="0 0 24 24">
       <path fill="currentColor" d="M7 16a1 1 0 0 1-1-1v-2H4a1 1 0 1 1 0-2h2V9a1 1 0 1 1 2 0v2h2a1 1 0 1 1 0 2H8v2a1 1 0 0 1-1 1Zm10-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1Zm-2 3a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1Z"/>
       <path fill="currentColor" d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4h-1.2a3 3 0 0 1-2.6-1.5l-.6-1a2 2 0 0 0-3.2 0l-.6 1A3 3 0 0 1 7.2 18H6a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v3a2 2 0 0 0 2 2h1.2a1 1 0 0 0 .87-.5l.6-1a4 4 0 0 1 6.62 0l.6 1a1 1 0 0 0 .87.5H18a2 2 0 0 0 2-2v-3a3 3 0 0 0-3-3H7Z"/>
-    </symbol>
-
-    <symbol id="i-sheet" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M6 2h8l4 4v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V7h3.5L13 3.5ZM7 11h10v2H7v-2Zm0 4h10v2H7v-2Zm0-8h6v2H7V7Z"/>
     </symbol>
 
     <symbol id="i-runes" viewBox="0 0 24 24">
@@ -50,7 +46,6 @@
     <div class="orb o2"></div>
     <div class="orb o3"></div>
     <div class="grid"></div>
-    <!-- STATIC LOGO watermark -->
     <div class="logoFade" aria-hidden="true"></div>
   </div>
 
@@ -61,17 +56,13 @@
         <div class="kicker">Omega Rarities 2</div>
         <h1>Rune Hub</h1>
       </div>
-      <span class="pill">GitHub Pages</span>
+      <span class="pill">Static Data</span>
     </div>
 
     <nav class="actions">
       <a class="btn ghost" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank" rel="noreferrer">
         <span class="btnIcon"><svg><use href="#i-game"/></svg></span>
         <span>Open Game</span>
-      </a>
-      <a class="btn" id="openSheet" target="_blank" rel="noreferrer">
-        <span class="btnIcon"><svg><use href="#i-sheet"/></svg></span>
-        <span>Open Sheet</span>
       </a>
     </nav>
   </header>
@@ -80,14 +71,13 @@
     <section class="hero card">
       <div class="heroLeft">
         <div class="badgeRow">
-          <span class="badge">Static logo background</span>
-          <span class="badge">Normal vs Event sorted correctly</span>
-          <span class="badge">No row misalignment</span>
+          <span class="badge">No Google Sheets</span>
+          <span class="badge">GitHub Pages ready</span>
+          <span class="badge">Icons + static logo</span>
         </div>
         <h2>Runes + Events + Grind</h2>
         <p class="muted">
-          Normal Runes tab shows the “Normal Runes” table (including Clear/Genesis under Slime).
-          Event Runes tab shows the “EVENT RUNES” table (1M Noob → 1M Absolute).
+          Data is loaded from <span class="mono">assets/data.json</span>. Delete the spreadsheet anytime—this site stays working.
         </p>
       </div>
 
@@ -119,7 +109,7 @@
           <span class="tabIcon"><svg><use href="#i-grind"/></svg></span><span>Rare Rune Grind</span>
         </button>
         <button class="tab" data-tab="source" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg><use href="#i-source"/></svg></span><span>Source</span>
+          <span class="tabIcon"><svg><use href="#i-source"/></svg></span><span>Data</span>
         </button>
       </div>
 
@@ -170,8 +160,6 @@
           </div>
           <div id="runeRows" class="rows"></div>
         </div>
-
-        <div class="hint muted">Loaded from the sheet’s “Normal Runes” table.</div>
       </div>
 
       <!-- EVENTS -->
@@ -207,8 +195,6 @@
           </div>
           <div id="eventRows" class="rows"></div>
         </div>
-
-        <div class="hint muted">Loaded from the sheet’s “EVENT RUNES” table.</div>
       </div>
 
       <!-- GRIND -->
@@ -218,7 +204,7 @@
             <span class="fieldLabel">Search grind</span>
             <div class="inputIcon">
               <span class="ii"><svg><use href="#i-search"/></svg></span>
-              <input id="grindSearch" type="search" placeholder="Type anything from the grind sheet..." autocomplete="off" />
+              <input id="grindSearch" type="search" placeholder="Search anything..." autocomplete="off" />
             </div>
           </label>
 
@@ -230,35 +216,22 @@
 
         <div class="grindWrap">
           <div class="grindNote muted">
-            This is rendered as real content (not an embed). To fill it, set the Grind GID in CONFIG or use local CSV mode.
+            This is rendered from <span class="mono">assets/data.json</span> → <span class="mono">rareRuneGrind</span>.
           </div>
           <div id="grindTable" class="grindTable"></div>
         </div>
       </div>
 
-      <!-- SOURCE -->
+      <!-- DATA -->
       <div class="tabpane" id="tab-source" role="tabpanel">
         <div class="sourceBox">
-          <h3 class="h3">Source</h3>
+          <h3 class="h3">Data file</h3>
           <p class="muted">
-            Uses Google Sheets “gviz CSV” endpoint (best for GitHub Pages). If blocked, check sharing permissions.
+            Everything is loaded from <span class="mono">assets/data.json</span>.
           </p>
 
-          <div class="kv">
-            <div class="k">Sheet ID</div>
-            <div class="v mono" id="sheetIdView">—</div>
-          </div>
-          <div class="kv">
-            <div class="k">Rune Stats GID</div>
-            <div class="v mono" id="gidStatsView">—</div>
-          </div>
-          <div class="kv">
-            <div class="k">Grind GID</div>
-            <div class="v mono" id="gidGrindView">—</div>
-          </div>
-
           <div class="note">
-            If CSV fetch fails: set sheet to “Anyone with the link can view”.
+            To update runes, edit <span class="mono">assets/data.json</span>, commit, and push — GitHub Pages updates.
           </div>
         </div>
       </div>
@@ -268,205 +241,13 @@
   </main>
 
   <script>
-    // =============================
-    // CONFIG
-    // =============================
-    const SHEET_ID = "1DaRN1KROJJSbEYrqbfBEuTod5OmS49Bnlt_LsJKS7Eo";
-    const GID_RUNE_STATS = 236628808;
+    const DATA_URL = "assets/data.json";
 
-    // If you truly can't get the gid, set USE_LOCAL_GRIND_CSV=true and add /assets/grind.csv
-    const GID_RARE_RUNE_GRIND = 0;
-    const USE_LOCAL_GRIND_CSV = false; // set true to use assets/grind.csv instead of google
-
-    document.getElementById("openSheet").href =
-      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID_RUNE_STATS}#gid=${GID_RUNE_STATS}`;
-
-    // =============================
-    // Helpers
-    // =============================
     const $ = (s) => document.querySelector(s);
     const norm = (s) => (s ?? "").toString().toLowerCase().trim();
-
-    function esc(s){
-      return (s ?? "").toString().replace(/[&<>"']/g, m => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
-      }[m]));
-    }
-
-    function gvizCsvUrl(gid){
-      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
-    }
-    function exportCsvUrl(gid){
-      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
-    }
-
-    async function fetchCsvFromGoogle(gid){
-      let res = await fetch(gvizCsvUrl(gid));
-      let text = await res.text();
-
-      if (text.includes("<html") || text.includes("<!DOCTYPE")) {
-        res = await fetch(exportCsvUrl(gid));
-        text = await res.text();
-      }
-
-      if (text.includes("<html") || text.includes("<!DOCTYPE")) {
-        throw new Error("CSV fetch blocked (HTML response). Check sharing settings.");
-      }
-      return text;
-    }
-
-    async function fetchGrindCsv(){
-      if (USE_LOCAL_GRIND_CSV) {
-        const res = await fetch("assets/grind.csv");
-        if (!res.ok) throw new Error("Missing assets/grind.csv");
-        return await res.text();
-      }
-      return await fetchCsvFromGoogle(GID_RARE_RUNE_GRIND);
-    }
-
-    function parseCSV(text){
-      const rows = [];
-      let row = [];
-      let cur = "";
-      let inQ = false;
-
-      for (let i=0; i<text.length; i++){
-        const c = text[i];
-        const n = text[i+1];
-
-        if (c === '"' && n === '"'){ cur += '"'; i++; continue; }
-        if (c === '"'){ inQ = !inQ; continue; }
-
-        if (!inQ && c === ","){ row.push(cur); cur=""; continue; }
-        if (!inQ && (c === "\n" || c === "\r")){
-          if (c === "\r" && n === "\n") i++;
-          row.push(cur); cur="";
-          if (row.some(cell => norm(cell) !== "")) rows.push(row);
-          row = [];
-          continue;
-        }
-        cur += c;
-      }
-      row.push(cur);
-      if (row.some(cell => norm(cell) !== "")) rows.push(row);
-      return rows;
-    }
-
-    function cleanStats(parts){
-      return parts
-        .map(s => (s ?? "").toString().trim())
-        .filter(s => s && norm(s) !== "n/a");
-    }
-
-    // World order like your sheet (stable inside each section)
-    const WORLD_ORDER = ["Slime","Fire","Water","Plasma","Snow","Frost","Snowflakes","Stardust","Comets","Meteors"];
-    const worldRank = (w) => {
-      const i = WORLD_ORDER.findIndex(x => norm(x) === norm(w));
-      return i === -1 ? 999 : i;
-    };
-
-    function parseRuneStatsSheet(rows){
-      let mode = "none"; // none | event | normal
-      let currentWorld = "";
-      let currentWorldNo = "";
-      let currentEventGroup = "";
-
-      const normal = [];
-      const events = [];
-
-      const isSectionHeader = (cells) => {
-        const joined = cells.filter(c => norm(c) !== "" && norm(c) !== "n/a");
-        if (joined.length !== 1) return false;
-        return /world\s+\d+/i.test(joined[0]);
-      };
-
-      const parseHeader = (s) => {
-        const m = s.match(/^(.*?)(?:\s+world\s+(\d+))\s*$/i);
-        if (!m) return { world: s.trim(), no: "" };
-        return { world: m[1].trim(), no: m[2].trim() };
-      };
-
-      const isColumnHeader = (cells) => {
-        // "Rune Name", "First Stat" etc (sometimes with a leading label column)
-        const joined = cells.map(norm);
-        return joined.includes("rune name") || joined.includes("first stat");
-      };
-
-      for (const r of rows){
-        const cells = r.map(x => (x ?? "").toString().trim());
-        const nonEmpty = cells.filter(c => norm(c) !== "");
-
-        if (!nonEmpty.length) continue;
-
-        if (norm(nonEmpty[0]) === "event runes"){
-          mode = "event";
-          currentEventGroup = "";
-          continue;
-        }
-        if (norm(nonEmpty[0]) === "normal runes"){
-          mode = "normal";
-          currentWorld = "";
-          currentWorldNo = "";
-          continue;
-        }
-
-        if (isColumnHeader(cells)) continue;
-
-        if (mode === "event"){
-          // Group row like "1M Event World 2" (merged)
-          if (nonEmpty.length === 1 && /event\s+world/i.test(nonEmpty[0])){
-            currentEventGroup = nonEmpty[0];
-            continue;
-          }
-
-          const runeName = cells[0];
-          if (!runeName || norm(runeName) === "n/a") continue;
-
-          const stats = cleanStats(cells.slice(1));
-          if (!stats.length) continue;
-
-          events.push({
-            event: currentEventGroup || "Event",
-            rune: runeName,
-            stats: stats.join(" • ")
-          });
-          continue;
-        }
-
-        if (mode === "normal"){
-          if (isSectionHeader(cells)){
-            const headerCell = cells.find(c => /world\s+\d+/i.test(c)) || nonEmpty[0];
-            const h = parseHeader(headerCell);
-            currentWorld = h.world;
-            currentWorldNo = h.no;
-            continue;
-          }
-
-          const runeName = cells[0];
-          if (!runeName || norm(runeName) === "n/a") continue;
-
-          const stats = cleanStats(cells.slice(1));
-          if (!stats.length) continue;
-
-          normal.push({
-            world: currentWorld || "Unknown",
-            worldNo: currentWorldNo || "",
-            rune: runeName,
-            stats: stats.join(" • ")
-          });
-        }
-      }
-
-      normal.sort((a,b) => {
-        const an = Number(a.worldNo || 0), bn = Number(b.worldNo || 0);
-        if (an !== bn) return an - bn;
-        const ar = worldRank(a.world), br = worldRank(b.world);
-        if (ar !== br) return ar - br;
-        return 0;
-      });
-
-      return { normal, events };
-    }
+    const esc = (s) => (s ?? "").toString().replace(/[&<>"']/g, m => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+    }[m]));
 
     function renderNormal(all){
       const runePick = $("#runePick").value;
@@ -478,7 +259,7 @@
         const okRune = (runePick === "__all") || r.rune === runePick;
         const okWorld = (worldPick === "__all") || r.world === worldPick;
         const okNo = (worldNoPick === "__all") || String(r.worldNo || "") === worldNoPick;
-        const okStats = !statsSearch || norm(r.stats).includes(statsSearch);
+        const okStats = !statsSearch || norm((r.stats || []).join(" • ")).includes(statsSearch);
         return okRune && okWorld && okNo && okStats;
       });
 
@@ -496,8 +277,7 @@
           <div><span class="chip small">${esc(r.worldNo || "—")}</span></div>
           <div class="rname">${esc(r.rune)}</div>
           <div class="stats">${
-            r.stats.split("•").map(s => s.trim()).filter(Boolean)
-              .map(s => `<span class="pillStat">${esc(s)}</span>`).join("")
+            (r.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")
           }</div>
         </div>
       `).join("");
@@ -509,7 +289,7 @@
 
       const filtered = all.filter(e => {
         const okName = !q || norm(e.rune).includes(q) || norm(e.event).includes(q);
-        const okStat = !sq || norm(e.stats).includes(sq);
+        const okStat = !sq || norm((e.stats || []).join(" • ")).includes(sq);
         return okName && okStat;
       });
 
@@ -526,33 +306,40 @@
           <div><span class="chip">${esc(e.event)}</span></div>
           <div class="rname">${esc(e.rune)}</div>
           <div class="stats">${
-            e.stats.split("•").map(s => s.trim()).filter(Boolean)
-              .map(s => `<span class="pillStat">${esc(s)}</span>`).join("")
+            (e.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")
           }</div>
         </div>
       `).join("");
     }
 
-    function renderGrind(rows, q){
+    function renderGrind(grind, q){
       const root = $("#grindTable");
       const query = norm(q);
 
-      const filtered = rows.filter(r => !query || r.some(c => norm(c).includes(query)));
-      $("#countGrind").textContent = String(filtered.length);
-
-      if (!filtered.length){
-        root.innerHTML = `<div class="emptyBox">No grind data (set Grind GID or enable local CSV).</div>`;
+      if (!grind || !Array.isArray(grind.rows) || !grind.rows.length){
+        $("#countGrind").textContent = "0";
+        root.innerHTML = `<div class="emptyBox">No grind data yet.</div>`;
         return;
       }
 
-      const maxCols = Math.max(...filtered.map(r => r.length));
-      const header = filtered[0];
-      const body = filtered.slice(1);
+      const headers = grind.headers || [];
+      const rows = grind.rows || [];
+
+      const filtered = rows.filter(r => {
+        if (!query) return true;
+        return r.some(cell => norm(cell).includes(query));
+      });
+
+      $("#countGrind").textContent = String(filtered.length);
+
+      const maxCols = Math.max(headers.length, ...rows.map(r => r.length), 1);
+      const head = Array.from({length:maxCols}, (_,i)=> headers[i] ?? `Col ${i+1}`);
+      const body = filtered;
 
       root.innerHTML = `
         <div class="ggrid" style="--cols:${maxCols}">
-          ${Array.from({length:maxCols}, (_,i)=> `<div class="gth">${esc(header[i] ?? "")}</div>`).join("")}
-          ${body.slice(0, 350).map(r =>
+          ${head.map(h => `<div class="gth">${esc(h)}</div>`).join("")}
+          ${body.slice(0, 500).map(r =>
             Array.from({length:maxCols}, (_,i)=> `<div class="gtd">${esc(r[i] ?? "")}</div>`).join("")
           ).join("")}
         </div>
@@ -570,50 +357,38 @@
       });
     }
 
-    async function loadAll(){
-      // Source views
-      $("#sheetIdView").textContent = SHEET_ID;
-      $("#gidStatsView").textContent = String(GID_RUNE_STATS);
-      $("#gidGrindView").textContent = USE_LOCAL_GRIND_CSV ? "LOCAL: assets/grind.csv" : String(GID_RARE_RUNE_GRIND);
+    async function loadData(){
+      const res = await fetch(DATA_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("Missing assets/data.json");
+      return await res.json();
+    }
 
-      // Rune stats
-      const csv = await fetchCsvFromGoogle(GID_RUNE_STATS);
-      const rows = parseCSV(csv);
-      const parsed = parseRuneStatsSheet(rows);
+    async function init(){
+      wireTabs();
 
-      const NORMAL_RUNES = parsed.normal;
-      const EVENT_RUNES = parsed.events;
+      const data = await loadData();
+      const normal = Array.isArray(data.normalRunes) ? data.normalRunes : [];
+      const events = Array.isArray(data.eventRunes) ? data.eventRunes : [];
+      const grind = data.rareRuneGrind || { headers: [], rows: [] };
 
-      // Fill filters from NORMAL RUNES
       const runePick = $("#runePick");
       const worldPick = $("#worldPick");
       const worldNoPick = $("#worldNoPick");
 
-      const runeNames = [...new Set(NORMAL_RUNES.map(r => r.rune))].sort((a,b)=>a.localeCompare(b));
-      const worlds = [...new Set(NORMAL_RUNES.map(r => r.world))].sort((a,b)=>worldRank(a)-worldRank(b));
-      const worldNos = [...new Set(NORMAL_RUNES.map(r => String(r.worldNo || "")).filter(Boolean))].sort((a,b)=>Number(a)-Number(b));
+      const runeNames = [...new Set(normal.map(r => r.rune))].sort((a,b)=>a.localeCompare(b));
+      const worlds = [...new Set(normal.map(r => r.world))].sort((a,b)=>a.localeCompare(b));
+      const worldNos = [...new Set(normal.map(r => String(r.worldNo || "")).filter(Boolean))].sort((a,b)=>Number(a)-Number(b));
 
       runeNames.forEach(n => { const o=document.createElement("option"); o.value=n; o.textContent=n; runePick.appendChild(o); });
       worlds.forEach(w => { const o=document.createElement("option"); o.value=w; o.textContent=w; worldPick.appendChild(o); });
       worldNos.forEach(n => { const o=document.createElement("option"); o.value=n; o.textContent=n; worldNoPick.appendChild(o); });
 
-      // Grind (rendered content)
-      let GRIND_ROWS = [];
-      try{
-        const gcsv = await fetchGrindCsv();
-        GRIND_ROWS = parseCSV(gcsv);
-      }catch(_){
-        GRIND_ROWS = [];
-      }
+      renderNormal(normal);
+      renderEvents(events);
+      renderGrind(grind, "");
 
-      // Initial renders
-      renderNormal(NORMAL_RUNES);
-      renderEvents(EVENT_RUNES);
-      renderGrind(GRIND_ROWS, "");
-
-      // Inputs
       ["runePick","worldPick","worldNoPick","statsSearch"].forEach(id => {
-        $("#" + id).addEventListener("input", () => renderNormal(NORMAL_RUNES));
+        $("#" + id).addEventListener("input", () => renderNormal(normal));
       });
 
       $("#clearRunes").addEventListener("click", () => {
@@ -621,38 +396,35 @@
         $("#worldPick").value="__all";
         $("#worldNoPick").value="__all";
         $("#statsSearch").value="";
-        renderNormal(NORMAL_RUNES);
+        renderNormal(normal);
       });
 
       ["eventSearch","eventStatsSearch"].forEach(id => {
-        $("#" + id).addEventListener("input", () => renderEvents(EVENT_RUNES));
+        $("#" + id).addEventListener("input", () => renderEvents(events));
       });
 
       $("#clearEvents").addEventListener("click", () => {
         $("#eventSearch").value="";
         $("#eventStatsSearch").value="";
-        renderEvents(EVENT_RUNES);
+        renderEvents(events);
       });
 
-      $("#grindSearch").addEventListener("input", () => renderGrind(GRIND_ROWS, $("#grindSearch").value));
+      $("#grindSearch").addEventListener("input", () => renderGrind(grind, $("#grindSearch").value));
       $("#clearGrind").addEventListener("click", () => {
         $("#grindSearch").value="";
-        renderGrind(GRIND_ROWS, "");
+        renderGrind(grind, "");
       });
 
-      // Counts
-      $("#countRunes").textContent = String(NORMAL_RUNES.length);
-      $("#countEvents").textContent = String(EVENT_RUNES.length);
-      $("#countGrind").textContent = String(GRIND_ROWS.length);
+      $("#countRunes").textContent = String(normal.length);
+      $("#countEvents").textContent = String(events.length);
+      $("#countGrind").textContent = String((grind.rows || []).length);
     }
 
-    wireTabs();
-
-    loadAll().catch(err => {
+    init().catch(err => {
       console.error(err);
-      $("#runeRows").innerHTML = `<div class="emptyBox">Failed to load Rune Stats. Make sure the sheet is “Anyone with link can view”.</div>`;
-      $("#eventRows").innerHTML = `<div class="emptyBox">Failed to load Rune Stats.</div>`;
-      $("#grindTable").innerHTML = `<div class="emptyBox">Grind not loaded (set Grind GID or enable local CSV).</div>`;
+      $("#runeRows").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.json</span>.</div>`;
+      $("#eventRows").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.json</span>.</div>`;
+      $("#grindTable").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.json</span>.</div>`;
     });
   </script>
 </body>
