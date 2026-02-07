@@ -9,11 +9,48 @@
 </head>
 
 <body>
+  <!-- ICON SPRITE (no dependencies, GitHub Pages safe) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="i-game" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M7 16a1 1 0 0 1-1-1v-2H4a1 1 0 1 1 0-2h2V9a1 1 0 1 1 2 0v2h2a1 1 0 1 1 0 2H8v2a1 1 0 0 1-1 1Zm10-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1Zm-2 3a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1Z"/>
+      <path fill="currentColor" d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4h-1.2a3 3 0 0 1-2.6-1.5l-.6-1a2 2 0 0 0-3.2 0l-.6 1A3 3 0 0 1 7.2 18H6a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v3a2 2 0 0 0 2 2h1.2a1 1 0 0 0 .87-.5l.6-1a4 4 0 0 1 6.62 0l.6 1a1 1 0 0 0 .87.5H18a2 2 0 0 0 2-2v-3a3 3 0 0 0-3-3H7Z"/>
+    </symbol>
+
+    <symbol id="i-sheet" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M6 2h8l4 4v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V7h3.5L13 3.5ZM7 11h10v2H7v-2Zm0 4h10v2H7v-2Zm0-8h6v2H7V7Z"/>
+    </symbol>
+
+    <symbol id="i-runes" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2 3 6.5V17.5L12 22l9-4.5V6.5L12 2Zm0 2.2 6.8 3.4L12 11 5.2 7.6 12 4.2ZM5 9.6l6 3V19l-6-3V9.6Zm14 0V16l-6 3v-6.8l6-2.6Z"/>
+    </symbol>
+
+    <symbol id="i-event" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7Zm0 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+    </symbol>
+
+    <symbol id="i-grind" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M4 4h16v4H4V4Zm0 6h16v10H4V10Zm3 2v2h10v-2H7Zm0 4v2h7v-2H7Z"/>
+    </symbol>
+
+    <symbol id="i-source" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Zm0 12L3 9v9l9 4 9-4V9l-9 5Z"/>
+    </symbol>
+
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M10 2a8 8 0 1 1 5.3 14l4.2 4.2a1 1 0 0 1-1.4 1.4L14 17.4A8 8 0 0 1 10 2Zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"/>
+    </symbol>
+
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 0 1-1.4-1.4l4.9-4.9-4.9-4.9A1 1 0 0 1 7.1 5.7L12 10.6l4.9-4.9a1 1 0 0 1 1.4 0Z"/>
+    </symbol>
+  </svg>
+
   <div class="bg">
     <div class="orb o1"></div>
     <div class="orb o2"></div>
     <div class="orb o3"></div>
     <div class="grid"></div>
+    <!-- STATIC LOGO watermark -->
     <div class="logoFade" aria-hidden="true"></div>
   </div>
 
@@ -29,10 +66,12 @@
 
     <nav class="actions">
       <a class="btn ghost" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank" rel="noreferrer">
-        Open Game
+        <span class="btnIcon"><svg><use href="#i-game"/></svg></span>
+        <span>Open Game</span>
       </a>
       <a class="btn" id="openSheet" target="_blank" rel="noreferrer">
-        Open Sheet
+        <span class="btnIcon"><svg><use href="#i-sheet"/></svg></span>
+        <span>Open Sheet</span>
       </a>
     </nav>
   </header>
@@ -41,13 +80,14 @@
     <section class="hero card">
       <div class="heroLeft">
         <div class="badgeRow">
-          <span class="badge">Normal Runes + Event Runes</span>
-          <span class="badge">Perfect alignment</span>
-          <span class="badge">Live from sheet</span>
+          <span class="badge">Static logo background</span>
+          <span class="badge">Normal vs Event sorted correctly</span>
+          <span class="badge">No row misalignment</span>
         </div>
-        <h2>Everything in one place</h2>
+        <h2>Runes + Events + Grind</h2>
         <p class="muted">
-          Pulls Rune Stats live from your sheet and sorts Event vs Normal exactly like your tables.
+          Normal Runes tab shows the “Normal Runes” table (including Clear/Genesis under Slime).
+          Event Runes tab shows the “EVENT RUNES” table (1M Noob → 1M Absolute).
         </p>
       </div>
 
@@ -69,16 +109,23 @@
 
     <section class="tabs card">
       <div class="tabbar" role="tablist" aria-label="Views">
-        <button class="tab active" data-tab="runes" role="tab" aria-selected="true">Runes</button>
-        <button class="tab" data-tab="events" role="tab" aria-selected="false">Event Runes</button>
-        <button class="tab" data-tab="grind" role="tab" aria-selected="false">Rare Rune Grind</button>
-        <button class="tab" data-tab="source" role="tab" aria-selected="false">Source</button>
+        <button class="tab active" data-tab="runes" role="tab" aria-selected="true">
+          <span class="tabIcon"><svg><use href="#i-runes"/></svg></span><span>Runes</span>
+        </button>
+        <button class="tab" data-tab="events" role="tab" aria-selected="false">
+          <span class="tabIcon"><svg><use href="#i-event"/></svg></span><span>Event Runes</span>
+        </button>
+        <button class="tab" data-tab="grind" role="tab" aria-selected="false">
+          <span class="tabIcon"><svg><use href="#i-grind"/></svg></span><span>Rare Rune Grind</span>
+        </button>
+        <button class="tab" data-tab="source" role="tab" aria-selected="false">
+          <span class="tabIcon"><svg><use href="#i-source"/></svg></span><span>Source</span>
+        </button>
       </div>
 
       <!-- RUNES -->
       <div class="tabpane active" id="tab-runes" role="tabpanel">
         <div class="controls">
-          <!-- renamed label per request -->
           <label class="field">
             <span class="fieldLabel">Rune Name</span>
             <select id="runePick">
@@ -102,10 +149,16 @@
 
           <label class="field">
             <span class="fieldLabel">Search stats</span>
-            <input id="statsSearch" type="search" placeholder="x12 Speed, Rune Luck, Plasma..." autocomplete="off" />
+            <div class="inputIcon">
+              <span class="ii"><svg><use href="#i-search"/></svg></span>
+              <input id="statsSearch" type="search" placeholder="x12 Speed, Rune Luck, Plasma..." autocomplete="off" />
+            </div>
           </label>
 
-          <button class="btn tiny ghost" id="clearRunes">Clear</button>
+          <button class="btn tiny ghost" id="clearRunes" title="Clear filters">
+            <span class="btnIcon"><svg><use href="#i-x"/></svg></span>
+            <span>Clear</span>
+          </button>
         </div>
 
         <div class="listWrap">
@@ -118,9 +171,7 @@
           <div id="runeRows" class="rows"></div>
         </div>
 
-        <div class="hint muted">
-          Loaded directly from the sheet’s “Normal Runes” table.
-        </div>
+        <div class="hint muted">Loaded from the sheet’s “Normal Runes” table.</div>
       </div>
 
       <!-- EVENTS -->
@@ -128,15 +179,24 @@
         <div class="controls controlsSmall">
           <label class="field">
             <span class="fieldLabel">Search event rune</span>
-            <input id="eventSearch" type="search" placeholder="1M Noob, 1M God..." autocomplete="off" />
+            <div class="inputIcon">
+              <span class="ii"><svg><use href="#i-search"/></svg></span>
+              <input id="eventSearch" type="search" placeholder="1M Noob, 1M God..." autocomplete="off" />
+            </div>
           </label>
 
           <label class="field">
             <span class="fieldLabel">Search stats</span>
-            <input id="eventStatsSearch" type="search" placeholder="Singularity, Passive, Rune Luck..." autocomplete="off" />
+            <div class="inputIcon">
+              <span class="ii"><svg><use href="#i-search"/></svg></span>
+              <input id="eventStatsSearch" type="search" placeholder="Singularity, Passive, Rune Luck..." autocomplete="off" />
+            </div>
           </label>
 
-          <button class="btn tiny ghost" id="clearEvents">Clear</button>
+          <button class="btn tiny ghost" id="clearEvents" title="Clear filters">
+            <span class="btnIcon"><svg><use href="#i-x"/></svg></span>
+            <span>Clear</span>
+          </button>
         </div>
 
         <div class="listWrap">
@@ -148,9 +208,7 @@
           <div id="eventRows" class="rows"></div>
         </div>
 
-        <div class="hint muted">
-          Loaded directly from the sheet’s “EVENT RUNES” table.
-        </div>
+        <div class="hint muted">Loaded from the sheet’s “EVENT RUNES” table.</div>
       </div>
 
       <!-- GRIND -->
@@ -158,14 +216,21 @@
         <div class="controls controlsSmall">
           <label class="field">
             <span class="fieldLabel">Search grind</span>
-            <input id="grindSearch" type="search" placeholder="Type anything from the grind sheet..." autocomplete="off" />
+            <div class="inputIcon">
+              <span class="ii"><svg><use href="#i-search"/></svg></span>
+              <input id="grindSearch" type="search" placeholder="Type anything from the grind sheet..." autocomplete="off" />
+            </div>
           </label>
-          <button class="btn tiny ghost" id="clearGrind">Clear</button>
+
+          <button class="btn tiny ghost" id="clearGrind" title="Clear filters">
+            <span class="btnIcon"><svg><use href="#i-x"/></svg></span>
+            <span>Clear</span>
+          </button>
         </div>
 
         <div class="grindWrap">
           <div class="grindNote muted">
-            This is a real rendered table (not an embed). Set the correct Grind GID in config to populate it.
+            This is rendered as real content (not an embed). To fill it, set the Grind GID in CONFIG or use local CSV mode.
           </div>
           <div id="grindTable" class="grindTable"></div>
         </div>
@@ -176,7 +241,7 @@
         <div class="sourceBox">
           <h3 class="h3">Source</h3>
           <p class="muted">
-            Uses Google Sheets CSV endpoints that work well on GitHub Pages.
+            Uses Google Sheets “gviz CSV” endpoint (best for GitHub Pages). If blocked, check sharing permissions.
           </p>
 
           <div class="kv">
@@ -193,7 +258,7 @@
           </div>
 
           <div class="note">
-            Sheet must be set to “Anyone with the link can view”.
+            If CSV fetch fails: set sheet to “Anyone with the link can view”.
           </div>
         </div>
       </div>
@@ -209,10 +274,9 @@
     const SHEET_ID = "1DaRN1KROJJSbEYrqbfBEuTod5OmS49Bnlt_LsJKS7Eo";
     const GID_RUNE_STATS = 236628808;
 
-    // Set this to the gid of your "Rare Rune Grind" sheet tab.
+    // If you truly can't get the gid, set USE_LOCAL_GRIND_CSV=true and add /assets/grind.csv
     const GID_RARE_RUNE_GRIND = 0;
-
-    const UNIVERSE_ID = 9167717229;
+    const USE_LOCAL_GRIND_CSV = false; // set true to use assets/grind.csv instead of google
 
     document.getElementById("openSheet").href =
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID_RUNE_STATS}#gid=${GID_RUNE_STATS}`;
@@ -229,29 +293,35 @@
       }[m]));
     }
 
-    // gviz CSV is the most reliable for GitHub Pages
     function gvizCsvUrl(gid){
       return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
     }
-    // fallback
     function exportCsvUrl(gid){
       return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
     }
 
-    async function fetchCsv(gid){
-      // try gviz first
+    async function fetchCsvFromGoogle(gid){
       let res = await fetch(gvizCsvUrl(gid));
       let text = await res.text();
-      // if it looks like HTML, fallback
+
       if (text.includes("<html") || text.includes("<!DOCTYPE")) {
         res = await fetch(exportCsvUrl(gid));
         text = await res.text();
       }
-      // still html => fail
+
       if (text.includes("<html") || text.includes("<!DOCTYPE")) {
-        throw new Error("CSV fetch blocked. Check sharing permissions.");
+        throw new Error("CSV fetch blocked (HTML response). Check sharing settings.");
       }
       return text;
+    }
+
+    async function fetchGrindCsv(){
+      if (USE_LOCAL_GRIND_CSV) {
+        const res = await fetch("assets/grind.csv");
+        if (!res.ok) throw new Error("Missing assets/grind.csv");
+        return await res.text();
+      }
+      return await fetchCsvFromGoogle(GID_RARE_RUNE_GRIND);
     }
 
     function parseCSV(text){
@@ -288,42 +358,13 @@
         .filter(s => s && norm(s) !== "n/a");
     }
 
-    // =============================
-    // Roblox icon watermark
-    // =============================
-    async function applyGameIconWatermark(){
-      try{
-        const url = `https://thumbnails.roblox.com/v1/games/icons?universeIds=${UNIVERSE_ID}&size=512x512&format=Png&isCircular=false`;
-        const res = await fetch(url, { mode:"cors" });
-        const json = await res.json();
-        const iconUrl = json?.data?.[0]?.imageUrl;
-        if (iconUrl){
-          document.documentElement.style.setProperty("--gameIcon", `url("${iconUrl}")`);
-          document.body.classList.add("hasIcon");
-        }
-      }catch(_){}
-    }
-
-    // =============================
-    // EXACT sorting order like your sheet sections
-    // =============================
-    const WORLD_ORDER = [
-      "Slime","Fire","Water","Plasma",
-      "Snow","Frost","Snowflakes",
-      "Stardust","Comets","Meteors"
-    ];
+    // World order like your sheet (stable inside each section)
+    const WORLD_ORDER = ["Slime","Fire","Water","Plasma","Snow","Frost","Snowflakes","Stardust","Comets","Meteors"];
     const worldRank = (w) => {
       const i = WORLD_ORDER.findIndex(x => norm(x) === norm(w));
       return i === -1 ? 999 : i;
     };
 
-    // =============================
-    // Parser for your specific sheet layout
-    // Based on your screenshots:
-    // - "EVENT RUNES" table
-    // - "Normal Runes" table
-    // Section headers like "Slime World 1", "Fire World 1", ...
-    // =============================
     function parseRuneStatsSheet(rows){
       let mode = "none"; // none | event | normal
       let currentWorld = "";
@@ -334,7 +375,6 @@
       const events = [];
 
       const isSectionHeader = (cells) => {
-        // Typically one cell contains "Something World X" and the rest empty / N/A
         const joined = cells.filter(c => norm(c) !== "" && norm(c) !== "n/a");
         if (joined.length !== 1) return false;
         return /world\s+\d+/i.test(joined[0]);
@@ -346,11 +386,10 @@
         return { world: m[1].trim(), no: m[2].trim() };
       };
 
-      const isTableHeaderRow = (cells) => {
-        // "Rune Name", "First Stat", ...
-        const a = norm(cells[0]);
-        const b = norm(cells[1]);
-        return a.includes("rune name") || b.includes("rune name");
+      const isColumnHeader = (cells) => {
+        // "Rune Name", "First Stat" etc (sometimes with a leading label column)
+        const joined = cells.map(norm);
+        return joined.includes("rune name") || joined.includes("first stat");
       };
 
       for (const r of rows){
@@ -359,7 +398,6 @@
 
         if (!nonEmpty.length) continue;
 
-        // Switch modes
         if (norm(nonEmpty[0]) === "event runes"){
           mode = "event";
           currentEventGroup = "";
@@ -371,22 +409,17 @@
           currentWorldNo = "";
           continue;
         }
-        if (isTableHeaderRow(cells)){
-          // skip column headers for both tables
-          continue;
-        }
 
-        // EVENT: group header like "1M Event World 2" (merged)
+        if (isColumnHeader(cells)) continue;
+
         if (mode === "event"){
-          const merged = nonEmpty.length === 1 ? nonEmpty[0] : "";
-          if (merged && /event\s+world/i.test(merged)){
-            currentEventGroup = merged;
+          // Group row like "1M Event World 2" (merged)
+          if (nonEmpty.length === 1 && /event\s+world/i.test(nonEmpty[0])){
+            currentEventGroup = nonEmpty[0];
             continue;
           }
 
-          // Event row: first cell is rune name, rest are stat columns
-          // In your sheet, "1M Noob" etc in first column.
-          const runeName = cells[0] || "";
+          const runeName = cells[0];
           if (!runeName || norm(runeName) === "n/a") continue;
 
           const stats = cleanStats(cells.slice(1));
@@ -400,7 +433,6 @@
           continue;
         }
 
-        // NORMAL: section headers like "Slime World 1"
         if (mode === "normal"){
           if (isSectionHeader(cells)){
             const headerCell = cells.find(c => /world\s+\d+/i.test(c)) || nonEmpty[0];
@@ -410,8 +442,7 @@
             continue;
           }
 
-          // Normal rune row: first cell rune name, rest stats
-          const runeName = cells[0] || "";
+          const runeName = cells[0];
           if (!runeName || norm(runeName) === "n/a") continue;
 
           const stats = cleanStats(cells.slice(1));
@@ -426,8 +457,6 @@
         }
       }
 
-      // Sort by World number, then by your world order, then keep in-sheet order.
-      // We keep stable order inside same world by not sorting further.
       normal.sort((a,b) => {
         const an = Number(a.worldNo || 0), bn = Number(b.worldNo || 0);
         if (an !== bn) return an - bn;
@@ -439,9 +468,6 @@
       return { normal, events };
     }
 
-    // =============================
-    // Renderers (grid rows = no misalignment)
-    // =============================
     function renderNormal(all){
       const runePick = $("#runePick").value;
       const worldPick = $("#worldPick").value;
@@ -515,7 +541,7 @@
       $("#countGrind").textContent = String(filtered.length);
 
       if (!filtered.length){
-        root.innerHTML = `<div class="emptyBox">No matches (or Grind GID not set).</div>`;
+        root.innerHTML = `<div class="emptyBox">No grind data (set Grind GID or enable local CSV).</div>`;
         return;
       }
 
@@ -533,26 +559,32 @@
       `;
     }
 
-    // =============================
-    // Init
-    // =============================
-    let NORMAL_RUNES = [];
-    let EVENT_RUNES = [];
-    let GRIND_ROWS = [];
+    function wireTabs(){
+      document.querySelectorAll(".tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+        });
+      });
+    }
 
     async function loadAll(){
+      // Source views
       $("#sheetIdView").textContent = SHEET_ID;
       $("#gidStatsView").textContent = String(GID_RUNE_STATS);
-      $("#gidGrindView").textContent = String(GID_RARE_RUNE_GRIND);
+      $("#gidGrindView").textContent = USE_LOCAL_GRIND_CSV ? "LOCAL: assets/grind.csv" : String(GID_RARE_RUNE_GRIND);
 
-      // Rune Stats
-      const csv = await fetchCsv(GID_RUNE_STATS);
+      // Rune stats
+      const csv = await fetchCsvFromGoogle(GID_RUNE_STATS);
       const rows = parseCSV(csv);
       const parsed = parseRuneStatsSheet(rows);
-      NORMAL_RUNES = parsed.normal;
-      EVENT_RUNES = parsed.events;
 
-      // Populate filters
+      const NORMAL_RUNES = parsed.normal;
+      const EVENT_RUNES = parsed.events;
+
+      // Fill filters from NORMAL RUNES
       const runePick = $("#runePick");
       const worldPick = $("#worldPick");
       const worldNoPick = $("#worldNoPick");
@@ -565,20 +597,21 @@
       worlds.forEach(w => { const o=document.createElement("option"); o.value=w; o.textContent=w; worldPick.appendChild(o); });
       worldNos.forEach(n => { const o=document.createElement("option"); o.value=n; o.textContent=n; worldNoPick.appendChild(o); });
 
-      // Grind (optional)
+      // Grind (rendered content)
+      let GRIND_ROWS = [];
       try{
-        const gcsv = await fetchCsv(GID_RARE_RUNE_GRIND);
+        const gcsv = await fetchGrindCsv();
         GRIND_ROWS = parseCSV(gcsv);
       }catch(_){
         GRIND_ROWS = [];
       }
 
-      // Initial render
+      // Initial renders
       renderNormal(NORMAL_RUNES);
       renderEvents(EVENT_RUNES);
       renderGrind(GRIND_ROWS, "");
 
-      // Listeners
+      // Inputs
       ["runePick","worldPick","worldNoPick","statsSearch"].forEach(id => {
         $("#" + id).addEventListener("input", () => renderNormal(NORMAL_RUNES));
       });
@@ -607,22 +640,19 @@
         renderGrind(GRIND_ROWS, "");
       });
 
-      // Tabs
-      document.querySelectorAll(".tab").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-          document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
-          btn.classList.add("active");
-          document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
-        });
-      });
+      // Counts
+      $("#countRunes").textContent = String(NORMAL_RUNES.length);
+      $("#countEvents").textContent = String(EVENT_RUNES.length);
+      $("#countGrind").textContent = String(GRIND_ROWS.length);
     }
 
-    applyGameIconWatermark();
+    wireTabs();
+
     loadAll().catch(err => {
       console.error(err);
-      $("#runeRows").innerHTML = `<div class="emptyBox">Failed to load sheet CSV. Set sharing to “Anyone with link can view”.</div>`;
-      $("#eventRows").innerHTML = `<div class="emptyBox">Failed to load sheet CSV.</div>`;
+      $("#runeRows").innerHTML = `<div class="emptyBox">Failed to load Rune Stats. Make sure the sheet is “Anyone with link can view”.</div>`;
+      $("#eventRows").innerHTML = `<div class="emptyBox">Failed to load Rune Stats.</div>`;
+      $("#grindTable").innerHTML = `<div class="emptyBox">Grind not loaded (set Grind GID or enable local CSV).</div>`;
     });
   </script>
 </body>
