@@ -18,9 +18,8 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
+html {
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -33,6 +32,7 @@ body {
     radial-gradient(900px 700px at 50% 110%, rgba(45, 212, 255, .10), transparent 60%),
     linear-gradient(180deg, var(--bg0), var(--bg1));
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* ===== Background FX ===== */
@@ -176,12 +176,17 @@ body {
   background: linear-gradient(135deg, rgba(124, 77, 255, .24), rgba(45, 212, 255, .16));
   border: 1px solid rgba(255, 255, 255, .14);
   box-shadow: var(--shadow2);
-  transition: transform .12s ease, filter .12s ease;
+  transition: transform .15s cubic-bezier(0.4, 0, 0.2, 1), filter .15s ease, background .15s ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.06);
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.15);
+  background: linear-gradient(135deg, rgba(124, 77, 255, .35), rgba(45, 212, 255, .25));
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn.ghost {
@@ -290,34 +295,72 @@ body {
 
 .tabbar {
   display: flex;
+  justify-content: center;
   gap: 8px;
   padding: 6px;
   border-radius: 16px;
   background: rgba(0, 0, 0, .22);
   border: 1px solid rgba(255, 255, 255, .12);
+  position: relative;
+  /* For indicator */
+}
+
+.tabIndicator {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  width: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(77, 255, 136, .18), rgba(124, 77, 255, .16));
+  border: 1px solid rgba(255, 255, 255, .18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+  transition: all .35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .tab {
+  position: relative;
+  z-index: 1;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 10px 16px;
   border-radius: 12px;
   border: 1px solid transparent;
   background: transparent;
-  color: rgba(255, 255, 255, .86);
-  font-weight: 900;
+  color: rgba(255, 255, 255, .6);
+  font-weight: 700;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  transition: all .3s ease;
+}
+
+.tab:hover {
+  color: #fff;
 }
 
 .tab.active {
-  background: linear-gradient(135deg, rgba(77, 255, 136, .16), rgba(124, 77, 255, .14));
-  border-color: rgba(255, 255, 255, .14);
+  color: #fff;
 }
 
 .tabpane {
   display: none;
   padding: 12px 6px 6px;
+  animation: paneIn .3s ease-out;
+}
+
+@keyframes paneIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tabpane.active {
@@ -413,6 +456,34 @@ select {
 
 .inputIcon input {
   padding-left: 38px;
+  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.inputIcon input:focus {
+  border-color: rgba(124, 77, 255, 0.5);
+  background: rgba(124, 77, 255, 0.05);
+  box-shadow: 0 0 20px rgba(124, 77, 255, 0.15);
+}
+
+/* Specialized Calculator Input */
+.calcInput {
+  border-radius: 999px !important;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding-left: 44px !important;
+  font-size: 16px !important;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.calcInput:focus {
+  background: rgba(124, 77, 255, 0.08) !important;
+  border-color: rgba(124, 77, 255, 0.6) !important;
+  box-shadow:
+    0 0 20px rgba(124, 77, 255, 0.2),
+    inset 0 0 10px rgba(124, 77, 255, 0.1) !important;
+  transform: translateY(-1px);
 }
 
 /* ===== LIST (Grid Rows) - fixes alignment ===== */
@@ -425,7 +496,8 @@ select {
 
 .rowHeader {
   display: grid;
-  grid-template-columns: 220px 70px 280px 1fr;
+  grid-template-columns: 140px 280px 1fr;
+  text-align: center;
   padding: 12px 14px;
   background: rgba(0, 0, 0, .55);
   border-bottom: 1px solid rgba(255, 255, 255, .12);
@@ -446,15 +518,35 @@ select {
 
 .rows {
   display: block;
+  min-height: 400px;
+  transition: opacity .3s ease;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 220px 70px 280px 1fr;
+  grid-template-columns: 140px 280px 1fr;
   align-items: center;
+  text-align: center;
   padding: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, .08);
   gap: 16px;
+  transition: all .45s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: rowIn .5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  will-change: transform, opacity;
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.97);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
 }
 
 .rowEvents {
@@ -462,12 +554,20 @@ select {
 }
 
 .row:hover {
-  background: rgba(255, 255, 255, .04);
+  background: rgba(255, 255, 255, .08);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .4);
+  border-color: rgba(255, 255, 255, .2);
+  z-index: 5;
+  position: relative;
+  border-radius: 12px;
 }
 
 .rname {
   font-weight: 900;
   letter-spacing: .01em;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, .1);
 }
 
 .stats {
@@ -475,6 +575,7 @@ select {
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+  justify-content: center;
 }
 
 .chip {
@@ -501,8 +602,16 @@ select {
   padding: 6px 9px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, .14);
-  background: linear-gradient(135deg, rgba(45, 212, 255, .10), rgba(255, 77, 216, .08));
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+  background: linear-gradient(135deg, rgba(45, 212, 255, .12), rgba(255, 77, 216, .10));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+  transition: all .2s ease;
+  cursor: default;
+}
+
+.pillStat:hover {
+  border-color: rgba(255, 255, 255, .3);
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 .emptyBox {
@@ -568,6 +677,89 @@ select {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, .14);
   background: rgba(255, 255, 255, .04);
+}
+
+.worldNote {
+  font-size: 11px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+}
+
+/* ===== Filter Chips ===== */
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.multiChip {
+  padding: 6px 14px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.multiChip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.multiChip.active {
+  background: linear-gradient(135deg, #7c4dff, #448aff);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(124, 77, 255, 0.3);
+}
+
+.multiChip[data-val="__all"].active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ===== Tutorial ===== */
+.tutWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 10px 4px;
+}
+
+.tutSection {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.tutSection h3 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.tutSection p {
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tutImg {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tutImg img {
+  width: 100%;
+  display: block;
 }
 
 /* ===== Responsive ===== */

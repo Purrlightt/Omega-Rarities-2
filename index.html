@@ -46,6 +46,11 @@
       <path fill="currentColor"
         d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 0 1-1.4-1.4l4.9-4.9-4.9-4.9A1 1 0 0 1 7.1 5.7L12 10.6l4.9-4.9a1 1 0 0 1 1.4 0Z" />
     </symbol>
+
+    <symbol id="i-discord" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M19.3 4.5a16.3 16.3 0 0 0-4-1.2l-.2.4c1.5.4 2.8 1.1 4 2-1-.6-2-1-3.2-1.3l-.8-.2h-6.2l-.8.2c-1.2.3-2.3.7-3.2 1.3 1.2-.9 2.5-1.6 4-2l-.2-.4c-1.4.2-2.7.6-4 1.2a18.2 18.2 0 0 0-3.3 7.8c.8 1.4 2.2 2.4 3.8 2.8l.8-1c-1-.3-1.8-.8-2.5-1.5l.3.2c.8.5 1.7.9 2.6 1.2 1 .3 2.1.5 3.2.5s2.2-.2 3.2-.5a11.9 11.9 0 0 0 2.6-1.2 8.6 8.6 0 0 0 .6-.4c-.7.7-1.5 1.2-2.5 1.5l.8 1c1.6-.4 3-1.4 3.8-2.8 1.1-3.6.5-6.5-3.3-7.8ZM8.5 13c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5Zm7 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5Z" />
+    </symbol>
   </svg>
 
   <div class="bg">
@@ -67,6 +72,13 @@
     </div>
 
     <nav class="actions">
+      <a class="btn ghost" href="https://discord.com/channels/1327972266356768800/1467144703190241291" target="_blank"
+        rel="noreferrer">
+        <span class="btnIcon"><svg>
+            <use href="#i-discord" />
+          </svg></span>
+        <span>Discord Community</span>
+      </a>
       <a class="btn ghost" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank"
         rel="noreferrer">
         <span class="btnIcon"><svg>
@@ -81,14 +93,13 @@
     <section class="hero card">
       <div class="heroLeft">
         <div class="badgeRow">
-          <span class="badge">No Google Sheets</span>
-          <span class="badge">GitHub Pages ready</span>
-          <span class="badge">Icons + static logo</span>
+          <span class="badge"
+            style="background: rgba(124, 77, 255, 0.2); border-color: rgba(124, 77, 255, 0.3);">Created by
+            Purrlight</span>
         </div>
-        <h2>Runes + Events + Grind</h2>
+        <h2>Runes • Events • Grind</h2>
         <p class="muted">
-          Data is loaded from <span class="mono">assets/data.js</span>. Delete the spreadsheet anytime—this site stays
-          working.
+          Comprehensive database for Omega Rarities 2.
         </p>
       </div>
 
@@ -102,7 +113,7 @@
           <div class="statValue" id="countEvents">—</div>
         </div>
         <div class="stat">
-          <div class="statLabel">Grind Rows</div>
+          <div class="statLabel">Max Defined Clones</div>
           <div class="statValue" id="countGrind">—</div>
         </div>
       </div>
@@ -110,6 +121,7 @@
 
     <section class="tabs card">
       <div class="tabbar" role="tablist" aria-label="Views">
+        <div class="tabIndicator" id="tabIndicator"></div>
         <button class="tab active" data-tab="runes" role="tab" aria-selected="true">
           <span class="tabIcon"><svg>
               <use href="#i-runes" />
@@ -125,10 +137,22 @@
               <use href="#i-grind" />
             </svg></span><span>Rare Rune Grind</span>
         </button>
-        <button class="tab" data-tab="source" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg>
-              <use href="#i-source" />
-            </svg></span><span>Data</span>
+        <button class="tab" data-tab="utility" role="tab" aria-selected="false">
+          <span class="tabIcon"><svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M7 2v11h3v9l7-12h-4l3-8z" />
+            </svg></span><span>Utility</span>
+        </button>
+        <button class="tab" data-tab="info" role="tab" aria-selected="false">
+          <span class="tabIcon"><svg viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M11 9h2V7h-2v2Zm0 8h2v-6h-2v6Zm1-15C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z" />
+            </svg></span><span>Quick Info</span>
+        </button>
+        <button class="tab" data-tab="tutorial" role="tab" aria-selected="false">
+          <span class="tabIcon"><svg viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M11 18h2v-2h-2v2Zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4Z" />
+            </svg></span><span>Tutorial</span>
         </button>
       </div>
 
@@ -136,24 +160,17 @@
       <div class="tabpane active" id="tab-runes" role="tabpanel">
         <div class="controls">
           <label class="field">
-            <span class="fieldLabel">Rune Name</span>
-            <select id="runePick">
-              <option value="__all">All Runes</option>
-            </select>
-          </label>
-
-          <label class="field" style="display:none">
-            <span class="fieldLabel">World (Hidden)</span>
-            <select id="worldPick">
-              <option value="__all">All Worlds</option>
-            </select>
+            <span class="fieldLabel">Rune Category</span>
+            <div id="runeChips" class="chipGroup">
+              <div class="multiChip active" data-val="__all">All</div>
+            </div>
           </label>
 
           <label class="field">
             <span class="fieldLabel">World</span>
-            <select id="worldNoPick">
-              <option value="__all">All</option>
-            </select>
+            <div id="worldChips" class="chipGroup">
+              <div class="multiChip active" data-val="__all">All</div>
+            </div>
           </label>
 
           <label class="field">
@@ -180,6 +197,10 @@
             <div>Rune</div>
             <div>Stats</div>
           </div>
+          <div class="muted"
+            style="padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255, 255, 255, .05);">
+            Note: All rune stats are calculated with the max rune cap.
+          </div>
           <div id="runeRows" class="rows"></div>
         </div>
       </div>
@@ -188,12 +209,9 @@
       <div class="tabpane" id="tab-events" role="tabpanel">
         <div class="controls controlsSmall">
           <label class="field">
-            <span class="fieldLabel">Search event rune</span>
-            <div class="inputIcon">
-              <span class="ii"><svg>
-                  <use href="#i-search" />
-                </svg></span>
-              <input id="eventSearch" type="search" placeholder="1M Noob, 1M God..." autocomplete="off" />
+            <span class="fieldLabel">Event</span>
+            <div id="eventChips" class="chipGroup">
+              <div class="multiChip active" data-val="__all">All Events</div>
             </div>
           </label>
 
@@ -226,45 +244,114 @@
         </div>
       </div>
 
-      <!-- GRIND -->
       <div class="tabpane" id="tab-grind" role="tabpanel">
-        <div class="controls controlsSmall">
+        <div class="controls" style="grid-template-columns: 1fr auto;">
           <label class="field">
-            <span class="fieldLabel">Search grind</span>
+            <span class="fieldLabel">Your Rune Clones</span>
             <div class="inputIcon">
               <span class="ii"><svg>
                   <use href="#i-search" />
                 </svg></span>
-              <input id="grindSearch" type="search" placeholder="Search anything..." autocomplete="off" />
+              <input id="grindSearch" class="calcInput" type="number" placeholder="Enter exact number (e.g. 10)"
+                autocomplete="off" />
             </div>
           </label>
 
-          <button class="btn tiny ghost" id="clearGrind" title="Clear filters">
+          <button class="btn tiny ghost" id="clearGrind" title="Clear">
             <span class="btnIcon"><svg>
                 <use href="#i-x" />
               </svg></span>
-            <span>Clear</span>
+            <span>Reset</span>
           </button>
         </div>
 
-        <div class="grindWrap">
-          <div class="grindNote muted">
-            This is rendered from <span class="mono">assets/data.js</span> → <span class="mono">rareRuneGrind</span>.
+        <div id="grindResultArea"></div>
+      </div>
+
+      <!-- UTILITY -->
+      <div class="tabpane" id="tab-utility" role="tabpanel">
+        <div class="tutWrap" id="utilityArea"></div>
+      </div>
+
+      <!-- QUICK INFO -->
+      <div class="tabpane" id="tab-info" role="tabpanel">
+        <div class="tutWrap">
+          <div class="tutSection">
+            <h3 class="h3">Astral Flux Mechanics</h3>
+            <p class="muted">Astral Flux stats do not increase immediately. They start scaling at specific thresholds:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+              <div class="card" style="padding: 12px 16px; background: rgba(255, 255, 255, 0.03);">
+                <span class="fieldLabel" style="color: #448aff;">Bulk</span>
+                <div style="font-size: 18px; font-weight: 700;">Starts scaling at <span class="mono">100,000</span>
+                </div>
+              </div>
+              <div class="card" style="padding: 12px 16px; background: rgba(255, 255, 255, 0.03);">
+                <span class="fieldLabel" style="color: #448aff;">Speed</span>
+                <div style="font-size: 18px; font-weight: 700;">Starts scaling at <span class="mono">10,000,000</span>
+                  (10M)</div>
+              </div>
+              <div class="card" style="padding: 12px 16px; background: rgba(255, 255, 255, 0.03);">
+                <span class="fieldLabel" style="color: #448aff;">Luck</span>
+                <div style="font-size: 18px; font-weight: 700;">Starts scaling at <span
+                    class="mono">10,000,000,000</span> (10B)</div>
+              </div>
+            </div>
           </div>
-          <div id="grindTable" class="grindTable"></div>
+
+          <div class="tutSection">
+            <h3 class="h3">1M Absolute Caps</h3>
+            <p class="muted">Specific info regarding the 1M Absolute rune's maximum potential:</p>
+            <ul style="color: var(--muted); padding-left: 20px; line-height: 1.6;">
+              <li>At around <span class="mono" style="color: #fff;">108k</span>, it maxes out **everything except
+                Luck**.</li>
+              <li>At around <span class="mono" style="color: #fff;">75k</span>, it maxes out **Rune Luck** and **Bulk**.
+              </li>
+            </ul>
+          </div>
+
+          <div class="tutSection" style="border-left: 4px solid #448aff; padding-left: 20px;">
+            <h3 class="h3">Event Rune Boost Rules</h3>
+            <p style="color: #fff; font-weight: 600;">Event Runes are unique and ONLY receive boosts from:</p>
+            <div class="stats" style="margin-top: 10px; justify-content: flex-start;">
+              <span class="pillStat">Gamepasses</span>
+              <span class="pillStat">Potions</span>
+              <span class="pillStat">The Rune itself</span>
+            </div>
+            <p class="muted" style="margin-top: 12px; font-size: 13px;">Other external multipliers do not apply to event
+              rune stats.</p>
+          </div>
         </div>
       </div>
 
-      <!-- DATA -->
-      <div class="tabpane" id="tab-source" role="tabpanel">
-        <div class="sourceBox">
-          <h3 class="h3">Data file</h3>
-          <p class="muted">
-            Everything is loaded from <span class="mono">assets/data.js</span>.
-          </p>
+      <!-- TUTORIAL -->
+      <div class="tabpane" id="tab-tutorial" role="tabpanel">
+        <div class="tutWrap">
+          <div class="tutSection" style="border-color: rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05);">
+            <h3 class="h3" style="color: #ff4d4d;">⚠️ Important: RPS Limit</h3>
+            <p class="muted">Your actual <strong>RPS amount</strong> must be <strong>equal to or below</strong> the
+              calculated number for your Rune Clones. If your RPS is higher than the requirement, it will not work!</p>
+          </div>
 
-          <div class="note">
-            To update runes, edit <span class="mono">assets/data.js</span>, commit, and push — GitHub Pages updates.
+          <div class="tutSection">
+            <h3 class="h3">1. Find Your Rune Clones</h3>
+            <p class="muted">To use the calculator, you need your exact <strong>Rune Clone</strong> count. You can
+              find this in your <strong>Profile</strong> menu inside the game.</p>
+            <div class="tutImg"><img src="assets/ProfileTut.png" alt="Profile Tutorial"></div>
+          </div>
+
+          <div class="tutSection">
+            <h3 class="h3">2. Turn Off Luck</h3>
+            <p class="muted">For the Rune Grind calculations to be accurate, you MUST have your <strong>Luck turned
+                OFF</strong>. This ensures the base drop rates are used.</p>
+            <div class="tutImg"><img src="assets/RuneLuck.png" alt="Rune Luck Settings"></div>
+          </div>
+
+          <div class="tutSection">
+            <h3 class="h3">3. Tweak Your Bulk</h3>
+            <p class="muted">Before starting your grind, ensure you tweak your <strong>Bulk amount</strong> in the
+              settings to optimize your efficiency.</p>
+            <div class="tutImg"><img src="assets/RuneBulk.png" alt="Rune Bulk Settings"></div>
           </div>
         </div>
       </div>
@@ -281,46 +368,49 @@
       "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;"
     }[m]));
 
+    function getActiveVals(containerId) {
+      return [...document.querySelectorAll(`#${containerId} .multiChip.active`)].map(c => c.dataset.val);
+    }
+
     function renderNormal(all) {
-      const runePick = $("#runePick").value;
-      // const worldPick = $("#worldPick").value; 
-      const worldNoPick = $("#worldNoPick").value;
+      const runePicks = getActiveVals("runeChips");
+      const worldPicks = getActiveVals("worldChips");
       const statsSearch = norm($("#statsSearch").value);
 
       const filtered = all.filter(r => {
-        const okRune = (runePick === "__all") || r.rune === runePick;
-        const okWorld = true; // (worldPick === "__all") || r.world === worldPick;
-        const okNo = (worldNoPick === "__all") || String(r.worldNo || "") === worldNoPick;
+        const okCat = runePicks.includes("__all") || runePicks.includes(r.world);
+        const okWorld = worldPicks.includes("__all") || worldPicks.includes(String(r.worldNo || ""));
         const okStats = !statsSearch || norm((r.stats || []).join(" • ")).includes(statsSearch);
-        return okRune && okWorld && okNo && okStats;
+        return okCat && okWorld && okStats;
       });
 
       $("#countRunes").textContent = String(all.length);
 
       const rowsEl = $("#runeRows");
+      rowsEl.innerHTML = "";
+
       if (!filtered.length) {
         rowsEl.innerHTML = `<div class="emptyBox">No matches.</div>`;
         return;
       }
 
-      rowsEl.innerHTML = filtered.map(r => `
-        <div class="row">
-          <div><span class="chip">${esc(r.worldNo || "—")}</span></div>
+      rowsEl.innerHTML = filtered.map((r, idx) => `
+        <div class="row" style="animation-delay: ${idx * 0.02}s">
+          <div><span class="chip">${esc(r.world || "—")}</span></div>
           <div class="rname">${esc(r.rune)}</div>
-          <div class="stats">${(r.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")
-        }</div>
+          <div class="stats">${(r.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
         </div>
       `).join("");
     }
 
     function renderEvents(all) {
-      const q = norm($("#eventSearch").value);
+      const eventPicks = getActiveVals("eventChips");
       const sq = norm($("#eventStatsSearch").value);
 
       const filtered = all.filter(e => {
-        const okName = !q || norm(e.rune).includes(q) || norm(e.event).includes(q);
+        const okEvent = eventPicks.includes("__all") || eventPicks.includes(e.event);
         const okStat = !sq || norm((e.stats || []).join(" • ")).includes(sq);
-        return okName && okStat;
+        return okEvent && okStat;
       });
 
       $("#countEvents").textContent = String(all.length);
@@ -331,66 +421,185 @@
         return;
       }
 
-      rowsEl.innerHTML = filtered.map(e => `
-        <div class="row rowEvents">
-          <div><span class="chip">${esc(e.event)}</span></div>
-          <div class="rname">${esc(e.rune)}</div>
-          <div class="stats">${(e.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")
-        }</div>
-        </div>
-      `).join("");
+      rowsEl.innerHTML = filtered.map((e, idx) => {
+        const cleanEvent = esc(e.event.replace(/\s*World\s*\d+\s*/gi, "").trim());
+        let worldInfo = "";
+        if (e.event.toLowerCase().includes("world 2")) {
+          worldInfo = `<div class="worldNote">This rune is in Snow World</div>`;
+        } else if (e.event.toLowerCase().includes("world 1")) {
+          worldInfo = `<div class="worldNote">This rune is in Spawn World</div>`;
+        } else if (e.event.toLowerCase().includes("world 3")) {
+          worldInfo = `<div class="worldNote">This rune is in Galactic World</div>`;
+        }
+
+        return `
+          <div class="row rowEvents" style="animation-delay: ${idx * 0.02}s">
+            <div><span class="chip">${cleanEvent}</span></div>
+            <div class="rname">${esc(e.rune)}${worldInfo}</div>
+            <div class="stats">${(e.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function formatSuffix(num) {
+      const suffixes = ["Sx", "Sp", "O", "N", "D", "UD", "DD", "TD", "QD", "QiD", "SD", "SPD", "OD", "ND", "V"];
+      let sIdx = 0;
+      let val = Number(num);
+      while (val >= 1000 && sIdx < suffixes.length - 1) {
+        val /= 1000;
+        sIdx++;
+      }
+      return parseFloat(val.toFixed(3)) + suffixes[sIdx];
     }
 
     function renderGrind(grind, q) {
-      const root = $("#grindTable");
-      const query = norm(q);
+      const root = $("#grindResultArea");
+      const query = q.trim();
 
-      if (!grind || !Array.isArray(grind.rows) || !grind.rows.length) {
-        $("#countGrind").textContent = "0";
-        root.innerHTML = `<div class="emptyBox">No grind data yet.</div>`;
+      if (!query || isNaN(query) || Number(query) <= 0) {
+        root.innerHTML = `
+          <div class="emptyBox" style="padding: 40px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px;">
+            Type your Rune Clone count above to calculate the required RPS.
+          </div>`;
         return;
       }
 
-      const headers = grind.headers || [];
-      const rows = grind.rows || [];
-
-      const filtered = rows.filter(r => {
-        if (!query) return true;
-        // Search only the first column (Rune Clones)
-        return r.length > 0 && norm(r[0]).includes(query);
-      });
-
-      $("#countGrind").textContent = String(filtered.length);
-
-      const maxCols = Math.max(headers.length, ...rows.map(r => r.length), 1);
-      const head = Array.from({ length: maxCols }, (_, i) => headers[i] ?? `Col ${i + 1}`);
-      const body = filtered;
+      const clones = Number(query);
+      const rpsValue = clones * 35.625;
+      const formatted = formatSuffix(rpsValue);
 
       root.innerHTML = `
-        <div class="ggrid" style="--cols:${maxCols}">
-          ${head.map(h => `<div class="gth">${esc(h)}</div>`).join("")}
-          ${body.slice(0, 500).map(r =>
-        Array.from({ length: maxCols }, (_, i) => `<div class="gtd">${esc(r[i] ?? "")}</div>`).join("")
-      ).join("")}
+        <div class="card" style="padding: 30px; margin-top: 20px; text-align: center; background: rgba(124, 77, 255, 0.1); border-color: rgba(124, 77, 255, 0.3); animation: paneIn 0.4s ease-out;">
+          <div class="fieldLabel" style="margin-bottom: 10px;">Calculated RPS</div>
+          <div style="font-size: 44px; font-weight: 900; color: #fff; text-shadow: 0 0 30px rgba(124, 77, 255, 0.4); overflow-wrap: break-word;">${esc(formatted)}</div>
+          <div class="muted" style="margin-top: 15px; font-size: 14px;">Formula: ${clones} × 35.625Sx</div>
         </div>
       `;
     }
 
+    function renderUtility(normal, events) {
+      const target = $("#utilityArea");
+      const utilityStats = ["Speed", "Bulk", "Rune Luck"];
+      const results = { "Speed": {}, "Bulk": {}, "Rune Luck": {} };
+
+      const all = [
+        ...normal.map(r => ({ ...r, label: r.world })),
+        ...events.map(e => ({ ...e, label: e.event.replace(/\s*World\s*\d+\s*/gi, "").trim() }))
+      ];
+
+      all.forEach(r => {
+        (r.stats || []).forEach(statLine => {
+          utilityStats.forEach(s => {
+            if (statLine.toLowerCase().includes(s.toLowerCase())) {
+              if (!results[s][r.label]) results[s][r.label] = [];
+              results[s][r.label].push({ name: r.rune, val: statLine });
+            }
+          });
+        });
+      });
+
+      target.innerHTML = utilityStats.map(s => {
+        const categories = Object.keys(results[s]).sort();
+        const content = categories.map(cat => `
+          <div style="margin-bottom: 20px;">
+            <div class="fieldLabel" style="color: #448aff; margin-bottom: 8px;">${esc(cat)}</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              ${results[s][cat].map(item => `
+                <div style="display: flex; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                  <span class="mono" style="color: #fff;">${esc(item.name)}</span>
+                  <span class="pillStat" style="margin: 0; font-size: 12px; background: rgba(124, 77, 255, 0.2);">${esc(item.val)}</span>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `).join("");
+
+        return `
+          <div class="tutSection">
+            <h3 class="h3">${s} Runes</h3>
+            <p class="muted" style="margin-bottom: 20px;">Detailed list of runes providing ${s}:</p>
+            ${content || '<div class="muted">No runes found for this stat.</div>'}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function moveIndicator(btn, isLongJump = false) {
+      const ind = $("#tabIndicator");
+      if (!ind || !btn) return;
+
+      // "Train Stop" physics: Extreme Quintic-Out for long travel
+      if (isLongJump) {
+        ind.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
+        ind.style.transitionDuration = "0.9s";
+      } else {
+        ind.style.transitionTimingFunction = "cubic-bezier(0.4, 0, 0.2, 1)";
+        ind.style.transitionDuration = "0.35s";
+      }
+
+      ind.style.transform = `translateX(${btn.offsetLeft - 6}px)`;
+      ind.style.width = `${btn.offsetWidth}px`;
+    }
+
     function wireTabs() {
-      document.querySelectorAll(".tab").forEach(btn => {
+      const tabs = Array.from(document.querySelectorAll(".tab"));
+      let currentIndex = tabs.findIndex(t => t.classList.contains("active"));
+
+      tabs.forEach((btn, targetIndex) => {
         btn.addEventListener("click", () => {
-          document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+          const distance = Math.abs(targetIndex - currentIndex);
+          const isLongJump = distance > 1;
+
+          tabs.forEach(b => b.classList.remove("active"));
           document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
           btn.classList.add("active");
           document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+
+          moveIndicator(btn, isLongJump);
+          currentIndex = targetIndex;
         });
+      });
+      setTimeout(() => {
+        const active = $(".tab.active");
+        if (active) moveIndicator(active);
+      }, 50);
+    }
+
+    function setupChipGroup(id, values, onChange, labelMapper = null) {
+      const group = $(id);
+      values.forEach(val => {
+        const chip = document.createElement("div");
+        chip.className = "multiChip";
+        chip.dataset.val = val;
+        chip.textContent = labelMapper ? labelMapper(val) : val;
+        group.appendChild(chip);
+      });
+
+      group.addEventListener("click", e => {
+        const chip = e.target.closest(".multiChip");
+        if (!chip) return;
+
+        const val = chip.dataset.val;
+        const allBtn = group.querySelector('[data-val="__all"]');
+
+        if (val === "__all") {
+          group.querySelectorAll(".multiChip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+        } else {
+          allBtn.classList.remove("active");
+          chip.classList.toggle("active");
+          if (!group.querySelector(".multiChip.active")) {
+            allBtn.classList.add("active");
+          }
+        }
+        onChange();
       });
     }
 
     async function init() {
       wireTabs();
 
-      // Check if OMEGA_DATA is loaded
       if (typeof OMEGA_DATA === 'undefined') {
         throw new Error("Missing assets/data.js or OMEGA_DATA is not defined");
       }
@@ -400,47 +609,33 @@
       const events = Array.isArray(data.eventRunes) ? data.eventRunes : [];
       const grind = data.rareRuneGrind || { headers: [], rows: [] };
 
-      const runePick = $("#runePick");
-      // const worldPick = $("#worldPick"); // Removed World tag/filter
-      const worldNoPick = $("#worldNoPick");
+      // Setup Normal Runes Chips
+      const worlds = [...new Set(normal.map(r => r.world))];
+      setupChipGroup("#runeChips", worlds, () => renderNormal(normal));
 
-      const runeNames = [...new Set(normal.map(r => r.rune))].sort((a, b) => a.localeCompare(b));
-      // const worlds = [...new Set(normal.map(r => r.world))].sort((a, b) => a.localeCompare(b));
-      // Use "Spawn", "Snow" etc instead of numbers now, so we sort alphabetically or keep a custom order if needed
-      // But they are strings now, implying distinct values.
-      const worldNos = [...new Set(normal.map(r => String(r.worldNo || "")).filter(Boolean))];
-      // Optional: enforce order Spawn -> Snow -> Galactic if they appear? 
-      // For now alphabetic or insertion order is fine, but user had 1, 2, 3 so let's just default to what we have or sort?
-      // "Galactic" > "Snow" > "Spawn" alphabet?? No. 
-      // Let's just sort alphabetically or leave as is. User didn't specify sort order.
-      worldNos.sort();
+      const worldNos = [...new Set(normal.map(r => String(r.worldNo || "")).filter(Boolean))].sort();
+      setupChipGroup("#worldChips", worldNos, () => renderNormal(normal));
 
-      runeNames.forEach(n => { const o = document.createElement("option"); o.value = n; o.textContent = n; runePick.appendChild(o); });
-      // worlds.forEach(w => { const o = document.createElement("option"); o.value = w; o.textContent = w; worldPick.appendChild(o); });
-      worldNos.forEach(n => { const o = document.createElement("option"); o.value = n; o.textContent = n; worldNoPick.appendChild(o); });
+      // Setup Event Chips
+      const uniqueEvents = [...new Set(events.map(e => e.event))];
+      setupChipGroup("#eventChips", uniqueEvents, () => renderEvents(events), (val) => val.replace(/\s*World\s*\d+\s*/gi, "").trim());
 
       renderNormal(normal);
       renderEvents(events);
       renderGrind(grind, "");
+      renderUtility(normal, events);
 
-      ["runePick", "worldNoPick", "statsSearch"].forEach(id => {
-        $("#" + id).addEventListener("input", () => renderNormal(normal));
-      });
-
+      $("#statsSearch").addEventListener("input", () => renderNormal(normal));
       $("#clearRunes").addEventListener("click", () => {
-        $("#runePick").value = "__all";
-        // $("#worldPick").value = "__all";
-        $("#worldNoPick").value = "__all";
+        $("#runeChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
+        $("#worldChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
         $("#statsSearch").value = "";
         renderNormal(normal);
       });
 
-      ["eventSearch", "eventStatsSearch"].forEach(id => {
-        $("#" + id).addEventListener("input", () => renderEvents(events));
-      });
-
+      $("#eventStatsSearch").addEventListener("input", () => renderEvents(events));
       $("#clearEvents").addEventListener("click", () => {
-        $("#eventSearch").value = "";
+        $("#eventChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
         $("#eventStatsSearch").value = "";
         renderEvents(events);
       });
@@ -453,14 +648,15 @@
 
       $("#countRunes").textContent = String(normal.length);
       $("#countEvents").textContent = String(events.length);
-      $("#countGrind").textContent = String((grind.rows || []).length);
+      const maxClones = (grind.rows || []).reduce((max, r) => Math.max(max, Number(r[0]) || 0), 0);
+      $("#countGrind").textContent = String(maxClones);
     }
 
     init().catch(err => {
       console.error(err);
       $("#runeRows").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span> (OMEGA_DATA undefined).</div>`;
       $("#eventRows").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span>.</div>`;
-      $("#grindTable").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span>.</div>`;
+      $("#grindResultArea").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span>.</div>`;
     });
 
   </script>
