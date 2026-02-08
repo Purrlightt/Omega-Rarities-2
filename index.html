@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="style.css" />
   <meta name="color-scheme" content="dark" />
 </head>
+
 <body>
   <!-- ICON SPRITE -->
   <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
@@ -74,7 +76,8 @@
         <span class="btnIcon"><svg> <use href="#i-discord" /> </svg></span>
         <span>Discord Community</span>
       </a>
-      <a class="btn ghost" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank" rel="noreferrer">
+      <a class="btn ghost" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank"
+        rel="noreferrer">
         <span class="btnIcon"><svg> <use href="#i-game" /> </svg></span>
         <span>Open Game</span>
       </a>
@@ -85,10 +88,14 @@
     <section class="hero card">
       <div class="heroLeft">
         <div class="badgeRow">
-          <span class="badge" style="background: rgba(124, 77, 255, 0.2); border-color: rgba(124, 77, 255, 0.3);">Created by Purrlight</span>
+          <span class="badge"
+            style="background: rgba(124, 77, 255, 0.2); border-color: rgba(124, 77, 255, 0.3);">Created by
+            Purrlight</span>
         </div>
         <h2>Runes • Events • Grind</h2>
-        <p class="muted"> Comprehensive database for Omega Rarities 2.</p>
+        <p class="muted">
+          Comprehensive database for Omega Rarities 2.
+        </p>
       </div>
 
       <div class="heroRight">
@@ -101,8 +108,8 @@
           <div class="statValue" id="countEvents">—</div>
         </div>
         <div class="stat">
-          <div class="statLabel">Max Defined Clones</div>
-          <div class="statValue" id="countGrind">—</div>
+          <div class="statLabel">RPS Threshold</div>
+          <div class="statValue">35.625Sx</div>
         </div>
       </div>
     </section>
@@ -433,7 +440,7 @@
       return parseFloat(val.toFixed(3)) + suffixes[sIdx];
     }
 
-    function renderGrind(grind, q) {
+    function renderGrind(q) {
       const root = $("#grindResultArea");
       const query = q.trim();
 
@@ -607,7 +614,6 @@
       const data = OMEGA_DATA;
       const normal = Array.isArray(data.normalRunes) ? data.normalRunes : [];
       const events = Array.isArray(data.eventRunes) ? data.eventRunes : [];
-      const grind = data.rareRuneGrind || { headers: [], rows: [] };
 
       // Setup Normal Runes Chips
       const worlds = [...new Set(normal.map(r => r.world))];
@@ -622,7 +628,7 @@
 
       renderNormal(normal);
       renderEvents(events);
-      renderGrind(grind, "");
+      renderGrind("");
       renderUtility(normal, events);
 
       $("#statsSearch").addEventListener("input", () => renderNormal(normal));
@@ -640,16 +646,14 @@
         renderEvents(events);
       });
 
-      $("#grindSearch").addEventListener("input", () => renderGrind(grind, $("#grindSearch").value));
+      $("#grindSearch").addEventListener("input", () => renderGrind($("#grindSearch").value));
       $("#clearGrind").addEventListener("click", () => {
         $("#grindSearch").value = "";
-        renderGrind(grind, "");
+        renderGrind("");
       });
 
       $("#countRunes").textContent = String(normal.length);
       $("#countEvents").textContent = String(events.length);
-      const maxClones = (grind.rows || []).reduce((max, r) => Math.max(max, Number(r[0]) || 0), 0);
-      $("#countGrind").textContent = String(maxClones);
     }
 
     init().catch(err => {
@@ -661,4 +665,5 @@
 
   </script>
 </body>
+
 </html>
