@@ -990,7 +990,7 @@ const OMEGA_DATA = {
                 "x4M Luck",
                 "x4.8 Meteors",
                 "x4.24 Rune Bulk",
-                "x34.32 Rune Luck"
+                "x4.32 Rune Luck"
             ]
         },
         {
@@ -1226,3 +1226,4 @@ const OMEGA_DATA = {
         ]
     }
 };
+
