@@ -64,7 +64,7 @@ const OMEGA_DATA = {
                 "x800 XP",
                 "x600 Slime",
                 "x200 Fire",
-                "x+ 15 Bulk"
+                "x+ 15 Rune Bulk"
             ]
         },
         {
@@ -85,7 +85,7 @@ const OMEGA_DATA = {
                 "x4T XP",
                 "x48k Plasma",
                 "x2k Snowflake",
-                "x20 Speed",
+                "x20 Rune Speed",
                 "x5 Rune Luck"
             ]
         },
@@ -159,7 +159,7 @@ const OMEGA_DATA = {
                 "x400 XP",
                 "x400 Slime",
                 "x600 Fire",
-                "x+15 Bulk"
+                "x+15 Rune Bulk"
             ]
         },
         {
@@ -170,7 +170,7 @@ const OMEGA_DATA = {
                 "x5k Luck",
                 "x6k XP",
                 "x3.2k Fire",
-                "x+79 Bulk"
+                "x+79 Rune Bulk"
             ]
         },
         {
@@ -182,7 +182,7 @@ const OMEGA_DATA = {
                 "x800T XP",
                 "x8k Snowflake",
                 "x4 Rune Luck",
-                "x12 Speed"
+                "x12 Rune Speed"
             ]
         },
         {
@@ -254,7 +254,7 @@ const OMEGA_DATA = {
                 "x1.6k XP",
                 "x800 Fire",
                 "x16 Plasma",
-                "x+39 Bulk"
+                "x+39 Rune Bulk"
             ]
         },
         {
@@ -266,7 +266,7 @@ const OMEGA_DATA = {
                 "x120k XP",
                 "x800 Fire",
                 "x40 Plasma",
-                "x8 Bulk"
+                "x8 Rune Bulk"
             ]
         },
         {
@@ -338,8 +338,8 @@ const OMEGA_DATA = {
                 "x4k Luck",
                 "x400k XP",
                 "x80 Plasma",
-                "x+79 Bulk",
-                "x8 Speed"
+                "x+79 Rune Bulk",
+                "x8 Rune Speed"
             ]
         },
         {
@@ -350,7 +350,7 @@ const OMEGA_DATA = {
                 "x12k Luck",
                 "x400k XP",
                 "x400 Plasma",
-                "x8 Bulk"
+                "x8 Rune Bulk"
             ]
         },
         {
@@ -379,7 +379,7 @@ const OMEGA_DATA = {
                 "x8k Luck",
                 "x8k XP",
                 "x128 Snow",
-                "x16 Bulk"
+                "x16 Rune Bulk"
             ]
         },
         {
@@ -390,7 +390,7 @@ const OMEGA_DATA = {
                 "x16k Luck",
                 "x12.8k XP",
                 "x160 Snow",
-                "x56 Speed"
+                "x56 Rune Speed"
             ]
         },
         {
@@ -422,7 +422,7 @@ const OMEGA_DATA = {
                 "x2.4k XP",
                 "x20 Fire",
                 "x60 Frost",
-                "x24 Speed"
+                "x24 Rune Speed"
             ]
         },
         {
@@ -433,7 +433,7 @@ const OMEGA_DATA = {
                 "x8k Luck",
                 "x4k XP",
                 "x24 Frost",
-                "x8 Bulk"
+                "x8 Rune Bulk"
             ]
         },
         {
@@ -445,7 +445,8 @@ const OMEGA_DATA = {
                 "x10k XP",
                 "x80 Snow",
                 "x80 Frost",
-                "x8 Bulk + Speed",
+                "x8 Rune Bulk",
+                "x8 Rune Speed",
                 "x8 Rune Luck"
             ]
         },
@@ -467,7 +468,7 @@ const OMEGA_DATA = {
                 "x43.2 Frost",
                 "x32k Luck",
                 "x16k XP",
-                "x40 Speed"
+                "x40 Rune Speed"
             ]
         },
         {
@@ -479,7 +480,7 @@ const OMEGA_DATA = {
                 "x96 Snow",
                 "x48 Frost",
                 "x19.2k XP",
-                "x16 Bulk"
+                "x16 Rune Bulk"
             ]
         },
         {
@@ -492,7 +493,7 @@ const OMEGA_DATA = {
                 "x160 Frost",
                 "x320 Snow",
                 "x8k Plasma",
-                "x48 Speed"
+                "x48 Rune Speed"
             ]
         },
         {
@@ -503,7 +504,7 @@ const OMEGA_DATA = {
                 "x16k Luck",
                 "x19.2k XP",
                 "x320 Frost",
-                "x64 Bulk"
+                "x64 Rune Bulk"
             ]
         },
         {
@@ -527,7 +528,7 @@ const OMEGA_DATA = {
                 "x20 Fire",
                 "x800 Plasma",
                 "x20 Frost",
-                "x8 Speed"
+                "x8 Rune Speed"
             ]
         },
         {
@@ -539,7 +540,7 @@ const OMEGA_DATA = {
                 "x4k XP",
                 "x600 Plasma",
                 "x80 Frost",
-                "x+7 Bulk"
+                "x+7 Rune Bulk"
             ]
         },
         {
@@ -550,8 +551,8 @@ const OMEGA_DATA = {
                 "x20k Luck",
                 "x10k XP",
                 "x80 Frost",
-                "x8 Bulk",
-                "x8 Speed"
+                "x8 Rune Bulk",
+                "x8 Rune Speed"
             ]
         },
         {
@@ -584,7 +585,7 @@ const OMEGA_DATA = {
                 "x44.8 Snowfl",
                 "x19.2k XP",
                 "x12.8k Plasma",
-                "x8 Bulk"
+                "x8 Rune Bulk"
             ]
         },
         {
@@ -607,7 +608,7 @@ const OMEGA_DATA = {
                 "x16k Luck",
                 "x19.2k XP",
                 "x73.6 Snowfl",
-                "x36.8 Bulk"
+                "x36.8 Rune Bulk"
             ]
         },
         {
@@ -630,7 +631,7 @@ const OMEGA_DATA = {
                 "x2.4k XP",
                 "x800 Plasma",
                 "x9.4 Snowflake",
-                "x4.6 Bulk"
+                "x4.6 Rune Bulk"
             ]
         },
         {
@@ -641,7 +642,7 @@ const OMEGA_DATA = {
                 "x8k Luck",
                 "x4k XP",
                 "x80 Snowflake",
-                "x12 Bulk",
+                "x12 Rune Bulk",
                 "x8 Rune Luck"
             ]
         },
@@ -654,8 +655,8 @@ const OMEGA_DATA = {
                 "x200k XP",
                 "x800 Plasma",
                 "x40 Snowflake",
-                "x8 Bulk",
-                "x12 Speed"
+                "x8 Rune Bulk",
+                "x12 Rune Speed"
             ]
         },
         {
@@ -666,8 +667,8 @@ const OMEGA_DATA = {
                 "x400B Luck",
                 "x400B XP",
                 "x200 Snowfl",
-                "x8 Bulk",
-                "x16 Speed",
+                "x8 Rune Bulk",
+                "x16 Rune Speed",
                 "x10 Rune Luck"
             ]
         },
@@ -677,7 +678,7 @@ const OMEGA_DATA = {
             "rune": "Stardust Core",
             "stats": [
                 "x64 Stardust",
-                "x32 Speed"
+                "x32 Rune Speed"
             ]
         },
         {
@@ -842,8 +843,8 @@ const OMEGA_DATA = {
             "rune": "Astral Flux",
             "stats": [
                 "x? Luck",
-                "x12 Bulk",
-                "x12 Speed",
+                "x12 Rune Bulk",
+                "x12 Rune Speed",
                 "x12 Rune Luck"
             ]
         },
@@ -945,7 +946,7 @@ const OMEGA_DATA = {
             "rune": "1M Rookie",
             "stats": [
                 "x160 Fire",
-                "x36.8 Bulk",
+                "x36.8 Rune Bulk",
                 "x33.8 Rune Luck"
             ]
         },
@@ -956,8 +957,8 @@ const OMEGA_DATA = {
                 "x3.2T Luck",
                 "x96 Comets",
                 "x38.4 Snow",
-                "x38.4 Bulk",
-                "x33.28 R Luck"
+                "x38.4 Rune Bulk",
+                "x33.28 Rune Luck"
             ]
         },
         {
@@ -967,8 +968,8 @@ const OMEGA_DATA = {
                 "x160T Luck",
                 "x20.8 Plasma",
                 "x19.2 Frost",
-                "x16.4 Bulk",
-                "x16.4 R Luck"
+                "x16.4 Rune Bulk",
+                "x16.4 Rune Luck"
             ]
         },
         {
@@ -978,8 +979,8 @@ const OMEGA_DATA = {
                 "x5 Stardust",
                 "x5 Meteors",
                 "x5.2 Snowflake",
-                "x4.2 Bulk",
-                "x4.2 R Luck"
+                "x4.2 Rune Bulk",
+                "x4.2 Rune Luck"
             ]
         },
         {
@@ -988,8 +989,8 @@ const OMEGA_DATA = {
             "stats": [
                 "x4M Luck",
                 "x4.8 Meteors",
-                "x4.24 Bulk",
-                "x34.32 R Luck"
+                "x4.24 Rune Bulk",
+                "x34.32 Rune Luck"
             ]
         },
         {
@@ -999,8 +1000,8 @@ const OMEGA_DATA = {
                 "x400M Luck",
                 "x4.4 Stardust",
                 "x4.8 Comets",
-                "x4.52 Bulk",
-                "x4.52 R Luck"
+                "x4.52 Rune Bulk",
+                "x4.52 Rune Luck"
             ]
         },
         {
@@ -1010,8 +1011,8 @@ const OMEGA_DATA = {
                 "x4Qd Luck",
                 "x5 Comets",
                 "x4.8 Stardust",
-                "x4.6 Bulk",
-                "x4.6 R Luck",
+                "x4.6 Rune Bulk",
+                "x4.6 Rune Luck",
                 "x1.52 Passive"
             ]
         },
@@ -1022,8 +1023,8 @@ const OMEGA_DATA = {
                 "x40Qn Luck",
                 "x8 Singularity",
                 "x8 Meteors",
-                "x6.8 Bulk",
-                "x6.8 R Luck",
+                "x6.8 Rune Bulk",
+                "x6.8 Rune Luck",
                 "x2 Passive"
             ]
         }
