@@ -538,8 +538,11 @@
         ind.style.transitionDuration = "0.35s";
       }
 
-      ind.style.transform = `translateX(${btn.offsetLeft - 6}px)`;
-      ind.style.width = `${btn.offsetWidth}px`;
+      // High-precision positioning
+      requestAnimationFrame(() => {
+        ind.style.transform = `translateX(${btn.offsetLeft - 6}px)`;
+        ind.style.width = `${btn.offsetWidth}px`;
+      });
     }
 
     function wireTabs() {
@@ -560,10 +563,27 @@
           currentIndex = targetIndex;
         });
       });
+
+      // Handle window resizing to keep indicator aligned
+      window.addEventListener('resize', () => {
+        const active = $(".tab.active");
+        if (active) {
+          ind.style.transition = 'none'; // Instant move on resize
+          moveIndicator(active);
+          setTimeout(() => ind.style.transition = '', 50);
+        }
+      });
+
+      // Handle font-loading shifts
+      document.fonts?.ready?.then(() => {
+        const active = $(".tab.active");
+        if (active) moveIndicator(active);
+      });
+
       setTimeout(() => {
         const active = $(".tab.active");
         if (active) moveIndicator(active);
-      }, 50);
+      }, 100);
     }
 
     function setupChipGroup(id, values, onChange, labelMapper = null) {
