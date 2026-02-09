@@ -1001,35 +1001,6 @@ select {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* ===== Rune Gradients ===== */
-@keyframes shine {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes shineVertical {
-  0% {
-    background-position: 50% 0%;
-  }
-
-  50% {
-    background-position: 50% 100%;
-  }
-
-  100% {
-    background-position: 50% 0%;
-  }
-}
-
 .rune-grad {
   font-weight: 800;
 }
@@ -1090,6 +1061,16 @@ select {
 }
 
 .rune-slime {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #66ff00, #00ff15, #66ff00);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.multiChip[data-val="Slime"].active, .multiChip[data-val="Slime"]:hover {
   display: inline-block;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1750,4 +1731,34 @@ select {
   background-image: linear-gradient(90deg, #ff39d4, #ff0d92);
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+}
+
+  
+/* ===== Rune Gradients ===== */
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shineVertical {
+  0% {
+    background-position: 50% 0%;
+  }
+
+  50% {
+    background-position: 50% 100%;
+  }
+
+  100% {
+    background-position: 50% 0%;
+  }
 }
