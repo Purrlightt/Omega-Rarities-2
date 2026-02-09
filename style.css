@@ -1000,3 +1000,754 @@ select {
 .dropList::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* ===== Rune Gradients ===== */
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shineVertical {
+  0% {
+    background-position: 50% 0%;
+  }
+
+  50% {
+    background-position: 50% 100%;
+  }
+
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+.rune-grad {
+  font-weight: 800;
+}
+
+/* Slime World */
+.rune-clear {
+  color: #4dd0e1;
+}
+
+.rune-cloud {
+  color: #e0e0e0;
+}
+
+.rune-butter {
+  color: #ffd54f;
+}
+
+.rune-crunchy {
+  color: #8bc34a;
+}
+
+.rune-icee {
+  color: #b39ddb;
+}
+
+.rune-jelly-cube {
+  color: #ffab91;
+}
+
+.rune-glossy {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(0deg, #ff1cff, #fa9aff, #ff1cff);
+  background-size: auto 150%;
+  animation: shineVertical 3s linear infinite;
+}
+
+.rune-prismatic {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff15ff, #28fff4);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-genesis {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #7c09ff, #00c3ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-slime {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #66ff00, #00ff15, #66ff00);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Fire World */
+.rune-ember {
+  color: #ff9800;
+}
+
+.rune-smoke {
+  color: #9e9e9e;
+}
+
+.rune-flame {
+  color: #ffd54f;
+}
+
+.rune-charcoal {
+  color: #757575;
+}
+
+.rune-inferno {
+  color: #ff6e40;
+}
+
+.rune-lava-core {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ffd900f3, #f6ff7e, #ffd900f3);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-phoenix {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff0ccaf3, #ffd000f3);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-hades {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #530000f3, #940000f3, #530000f3);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-hellstorm-core {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff7300f3, #fffb00f3);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-fire {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #fffb00, #ffae00);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Water World */
+.rune-coral {
+  color: #f06292;
+}
+
+.rune-mist {
+  color: #e0e0e0;
+}
+
+.rune-stream {
+  color: #0078bd;
+}
+
+.rune-tide {
+  color: #006b9c;
+}
+
+.rune-tsunami {
+  color: #00bcd4;
+}
+
+.rune-abyss {
+  color: #0e002e;
+}
+
+.rune-leviathan {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff00ea, #ff00bf, #ff00ea);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-poseidon {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #00fff2, #fbff00, #ffee00);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-water {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #00f7ff, #78fbff, #00f7ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Plasma World */
+.rune-spark {
+  color: #f291ff;
+}
+
+.rune-ionized {
+  color: #d40000;
+}
+
+.rune-voltage {
+  color: #4dd0e1;
+}
+
+.rune-charged {
+  color: #33ff00;
+}
+
+.rune-supernova {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #e5ff00, #ff00c8, #e5ff00);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-nebula {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #38005e, #8700a8, #c300ff);
+  background-size: auto 150%;
+  animation: shineVertical 3s linear infinite;
+}
+
+.rune-quasar {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(0deg, #ea00ff, #fffb00);
+  background-size: auto 150%;
+  animation: shineVertical 3s linear infinite;
+}
+
+.rune-celestial {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(0deg, #38005e, #8700a8, #c300ff);
+  background-size: auto 150%;
+  animation: shineVertical 3s linear infinite;
+}
+
+.rune-plasma {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #b700ff, #cc00ff, #b700ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Snow World */
+.rune-glacial {
+  color: #e1f5fe;
+}
+
+.rune-powder {
+  color: #ffffff;
+}
+
+.rune-rime {
+  color: #b3e5fc;
+}
+
+.rune-sleet {
+  color: #81d4fa;
+}
+
+.rune-permafrost {
+  color: #4fc3f7;
+}
+
+.rune-blizzardcore {
+  color: #29b6f6;
+}
+
+.rune-aurora-borealis {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #e100ff, #80d0ff);
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+.rune-polar-vortex {
+  color: #8cd7ff;
+}
+
+.rune-absolute-zero {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #f5a6ff, #98bcff);
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+  text-shadow: 0 0 15px rgba(160, 232, 255, 0.8);
+}
+
+.rune-snow {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Frost World */
+.rune-frostbite {
+  color: #b3e5fc;
+}
+
+.rune-icicle {
+  color: #45c4ff;
+}
+
+.rune-frozen {
+  color: #afe6ff;
+}
+
+.rune-cryogenic {
+  color: #ff8aef;
+}
+
+.rune-subzero {
+  color: #b3ff00;
+}
+
+.rune-frostcore {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #4662ad, #522180, #4662ad);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-crystalline {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #2243a0, #a200ff, #ee9bff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-deep-freeze {
+  color: #00d9ff;
+}
+
+.rune-eternal-ice {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff00ea, #b8b8b8, #3d7bff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-frost {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #57d8ff, #c9e5ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Snowflakes World */
+.rune-needle {
+  color: #9adfff;
+}
+
+.rune-column {
+  color: #5eccff;
+}
+
+.rune-plate {
+  color: #81d4fa;
+}
+
+.rune-stellar {
+  color: #dc6bff;
+}
+
+.rune-sectored {
+  color: #84d8ff;
+}
+
+.rune-fernlike {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #adedfd, #56befa);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-radiating {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #adedfd, #df56fa);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-capped {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #adedfd, #56faec);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-crystal {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #fdffa1, #fcff55);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-cosmic-ice {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #9645ff, #150031);
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+.rune-snowflake {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #57d8ff, #c9e5ff, #57d8ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Stardust World */
+.rune-stardust-core {
+  color: #d6d6d6;
+}
+
+.rune-stardust-shard {
+  color: #5fbdfc;
+}
+
+.rune-stardust-relic {
+  color: #2bdfff;
+}
+
+.rune-stardust-fragment {
+  color: #4b0088;
+}
+
+.rune-stardust-sigil {
+  color: #cf00be;
+}
+
+.rune-stardust-ember {
+  color: #f951ff;
+}
+
+.rune-stardust-nexus {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #1d006b, #bfeaf1);
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+.rune-stardust-essence {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #bcffff, #00d6cb);
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+.rune-stardust-remnant {
+  color: #c23fff;
+}
+
+.rune-stardust {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #fff09d, #ffee8a);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Comets World */
+.rune-cosmic-frost {
+  color: #b3f6ff;
+}
+
+.rune-stellar-ice {
+  color: #b384c5;
+}
+
+.rune-orbital-debris {
+  color: #8f6a9e;
+}
+
+.rune-drift-fragment {
+  color: #734399;
+}
+
+.rune-velocity-mark {
+  color: #a055cc;
+}
+
+.rune-atmospheric-burn {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #f4c6ff, #e167ff);
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+.rune-impact-horizon {
+  color: #f4c7ff;
+}
+
+.rune-extinction-core {
+  color: #d6b3ff;
+}
+
+.rune-astral-flux {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ce63ff, #eabbff);
+  background-size: 300% auto;
+  animation: shine 6s linear infinite;
+}
+
+.rune-comets {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ca45ff, #33f1ff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Meteors World */
+.rune-iron-fragment {
+  color: #f8c0ff;
+}
+
+.rune-molten-stone {
+  color: #acacac;
+}
+
+.rune-crater-dust {
+  color: #f4c9ff;
+}
+
+.rune-scorched-trail {
+  color: #ff00c8;
+}
+
+.rune-blazing-core {
+  color: #27f8ff;
+}
+
+.rune-fireball-spark {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ffae00, #ff3c00);
+  background-size: 300% auto;
+  animation: shine 6s linear infinite;
+}
+
+.rune-shockwave-echo {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff9abc, #762dff);
+  background-size: 300% auto;
+  animation: shine 6s linear infinite;
+}
+
+.rune-cataclysm-shard {
+  color: #53c0ff;
+}
+
+.rune-cosmic-ember {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #8c00ff, #3700ff);
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+.rune-meteors {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #78e4ff, #33beff);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
+
+/* Event Runes */
+.rune-1m-noob {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff8eec, #ffe397);
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+.rune-1m-rookie {
+  color: #41d3ff;
+}
+
+.rune-1m-skilled {
+  color: #42a5f5;
+}
+
+.rune-1m-expert {
+  color: #47a5bc;
+}
+
+.rune-1m-master {
+  color: #ffa2e3;
+}
+
+.rune-1m-elite {
+  color: #36f4eb;
+}
+
+.rune-1m-mythic {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #fffb00, #ffbb00);
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+.rune-1m-god {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #fff4b3, #ffc43b);
+  background-size: 200% auto;
+  animation: shine 3s linear infinite;
+}
+
+.rune-1m-absolute {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ffdd00, #4ecfff, #00ff88, #448aff);
+  background-size: 300% auto;
+  animation: shine 5s linear infinite;
+}
+
+.rune-1m {
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #ff39d4, #ff0d92);
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+}
