@@ -8,17 +8,27 @@ function getActiveVals(containerId) {
     return [...document.querySelectorAll(`#${containerId} .multiChip.active`)].map(c => c.dataset.val);
 }
 
+function getRuneClass(runeName, category) {
+    const r = norm(runeName);
+
+    // Convert rune name to CSS class name (lowercase, replace spaces with hyphens)
+    const className = 'rune-' + r.replace(/\s+/g, '-');
+
+    // Return the class name - CSS will handle the gradient
+    return className;
+}
+
 function renderNormal(all) {
     const runePicks = getActiveVals("runeChips");
     const worldPicks = getActiveVals("worldChips");
     const statsSearch = norm($("#statsSearch").value);
 
     const filtered = all.filter(r => {
-    const okCat = runePicks.includes("__all") || runePicks.includes(r.world);
-    const okWorld = worldPicks.includes("__all") || worldPicks.includes(String(r.worldNo || ""));
-    const searchPool = norm(`${r.rune} ${(r.stats || []).join(" ")}`);
-    const okStats = !statsSearch || searchPool.includes(statsSearch);
-    return okCat && okWorld && okStats;
+        const okCat = runePicks.includes("__all") || runePicks.includes(r.world);
+        const okWorld = worldPicks.includes("__all") || worldPicks.includes(String(r.worldNo || ""));
+        const searchPool = norm(`${r.rune} ${(r.stats || []).join(" ")}`);
+        const okStats = !statsSearch || searchPool.includes(statsSearch);
+        return okCat && okWorld && okStats;
     });
 
     $("#countRunes").textContent = String(all.length);
@@ -27,14 +37,14 @@ function renderNormal(all) {
     rowsEl.innerHTML = "";
 
     if (!filtered.length) {
-    rowsEl.innerHTML = `<div class="emptyBox">No matches.</div>`;
-    return;
+        rowsEl.innerHTML = `<div class="emptyBox">No matches.</div>`;
+        return;
     }
 
     rowsEl.innerHTML = filtered.map((r, idx) => `
     <div class="row" style="animation-delay: ${idx * 0.02}s">
         <div><span class="chip">${esc(r.world || "—")}</span></div>
-        <div class="rname">${esc(r.rune)}</div>
+        <div class="rname"><span class="rune-grad ${getRuneClass(r.rune, r.world)}">${esc(r.rune)}</span></div>
         <div class="stats">${(r.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
     </div>
     `).join("");
@@ -45,35 +55,38 @@ function renderEvents(all) {
     const sq = norm($("#eventStatsSearch").value);
 
     const filtered = all.filter(e => {
-    const okEvent = eventPicks.includes("__all") || eventPicks.includes(e.event);
-    const searchPool = norm(`${e.rune} ${(e.stats || []).join(" ")}`);
-    const okStat = !sq || searchPool.includes(sq);
-    return okEvent && okStat;
+        const okEvent = eventPicks.includes("__all") || eventPicks.includes(e.event);
+        const searchPool = norm(`${e.rune} ${(e.stats || []).join(" ")}`);
+        const okStat = !sq || searchPool.includes(sq);
+        return okEvent && okStat;
     });
 
     $("#countEvents").textContent = String(all.length);
 
     const rowsEl = $("#eventRows");
     if (!filtered.length) {
-    rowsEl.innerHTML = `<div class="emptyBox">No matches.</div>`;
-    return;
+        rowsEl.innerHTML = `<div class="emptyBox">No matches.</div>`;
+        return;
     }
 
     rowsEl.innerHTML = filtered.map((e, idx) => {
-    const cleanEvent = esc(e.event.replace(/\s*World\s*\d+\s*/gi, "").trim());
-    let worldInfo = "";
-    if (e.event.toLowerCase().includes("world 2")) {
-        worldInfo = `<div class="worldNote">This rune is in Snow World</div>`;
-    } else if (e.event.toLowerCase().includes("world 1")) {
-        worldInfo = `<div class="worldNote">This rune is in Spawn World</div>`;
-    } else if (e.event.toLowerCase().includes("world 3")) {
-        worldInfo = `<div class="worldNote">This rune is in Galactic World</div>`;
-    }
+        const cleanEvent = esc(e.event.replace(/\s*World\s*\d+\s*/gi, "").trim());
+        let worldInfo = "";
+        if (e.event.toLowerCase().includes("world 2")) {
+            worldInfo = `<div class="worldNote">This rune is in Snow World</div>`;
+        } else if (e.event.toLowerCase().includes("world 1")) {
+            worldInfo = `<div class="worldNote">This rune is in Spawn World</div>`;
+        } else if (e.event.toLowerCase().includes("world 3")) {
+            worldInfo = `<div class="worldNote">This rune is in Galactic World</div>`;
+        }
 
-    return `
+        return `
         <div class="row rowEvents" style="animation-delay: ${idx * 0.02}s">
         <div><span class="chip">${cleanEvent}</span></div>
-        <div class="rname">${esc(e.rune)}${worldInfo}</div>
+        <div class="rname">
+            <span class="rune-grad ${getRuneClass(e.rune, e.event)}">${esc(e.rune)}</span>
+            ${worldInfo}
+        </div>
         <div class="stats">${(e.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
         </div>
     `;
@@ -87,13 +100,13 @@ const ALL_SUFFIXES = (function () {
     const mult = ["", "Mi", "Mc", "Na", "Pi", "Fm", "At", "Zp", "Yc", "Xo", "Ve", "Me", "Due", "Tre", "Te", "Pt", "He", "Hp", "Oct", "En", "Ic", "Mei", "Dui", "Tri", "Teti", "Pti", "Hei", "Hp", "Oci", "Eni", "Tra", "TeC", "MTc", "DTc", "TrTc", "TeTc", "PeTc", "HTc", "HpT", "OcT", "EnT", "TetC", "MTetc", "DTetc", "TrTetc", "TeTetc", "PeTetc", "HTetc", "HpTetc", "OcTetc", "EnTetc", "PcT", "MPcT", "DPcT", "TPCt", "TePCt", "PePCt", "HePCt", "HpPct", "OcPct", "EnPct", "HCt", "MHcT", "DHcT", "THCt", "TeHCt", "PeHCt", "HeHCt", "HpHct", "OcHct", "EnHct", "HpCt", "MHpcT", "DHpcT", "THpCt", "TeHpCt", "PeHpCt", "HeHpCt", "HpHpct", "OcHpct", "EnHpct", "OCt", "MOcT", "DOcT", "TOCt", "TeOCt", "PeOCt", "HeOCt", "HpOct", "OcOct", "EnOct", "Ent", "MEnT", "DEnT", "TEnt", "TeEnt", "PeEnt", "HeEnt", "HpEnt", "OcEnt", "EnEnt", "Hect", "MeHect"];
     let res = ["", "k", "M", "B", "T"];
     for (let n = 5; n < 1000; n++) {
-    let i = n - 1;
-    let f = first[i % 10];
-    let s = second[Math.floor(i / 10) % 10];
-    let t = third[Math.floor(i / 100) % 10];
-    let m = mult[Math.floor(i / 1000)] || "";
-    let combined = f + s + t + m;
-    if (combined && !res.includes(combined)) res.push(combined);
+        let i = n - 1;
+        let f = first[i % 10];
+        let s = second[Math.floor(i / 10) % 10];
+        let t = third[Math.floor(i / 100) % 10];
+        let m = mult[Math.floor(i / 1000)] || "";
+        let combined = f + s + t + m;
+        if (combined && !res.includes(combined)) res.push(combined);
     }
     return res;
 })();
@@ -107,19 +120,19 @@ function formatSuffix(num) {
     let sIdx = 0;
 
     if (val < 1 && val > 0) {
-    // For sub-1 numbers, avoid scientific notation but keep reasonable decimals
-    // Use toPrecision if it's very small, then convert back from scientific if needed
-    let str = val.toFixed(10).replace(/\.?0+$/, "");
-    if (str === "0") {
-        // If it's still 0 after 10 decimals, use scientific as last resort or more decimals
-        return val.toExponential(2);
-    }
-    return (num < 0 ? "-" : "") + str;
+        // For sub-1 numbers, avoid scientific notation but keep reasonable decimals
+        // Use toPrecision if it's very small, then convert back from scientific if needed
+        let str = val.toFixed(10).replace(/\.?0+$/, "");
+        if (str === "0") {
+            // If it's still 0 after 10 decimals, use scientific as last resort or more decimals
+            return val.toExponential(2);
+        }
+        return (num < 0 ? "-" : "") + str;
     }
 
     while (val >= 1000 && sIdx < ALL_SUFFIXES.length - 1) {
-    val /= 1000;
-    sIdx++;
+        val /= 1000;
+        sIdx++;
     }
 
     // Ensure we don't return scientific for the scaled number
@@ -134,11 +147,11 @@ function parseSuffix(valStr) {
     let val = parseFloat(match[1]);
     let suf = match[2] ? match[2].toLowerCase() : '';
     if (suf) {
-    // Check aliases first
-    if (SUFFIX_ALIASES[suf]) suf = SUFFIX_ALIASES[suf].toLowerCase();
+        // Check aliases first
+        if (SUFFIX_ALIASES[suf]) suf = SUFFIX_ALIASES[suf].toLowerCase();
 
-    const foundIdx = ALL_SUFFIXES.findIndex(s => s.toLowerCase() === suf);
-    if (foundIdx > 0) val *= Math.pow(1000, foundIdx);
+        const foundIdx = ALL_SUFFIXES.findIndex(s => s.toLowerCase() === suf);
+        if (foundIdx > 0) val *= Math.pow(1000, foundIdx);
     }
     return val;
 }
@@ -175,21 +188,21 @@ function renderDropCalc() {
     const area = $("#dropCalcResultArea");
 
     if (!selectedRuneName || rps <= 0) {
-    area.innerHTML = `
+        area.innerHTML = `
         <div class="emptyBox" style="padding: 40px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px;">
         Select a rune and enter your RPS to see the estimated time.
         </div>`;
-    return;
+        return;
     }
 
     const all = [...OMEGA_DATA.normalRunes, ...OMEGA_DATA.eventRunes];
     const rune = all.find(r => r.rune.toLowerCase() === selectedRuneName.toLowerCase());
     if (!rune || !rune.chance) {
-    area.innerHTML = `
+        area.innerHTML = `
         <div class="emptyBox" style="padding: 40px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px;">
         Rune not found. Please select from the dropdown.
         </div>`;
-    return;
+        return;
     }
 
     const baseChanceStr = rune.chance.split("/")[1] || "1";
@@ -205,7 +218,7 @@ function renderDropCalc() {
 
     let timeToTarget = "—";
     if (targetVal > 0 && successesPerSec > 0) {
-    timeToTarget = formatDuration(targetVal / successesPerSec);
+        timeToTarget = formatDuration(targetVal / successesPerSec);
     }
 
     area.innerHTML = `
@@ -233,7 +246,7 @@ function renderDropCalc() {
         </div>
 
         <p class="muted" style="margin-top: 20px; font-size: 12px;">
-        For <strong>${esc(rune.rune)}</strong> (1/${esc(baseChanceStr)})
+        For <strong class="rune-grad ${getRuneClass(rune.rune, rune.world || rune.event)}">${esc(rune.rune)}</strong> (1/${esc(baseChanceStr)})
         </p>
     </div>
     `;
@@ -244,11 +257,11 @@ function renderGrind(q) {
     const query = q.trim();
 
     if (!query || isNaN(query) || Number(query) <= 0) {
-    root.innerHTML = `
+        root.innerHTML = `
         <div class="emptyBox" style="padding: 40px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px;">
         Type your Rune Clone count above to calculate the required RPS.
         </div>`;
-    return;
+        return;
     }
 
     const clones = Number(query);
@@ -270,38 +283,38 @@ function renderUtility(normal, events) {
     const results = { "Speed": {}, "Bulk": {}, "Rune Luck": {} };
 
     const all = [
-    ...normal.map(r => ({ ...r, label: r.world })),
-    ...events.map(e => ({ ...e, label: e.event.replace(/\s*World\s*\d+\s*/gi, "").trim() }))
+        ...normal.map(r => ({ ...r, label: r.world })),
+        ...events.map(e => ({ ...e, label: e.event.replace(/\s*World\s*\d+\s*/gi, "").trim() }))
     ];
 
     all.forEach(r => {
-    (r.stats || []).forEach(statLine => {
-        utilityStats.forEach(s => {
-        if (statLine.toLowerCase().includes(s.toLowerCase())) {
-            if (!results[s][r.label]) results[s][r.label] = [];
-            results[s][r.label].push({ name: r.rune, val: statLine });
-        }
+        (r.stats || []).forEach(statLine => {
+            utilityStats.forEach(s => {
+                if (statLine.toLowerCase().includes(s.toLowerCase())) {
+                    if (!results[s][r.label]) results[s][r.label] = [];
+                    results[s][r.label].push({ name: r.rune, val: statLine });
+                }
+            });
         });
-    });
     });
 
     target.innerHTML = utilityStats.map(s => {
-    const categories = Object.keys(results[s]).sort();
-    const content = categories.map(cat => `
+        const categories = Object.keys(results[s]).sort();
+        const content = categories.map(cat => `
         <div style="margin-bottom: 20px;">
         <div class="fieldLabel" style="color: #448aff; margin-bottom: 8px;">${esc(cat)}</div>
         <div style="display: flex; flex-direction: column; gap: 6px;">
             ${results[s][cat].map(item => `
-            <div style="display: flex; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-                <span class="mono" style="color: #fff;">${esc(item.name)}</span>
-                <span class="pillStat" style="margin: 0; font-size: 12px; background: rgba(124, 77, 255, 0.2);">${esc(item.val)}</span>
-            </div>
+                <div style="display: flex; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                  <span class="mono rune-grad ${getRuneClass(item.name, cat)}" style="color: #fff;">${esc(item.name)}</span>
+                  <span class="pillStat" style="margin: 0; font-size: 12px; background: rgba(124, 77, 255, 0.2);">${esc(item.val)}</span>
+                </div>
             `).join("")}
         </div>
         </div>
     `).join("");
 
-    return `
+        return `
         <div class="tutSection">
         <h3 class="h3">${s} Runes</h3>
         <p class="muted" style="margin-bottom: 20px;">Detailed list of runes providing ${s}:</p>
@@ -317,17 +330,17 @@ function moveIndicator(btn, isLongJump = false) {
 
     // "Train Stop" physics: Extreme Quintic-Out for long travel
     if (isLongJump) {
-    ind.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
-    ind.style.transitionDuration = "0.9s";
+        ind.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
+        ind.style.transitionDuration = "0.9s";
     } else {
-    ind.style.transitionTimingFunction = "cubic-bezier(0.4, 0, 0.2, 1)";
-    ind.style.transitionDuration = "0.35s";
+        ind.style.transitionTimingFunction = "cubic-bezier(0.4, 0, 0.2, 1)";
+        ind.style.transitionDuration = "0.35s";
     }
 
     // High-precision positioning
     requestAnimationFrame(() => {
-    ind.style.transform = `translateX(${btn.offsetLeft - 6}px)`;
-    ind.style.width = `${btn.offsetWidth}px`;
+        ind.style.transform = `translateX(${btn.offsetLeft - 6}px)`;
+        ind.style.width = `${btn.offsetWidth}px`;
     });
 }
 
@@ -336,71 +349,71 @@ function wireTabs() {
     let currentIndex = tabs.findIndex(t => t.classList.contains("active"));
 
     tabs.forEach((btn, targetIndex) => {
-    btn.addEventListener("click", () => {
-        const distance = Math.abs(targetIndex - currentIndex);
-        const isLongJump = distance > 1;
+        btn.addEventListener("click", () => {
+            const distance = Math.abs(targetIndex - currentIndex);
+            const isLongJump = distance > 1;
 
-        tabs.forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+            tabs.forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
 
-        moveIndicator(btn, isLongJump);
-        currentIndex = targetIndex;
-    });
+            moveIndicator(btn, isLongJump);
+            currentIndex = targetIndex;
+        });
     });
 
     // Handle window resizing to keep indicator aligned
     window.addEventListener('resize', () => {
-    const active = $(".tab.active");
-    if (active) {
-        const ind = $("#tabIndicator");
-        ind.style.transition = 'none'; // Instant move on resize
-        moveIndicator(active);
-        setTimeout(() => ind.style.transition = '', 50);
-    }
+        const active = $(".tab.active");
+        if (active) {
+            const ind = $("#tabIndicator");
+            ind.style.transition = 'none'; // Instant move on resize
+            moveIndicator(active);
+            setTimeout(() => ind.style.transition = '', 50);
+        }
     });
 
     // Handle font-loading shifts
     document.fonts?.ready?.then(() => {
-    const active = $(".tab.active");
-    if (active) moveIndicator(active);
+        const active = $(".tab.active");
+        if (active) moveIndicator(active);
     });
 
     setTimeout(() => {
-    const active = $(".tab.active");
-    if (active) moveIndicator(active);
+        const active = $(".tab.active");
+        if (active) moveIndicator(active);
     }, 100);
 }
 
 function setupChipGroup(id, values, onChange, labelMapper = null) {
     const group = $(id);
     values.forEach(val => {
-    const chip = document.createElement("div");
-    chip.className = "multiChip";
-    chip.dataset.val = val;
-    chip.textContent = labelMapper ? labelMapper(val) : val;
-    group.appendChild(chip);
+        const chip = document.createElement("div");
+        chip.className = "multiChip";
+        chip.dataset.val = val;
+        chip.textContent = labelMapper ? labelMapper(val) : val;
+        group.appendChild(chip);
     });
 
     group.addEventListener("click", e => {
-    const chip = e.target.closest(".multiChip");
-    if (!chip) return;
+        const chip = e.target.closest(".multiChip");
+        if (!chip) return;
 
-    const val = chip.dataset.val;
-    const allBtn = group.querySelector('[data-val="__all"]');
+        const val = chip.dataset.val;
+        const allBtn = group.querySelector('[data-val="__all"]');
 
-    if (val === "__all") {
-        group.querySelectorAll(".multiChip").forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-    } else {
-        allBtn.classList.remove("active");
-        chip.classList.toggle("active");
-        if (!group.querySelector(".multiChip.active")) {
-        allBtn.classList.add("active");
+        if (val === "__all") {
+            group.querySelectorAll(".multiChip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+        } else {
+            allBtn.classList.remove("active");
+            chip.classList.toggle("active");
+            if (!group.querySelector(".multiChip.active")) {
+                allBtn.classList.add("active");
+            }
         }
-    }
-    onChange();
+        onChange();
     });
 }
 
@@ -408,7 +421,7 @@ async function init() {
     wireTabs();
 
     if (typeof OMEGA_DATA === 'undefined') {
-    throw new Error("Missing assets/data.js or OMEGA_DATA is not defined");
+        throw new Error("Missing assets/data.js or OMEGA_DATA is not defined");
     }
 
     const data = OMEGA_DATA;
@@ -437,71 +450,71 @@ async function init() {
     const allRunes = [...normal, ...events].sort((a, b) => a.rune.localeCompare(b.rune));
 
     function updateRuneList(filter = "") {
-    const query = filter.toLowerCase();
-    const filtered = allRunes.filter(r => r.rune.toLowerCase().includes(query));
+        const query = filter.toLowerCase();
+        const filtered = allRunes.filter(r => r.rune.toLowerCase().includes(query));
 
-    runeList.innerHTML = filtered.map(r => `
+        runeList.innerHTML = filtered.map(r => `
         <li class="dropItem" data-name="${esc(r.rune)}">
-        <span>${esc(r.rune)}</span>
+        <span class="rune-grad ${getRuneClass(r.rune, r.world || r.event)}">${esc(r.rune)}</span>
         <span class="itemChance">${esc(r.chance)}</span>
         </li>
     `).join("");
     }
 
     runeSearchInput.addEventListener("focus", () => {
-    updateRuneList(runeSearchInput.value);
-    runeList.classList.add("active");
+        updateRuneList(runeSearchInput.value);
+        runeList.classList.add("active");
     });
 
     runeSearchInput.addEventListener("blur", () => {
-    // Delay to allow clicks to register on list items
-    setTimeout(() => runeList.classList.remove("active"), 200);
+        // Delay to allow clicks to register on list items
+        setTimeout(() => runeList.classList.remove("active"), 200);
     });
 
     runeSearchInput.addEventListener("input", () => {
-    updateRuneList(runeSearchInput.value);
-    renderDropCalc();
+        updateRuneList(runeSearchInput.value);
+        renderDropCalc();
     });
 
     runeList.addEventListener("click", e => {
-    const item = e.target.closest(".dropItem");
-    if (item) {
-        runeSearchInput.value = item.dataset.name;
-        runeList.classList.remove("active");
-        renderDropCalc();
-    }
+        const item = e.target.closest(".dropItem");
+        if (item) {
+            runeSearchInput.value = item.dataset.name;
+            runeList.classList.remove("active");
+            renderDropCalc();
+        }
     });
 
     $("#calcRPS").addEventListener("input", renderDropCalc);
     $("#calcLuck").addEventListener("input", renderDropCalc);
     $("#calcTarget").addEventListener("input", renderDropCalc);
     $("#clearDropCalc").addEventListener("click", () => {
-    $("#calcRPS").value = "";
-    $("#calcLuck").value = "";
-    $("#calcTarget").value = "";
-    $("#calcRuneSearch").value = "";
-    renderDropCalc();
+        $("#calcRPS").value = "";
+        $("#calcLuck").value = "";
+        $("#calcTarget").value = "";
+        $("#calcRuneSearch").value = "";
+        renderDropCalc();
     });
 
     $("#statsSearch").addEventListener("input", () => renderNormal(normal));
     $("#clearRunes").addEventListener("click", () => {
-    $("#runeChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
-    $("#worldChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
-    $("#statsSearch").value = "";
-    renderNormal(normal);
+        $("#runeChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
+        $("#worldChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
+        $("#statsSearch").value = "";
+        renderNormal(normal);
     });
 
     $("#eventStatsSearch").addEventListener("input", () => renderEvents(events));
     $("#clearEvents").addEventListener("click", () => {
-    $("#eventChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
-    $("#eventStatsSearch").value = "";
-    renderEvents(events);
+        $("#eventChips").querySelectorAll(".multiChip").forEach(c => c.classList.toggle("active", c.dataset.val === "__all"));
+        $("#eventStatsSearch").value = "";
+        renderEvents(events);
     });
 
     $("#grindSearch").addEventListener("input", () => renderGrind($("#grindSearch").value));
     $("#clearGrind").addEventListener("click", () => {
-    $("#grindSearch").value = "";
-    renderGrind("");
+        $("#grindSearch").value = "";
+        renderGrind("");
     });
 
     $("#countRunes").textContent = String(normal.length);
