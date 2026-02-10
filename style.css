@@ -1070,7 +1070,8 @@ select {
   animation: shine 3s linear infinite;
 }
 
-.multiChip[data-val="Slime"].active, .multiChip[data-val="Slime"]:hover {
+.multiChip[data-val="Slime"].active,
+.multiChip[data-val="Slime"]:hover {
   display: inline-block;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1733,7 +1734,7 @@ select {
   animation: shine 3s linear infinite;
 }
 
-  
+
 /* ===== Rune Gradients ===== */
 @keyframes shine {
   0% {
