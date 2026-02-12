@@ -621,7 +621,7 @@ const OMEGA_DATA = {
             "worldNo": "Galactic",
             "rune": "Cosmic Ember",
             "chance": "1/250SxVt",
-            "stats": ["x60 Meteors", "x60 Singularity", "x? Luck"]
+            "stats": ["x60 Meteors", "x60 Singularity", "x4No Luck"]
         }
     ],
     "eventRunes": [
@@ -681,3 +681,4 @@ const OMEGA_DATA = {
         }
     ]
 };
+
