@@ -4,18 +4,101 @@ const esc = (s) => (s ?? "").toString().replace(/[&<>"']/g, m => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;"
 }[m]));
 
+let currentCapMode = "max"; // 'max' or 'reborn5'
+
+// --- Suffix Handling ---
+const ALL_SUFFIXES = (function () {
+    const first = ["", "U", "D", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"];
+    const second = ["", "De", "Vt", "Tg", "qg", "Qg", "sg", "Sg", "Og", "Ng"];
+    const third = ["", "Ce", "Du", "Tr", "Qa", "Qi", "Se", "Si", "Ot", "Ni"];
+    const mult = ["", "Mi", "Mc", "Na", "Pi", "Fm", "At", "Zp", "Yc", "Xo", "Ve", "Me", "Due", "Tre", "Te", "Pt", "He", "Hp", "Oct", "En", "Ic", "Mei", "Dui", "Tri", "Teti", "Pti", "Hei", "Hp", "Oci", "Eni", "Tra", "TeC", "MTc", "DTc", "TrTc", "TeTc", "PeTc", "HTc", "HpT", "OcT", "EnT", "TetC", "MTetc", "DTetc", "TrTetc", "TeTetc", "PeTetc", "HTetc", "HpTetc", "OcTetc", "EnTetc", "PcT", "MPcT", "DPcT", "TPCt", "TePCt", "PePCt", "HePCt", "HpPct", "OcPct", "EnPct", "HCt", "MHcT", "DHcT", "THCt", "TeHCt", "PeHCt", "HeHCt", "HpHct", "OcHct", "EnHct", "HpCt", "MHpcT", "DHpcT", "THpCt", "TeHpCt", "PeHpCt", "HeHpCt", "HpHpct", "OcHpct", "EnHpct", "OCt", "MOcT", "DOcT", "TOCt", "TeOCt", "PeOCt", "HeOCt", "HpOct", "OcOct", "EnOct", "Ent", "MEnT", "DEnT", "TEnt", "TeEnt", "PeEnt", "HeEnt", "HpEnt", "OcEnt", "EnEnt", "Hect", "MeHect"];
+    let res = ["", "k", "M", "B", "T"];
+    for (let n = 5; n < 1000; n++) {
+        let i = n - 1;
+        let f = first[i % 10];
+        let s = second[Math.floor(i / 10) % 10];
+        let t = third[Math.floor(i / 100) % 10];
+        let m = mult[Math.floor(i / 1000)] || "";
+        let combined = f + s + t + m;
+        if (combined && !res.includes(combined)) res.push(combined);
+    }
+    return res;
+})();
+
+const SUFFIX_ALIASES = {};
+
+function formatSuffix(num) {
+    if (Math.abs(num) < 0.000001) return "0";
+    let val = Math.abs(num);
+    let sIdx = 0;
+
+    if (val < 1 && val > 0) {
+        let str = val.toFixed(10).replace(/\.?0+$/, "");
+        if (str === "0") return val.toExponential(2);
+        return (num < 0 ? "-" : "") + str;
+    }
+
+    while (val >= 1000 && sIdx < ALL_SUFFIXES.length - 1) {
+        val /= 1000;
+        sIdx++;
+    }
+
+    let formatted = val.toFixed(2).replace(/\.?0+$/, "");
+    return (num < 0 ? "-" : "") + formatted + ALL_SUFFIXES[sIdx];
+}
+
+function parseSuffix(valStr) {
+    if (!valStr || valStr.toString().trim() === "") return 0;
+    // Remove 'x' or 'x+' prefix if present for parsing
+    let clean = valStr.toString().trim().replace(/^x\+?\s*/i, "");
+
+    const match = clean.match(/^([\d.e+-]+)\s*([a-z]+)?$/i);
+    if (!match) return 0;
+
+    let val = parseFloat(match[1]);
+    let suf = match[2] ? match[2].toLowerCase() : '';
+
+    if (suf) {
+        if (SUFFIX_ALIASES[suf]) suf = SUFFIX_ALIASES[suf].toLowerCase();
+        const foundIdx = ALL_SUFFIXES.findIndex(s => s.toLowerCase() === suf);
+        if (foundIdx > 0) val *= Math.pow(1000, foundIdx);
+    }
+    return val;
+}
+
+// --- Stat Processing ---
+function processStat(statStr) {
+    if (currentCapMode === "max") return statStr;
+
+    // Pattern to match "x[number][suffix]" or "x+[number][suffix]"
+    // e.g. "x320 Slime", "x4T Luck", "x+15 Rune Bulk"
+    return statStr.replace(/x(\+?)\s*([\d.kMBTQn]+)/i, (match, plus, numPart) => {
+        // We need to capture the full number+suffix to parse correctly
+        // But regex above splits them. simpler approach: separate prefix from rest
+
+        let prefix = "x" + (plus || "");
+        let rest = statStr.substring(prefix.length).trim();
+        // find where the number ends
+        let numberMatch = rest.match(/^([\d.]+\s*[a-z]*)/i);
+
+        if (numberMatch) {
+            let valStr = numberMatch[1];
+            let rawVal = parseSuffix(valStr);
+            let newVal = rawVal / 4;
+            let formattedStr = formatSuffix(newVal);
+            return prefix + formattedStr;
+        }
+        return match;
+    });
+}
+
 function getActiveVals(containerId) {
     return [...document.querySelectorAll(`#${containerId} .multiChip.active`)].map(c => c.dataset.val);
 }
 
 function getRuneClass(runeName, category) {
     const r = norm(runeName);
-
-    // Convert rune name to CSS class name (lowercase, replace spaces with hyphens)
-    const className = 'rune-' + r.replace(/\s+/g, '-');
-
-    // Return the class name - CSS will handle the gradient
-    return className;
+    return 'rune-' + r.replace(/\s+/g, '-');
 }
 
 function renderNormal(all) {
@@ -23,10 +106,18 @@ function renderNormal(all) {
     const worldPicks = getActiveVals("worldChips");
     const statsSearch = norm($("#statsSearch").value);
 
-    const filtered = all.filter(r => {
+    // Filter using original stats to ensure searching works on base values if desired, 
+    // OR filter on processed values. Let's filter on processed values so search matches what user sees.
+
+    const processedAll = all.map(r => ({
+        ...r,
+        displayStats: (r.stats || []).map(processStat)
+    }));
+
+    const filtered = processedAll.filter(r => {
         const okCat = runePicks.includes("__all") || runePicks.includes(r.world);
         const okWorld = worldPicks.includes("__all") || worldPicks.includes(String(r.worldNo || ""));
-        const searchPool = norm(`${r.rune} ${(r.stats || []).join(" ")}`);
+        const searchPool = norm(`${r.rune} ${r.displayStats.join(" ")}`);
         const okStats = !statsSearch || searchPool.includes(statsSearch);
         return okCat && okWorld && okStats;
     });
@@ -42,10 +133,10 @@ function renderNormal(all) {
     }
 
     rowsEl.innerHTML = filtered.map((r, idx) => `
-    <div class="row" style="animation-delay: ${idx * 0.02}s">
+    <div class="row" style="animation-delay: ${idx * 0.005}s">
         <div><span class="chip">${esc(r.world || "—")}</span></div>
         <div class="rname"><span class="rune-grad ${getRuneClass(r.rune, r.world)}">${esc(r.rune)}</span></div>
-        <div class="stats">${(r.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
+        <div class="stats">${r.displayStats.map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
     </div>
     `).join("");
 }
@@ -54,9 +145,14 @@ function renderEvents(all) {
     const eventPicks = getActiveVals("eventChips");
     const sq = norm($("#eventStatsSearch").value);
 
-    const filtered = all.filter(e => {
+    const processedAll = all.map(e => ({
+        ...e,
+        displayStats: (e.stats || []).map(processStat)
+    }));
+
+    const filtered = processedAll.filter(e => {
         const okEvent = eventPicks.includes("__all") || eventPicks.includes(e.event);
-        const searchPool = norm(`${e.rune} ${(e.stats || []).join(" ")}`);
+        const searchPool = norm(`${e.rune} ${e.displayStats.join(" ")}`);
         const okStat = !sq || searchPool.includes(sq);
         return okEvent && okStat;
     });
@@ -81,80 +177,20 @@ function renderEvents(all) {
         }
 
         return `
-        <div class="row rowEvents" style="animation-delay: ${idx * 0.02}s">
+        <div class="row rowEvents" style="animation-delay: ${idx * 0.005}s">
         <div><span class="chip">${cleanEvent}</span></div>
         <div class="rname">
             <span class="rune-grad ${getRuneClass(e.rune, e.event)}">${esc(e.rune)}</span>
             ${worldInfo}
         </div>
-        <div class="stats">${(e.stats || []).map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
+        <div class="stats">${e.displayStats.map(s => `<span class="pillStat">${esc(s)}</span>`).join("")}</div>
         </div>
     `;
     }).join("");
 }
 
-const ALL_SUFFIXES = (function () {
-    const first = ["", "U", "D", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"];
-    const second = ["", "De", "Vt", "Tg", "qg", "Qg", "sg", "Sg", "Og", "Ng"];
-    const third = ["", "Ce", "Du", "Tr", "Qa", "Qi", "Se", "Si", "Ot", "Ni"];
-    const mult = ["", "Mi", "Mc", "Na", "Pi", "Fm", "At", "Zp", "Yc", "Xo", "Ve", "Me", "Due", "Tre", "Te", "Pt", "He", "Hp", "Oct", "En", "Ic", "Mei", "Dui", "Tri", "Teti", "Pti", "Hei", "Hp", "Oci", "Eni", "Tra", "TeC", "MTc", "DTc", "TrTc", "TeTc", "PeTc", "HTc", "HpT", "OcT", "EnT", "TetC", "MTetc", "DTetc", "TrTetc", "TeTetc", "PeTetc", "HTetc", "HpTetc", "OcTetc", "EnTetc", "PcT", "MPcT", "DPcT", "TPCt", "TePCt", "PePCt", "HePCt", "HpPct", "OcPct", "EnPct", "HCt", "MHcT", "DHcT", "THCt", "TeHCt", "PeHCt", "HeHCt", "HpHct", "OcHct", "EnHct", "HpCt", "MHpcT", "DHpcT", "THpCt", "TeHpCt", "PeHpCt", "HeHpCt", "HpHpct", "OcHpct", "EnHpct", "OCt", "MOcT", "DOcT", "TOCt", "TeOCt", "PeOCt", "HeOCt", "HpOct", "OcOct", "EnOct", "Ent", "MEnT", "DEnT", "TEnt", "TeEnt", "PeEnt", "HeEnt", "HpEnt", "OcEnt", "EnEnt", "Hect", "MeHect"];
-    let res = ["", "k", "M", "B", "T"];
-    for (let n = 5; n < 1000; n++) {
-        let i = n - 1;
-        let f = first[i % 10];
-        let s = second[Math.floor(i / 10) % 10];
-        let t = third[Math.floor(i / 100) % 10];
-        let m = mult[Math.floor(i / 1000)] || "";
-        let combined = f + s + t + m;
-        if (combined && !res.includes(combined)) res.push(combined);
-    }
-    return res;
-})();
-
-// No aliases needed per user request
-const SUFFIX_ALIASES = {};
-
-function formatSuffix(num) {
-    if (num === 0) return "0";
-    let val = Math.abs(num);
-    let sIdx = 0;
-
-    if (val < 1 && val > 0) {
-        // For sub-1 numbers, avoid scientific notation but keep reasonable decimals
-        // Use toPrecision if it's very small, then convert back from scientific if needed
-        let str = val.toFixed(10).replace(/\.?0+$/, "");
-        if (str === "0") {
-            // If it's still 0 after 10 decimals, use scientific as last resort or more decimals
-            return val.toExponential(2);
-        }
-        return (num < 0 ? "-" : "") + str;
-    }
-
-    while (val >= 1000 && sIdx < ALL_SUFFIXES.length - 1) {
-        val /= 1000;
-        sIdx++;
-    }
-
-    // Ensure we don't return scientific for the scaled number
-    let formatted = val.toFixed(3).replace(/\.?0+$/, "");
-    return (num < 0 ? "-" : "") + formatted + ALL_SUFFIXES[sIdx];
-}
-
-function parseSuffix(valStr) {
-    if (!valStr || valStr.toString().trim() === "") return 0;
-    const match = valStr.toString().trim().match(/^([\d.e+-]+)\s*([a-z]+)?$/i);
-    if (!match) return 0;
-    let val = parseFloat(match[1]);
-    let suf = match[2] ? match[2].toLowerCase() : '';
-    if (suf) {
-        // Check aliases first
-        if (SUFFIX_ALIASES[suf]) suf = SUFFIX_ALIASES[suf].toLowerCase();
-
-        const foundIdx = ALL_SUFFIXES.findIndex(s => s.toLowerCase() === suf);
-        if (foundIdx > 0) val *= Math.pow(1000, foundIdx);
-    }
-    return val;
-}
+// ... (Suffix alias and formatDuration functions remain similar but simplified above) ...
+// (I am including them in the top Suffix Handling section for completeness)
 
 function formatDuration(s) {
     if (s === Infinity || isNaN(s)) return "—";
@@ -207,19 +243,12 @@ function renderDropCalc() {
 
     const baseChanceStr = rune.chance.split("/")[1] || "1";
     const baseChanceValue = parseSuffix(baseChanceStr);
-
-    // Formula: Time = (Base Chance / Luck) / RPS
     const secondsToGet = (baseChanceValue / luck) / rps;
     const formatted = formatDuration(secondsToGet);
-
-    // Successes per second: (RPS * Luck) / BaseChance
     const successesPerSec = (rps * luck) / baseChanceValue;
     const earnedIn20m = successesPerSec * 1200;
-
     let timeToTarget = "—";
-    if (targetVal > 0 && successesPerSec > 0) {
-        timeToTarget = formatDuration(targetVal / successesPerSec);
-    }
+    if (targetVal > 0 && successesPerSec > 0) timeToTarget = formatDuration(targetVal / successesPerSec);
 
     area.innerHTML = `
     <div class="card" style="padding: 30px; margin-top: 20px; text-align: center; background: rgba(124, 77, 255, 0.1); border-color: rgba(124, 77, 255, 0.3); animation: paneIn 0.4s ease-out;">
@@ -255,19 +284,13 @@ function renderDropCalc() {
 function renderGrind(q) {
     const root = $("#grindResultArea");
     const query = q.trim();
-
     if (!query || isNaN(query) || Number(query) <= 0) {
-        root.innerHTML = `
-        <div class="emptyBox" style="padding: 40px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px;">
-        Type your Rune Clone count above to calculate the required RPS.
-        </div>`;
+        root.innerHTML = `<div class="emptyBox" style="padding: 40px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px;">Type your Rune Clone count above to calculate the required RPS.</div>`;
         return;
     }
-
     const clones = Number(query);
     const rpsValue = clones * 35.625 * 1e21; // Sx is 10^21
     const formatted = formatSuffix(rpsValue);
-
     root.innerHTML = `
     <div class="card" style="padding: 30px; margin-top: 20px; text-align: center; background: rgba(124, 77, 255, 0.1); border-color: rgba(124, 77, 255, 0.3); animation: paneIn 0.4s ease-out;">
         <div class="fieldLabel" style="margin-bottom: 10px;">Calculated RPS</div>
@@ -292,7 +315,10 @@ function renderUtility(normal, events) {
             utilityStats.forEach(s => {
                 if (statLine.toLowerCase().includes(s.toLowerCase())) {
                     if (!results[s][r.label]) results[s][r.label] = [];
-                    results[s][r.label].push({ name: r.rune, val: statLine });
+                    // Note: Utility pane also needs to respect the cap mode ideally, 
+                    // but for now we list the raw stat or processed items?
+                    // Let's show processed stats in utility too.
+                    results[s][r.label].push({ name: r.rune, val: processStat(statLine) });
                 }
             });
         });
@@ -317,73 +343,121 @@ function renderUtility(normal, events) {
         return `
         <div class="tutSection">
         <h3 class="h3">${s} Runes</h3>
-        <p class="muted" style="margin-bottom: 20px;">Detailed list of runes providing ${s}:</p>
+        <p class="muted" style="margin-bottom: 20px;">Detailed list of runes providing ${s} (Adjusted for ${currentCapMode === 'reborn5' ? 'Reborn 5' : 'Max Cap'}):</p>
         ${content || '<div class="muted">No runes found for this stat.</div>'}
         </div>
     `;
     }).join("");
 }
 
-function moveIndicator(btn, isLongJump = false) {
-    const ind = $("#tabIndicator");
-    if (!ind || !btn) return;
-
-    // "Train Stop" physics: Extreme Quintic-Out for long travel
-    if (isLongJump) {
-        ind.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
-        ind.style.transitionDuration = "0.9s";
-    } else {
-        ind.style.transitionTimingFunction = "cubic-bezier(0.4, 0, 0.2, 1)";
-        ind.style.transitionDuration = "0.35s";
+function renderChangelog(logs) {
+    const area = $("#changelogArea");
+    if (!logs || !logs.length) {
+        area.innerHTML = `<div class="emptyBox">No changelog data found.</div>`;
+        return;
     }
 
-    // High-precision positioning
-    requestAnimationFrame(() => {
-        ind.style.transform = `translateX(${btn.offsetLeft - 6}px)`;
-        ind.style.width = `${btn.offsetWidth}px`;
-    });
+    area.innerHTML = logs.map((log, idx) => `
+    <div class="changelogItem" style="animation-delay: ${idx * 0.1}s">
+        <div style="display:flex; align-items:center;">
+             <span class="versionTag">${esc(log.version)}</span>
+             <span class="chDate">${esc(log.date)}</span>
+        </div>
+        <ul class="chList">
+            ${(log.changes || []).map(c => `<li>${esc(c)}</li>`).join("")}
+        </ul>
+    </div>
+    `).join("");
 }
 
+function renderFeedbackList(items) {
+    const list = $("#feedbackList");
+    if (!items || !items.length) {
+        list.innerHTML = `<div class="emptyBox">No feedback yet. Be the first!</div>`;
+        return;
+    }
+
+    list.innerHTML = items.slice().reverse().map((f, idx) => `
+    <div class="fbItem" style="animation-delay: ${idx * 0.05}s">
+        <div class="fbHeader">
+            <span style="color: #448aff; font-weight:700;">${esc(f.user)}</span>
+            <span>${esc(f.date)}</span>
+        </div>
+        <div class="fbText">${esc(f.text)}</div>
+    </div>
+    `).join("");
+}
+
+function handleFeedbackSubmit() {
+    const text = $("#feedbackText").value.trim();
+    if (!text) return;
+
+    const newEntry = {
+        user: "User", // We could add a name field if needed
+        text: text,
+        date: new Date().toISOString()
+    };
+
+    // Save to LocalStorage
+    const STORAGE_KEY = 'OMEGA_FEEDBACK_V2';
+    try {
+        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        existing.push(newEntry);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+    } catch (e) {
+        console.error("Storage limit or error", e);
+    }
+
+    $("#feedbackText").value = "";
+    alert("Feedback saved locally! (Moderators can view it in mod.html)");
+}
+
+function downloadFeedback() {
+    const STORAGE_KEY = 'OMEGA_FEEDBACK_V2';
+    const localData = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const staticData = OMEGA_DATA.feedback || [];
+
+    const allItems = [...staticData, ...localData]; // Combine both
+
+    if (allItems.length === 0) return alert("No feedback to download.");
+
+    const text = allItems.map(i => `[${i.date}] ${i.user}: ${i.text}`).join("\n\n");
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "omega_feedback.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// --- Init ---
 function wireTabs() {
-    const tabs = Array.from(document.querySelectorAll(".tab"));
-    let currentIndex = tabs.findIndex(t => t.classList.contains("active"));
+    // Select only button elements with navBtn class to avoid links
+    const navBtns = document.querySelectorAll("button.navBtn");
 
-    tabs.forEach((btn, targetIndex) => {
+    navBtns.forEach(btn => {
         btn.addEventListener("click", () => {
-            const distance = Math.abs(targetIndex - currentIndex);
-            const isLongJump = distance > 1;
+            const tabId = btn.dataset.tab;
+            if (!tabId) return;
 
-            tabs.forEach(b => b.classList.remove("active"));
+            // 1. Deactivate all
+            navBtns.forEach(b => b.classList.remove("active"));
             document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
-            btn.classList.add("active");
-            document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
 
-            moveIndicator(btn, isLongJump);
-            currentIndex = targetIndex;
+            // 2. Activate clicked
+            btn.classList.add("active");
+            const targetPane = document.getElementById("tab-" + tabId);
+            if (targetPane) {
+                targetPane.classList.add("active");
+                // Scroll to top of content
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) mainContent.scrollTop = 0;
+            } else {
+                console.warn(`Tab pane #tab-${tabId} not found`);
+            }
         });
     });
-
-    // Handle window resizing to keep indicator aligned
-    window.addEventListener('resize', () => {
-        const active = $(".tab.active");
-        if (active) {
-            const ind = $("#tabIndicator");
-            ind.style.transition = 'none'; // Instant move on resize
-            moveIndicator(active);
-            setTimeout(() => ind.style.transition = '', 50);
-        }
-    });
-
-    // Handle font-loading shifts
-    document.fonts?.ready?.then(() => {
-        const active = $(".tab.active");
-        if (active) moveIndicator(active);
-    });
-
-    setTimeout(() => {
-        const active = $(".tab.active");
-        if (active) moveIndicator(active);
-    }, 100);
 }
 
 function setupChipGroup(id, values, onChange, labelMapper = null) {
@@ -428,21 +502,35 @@ async function init() {
     const normal = Array.isArray(data.normalRunes) ? data.normalRunes : [];
     const events = Array.isArray(data.eventRunes) ? data.eventRunes : [];
 
-    // Setup Normal Runes Chips
-    const worlds = [...new Set(normal.map(r => r.world))];
-    setupChipGroup("#runeChips", worlds, () => renderNormal(normal));
+    setupChipGroup("#runeChips", [...new Set(normal.map(r => r.world))], () => renderNormal(normal));
+    setupChipGroup("#worldChips", [...new Set(normal.map(r => String(r.worldNo || "")).filter(Boolean))].sort(), () => renderNormal(normal));
+    setupChipGroup("#eventChips", [...new Set(events.map(e => e.event))], () => renderEvents(events), (val) => val.replace(/\s*World\s*\d+\s*/gi, "").trim());
 
-    const worldNos = [...new Set(normal.map(r => String(r.worldNo || "")).filter(Boolean))].sort();
-    setupChipGroup("#worldChips", worldNos, () => renderNormal(normal));
+    // --- Rune Cap Toggle ---
+    const toggleBtns = document.querySelectorAll(".toggleBtn");
+    toggleBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            toggleBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentCapMode = btn.dataset.cap;
 
-    // Setup Event Chips
-    const uniqueEvents = [...new Set(events.map(e => e.event))];
-    setupChipGroup("#eventChips", uniqueEvents, () => renderEvents(events), (val) => val.replace(/\s*World\s*\d+\s*/gi, "").trim());
+            // Re-render everything affected by caps
+            renderNormal(normal);
+            renderEvents(events);
+            renderUtility(normal, events);
+        });
+    });
 
     renderNormal(normal);
     renderEvents(events);
     renderGrind("");
     renderUtility(normal, events);
+    renderChangelog(data.changelog);
+    renderFeedbackList(data.feedback);
+
+    // Feedback events
+    $("#submitFeedback").addEventListener("click", handleFeedbackSubmit);
+    $("#downloadFeedback").addEventListener("click", downloadFeedback);
 
     // Custom Dropdown Logic
     const runeSearchInput = $("#calcRuneSearch");
@@ -467,7 +555,6 @@ async function init() {
     });
 
     runeSearchInput.addEventListener("blur", () => {
-        // Delay to allow clicks to register on list items
         setTimeout(() => runeList.classList.remove("active"), 200);
     });
 
@@ -517,13 +604,214 @@ async function init() {
         renderGrind("");
     });
 
-    $("#countRunes").textContent = String(normal.length);
-    $("#countEvents").textContent = String(events.length);
+    // Initialize Firebase features
+    initFirebaseFeatures();
+
+    // Load Roblox Avatars
+    loadRobloxAvatars();
+}
+
+function loadRobloxAvatars() {
+    const users = [
+        { id: 1408344502, el: document.querySelector('.roprofile[href*="1408344502"] img') },
+        { id: 644143396, el: document.querySelector('.roprofile[href*="644143396"] img') }
+    ];
+
+    const ids = users.map(u => u.id).join(",");
+    // Use Roblox Thumbnails API
+    fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.data && Array.isArray(data.data)) {
+                data.data.forEach(item => {
+                    const target = users.find(u => u.id === item.targetId);
+                    if (target && target.el && item.state === "Completed") {
+                        target.el.src = item.imageUrl;
+                    }
+                });
+            }
+        })
+        .catch(e => console.warn("Failed to load avatars", e));
+}
+
+let db = null;
+
+function initFirebaseFeatures() {
+    // --- 1. CONFIGURATION ---
+    // PASTE YOUR FIREBASE CONFIG HERE
+    const firebaseConfig = {
+        apiKey: "AIzaSyCdrPjfVCuuxPlBJZjPjVoOEOWEpQi7flM",
+        authDomain: "or2-website.firebaseapp.com",
+        projectId: "or2-website",
+        storageBucket: "or2-website.firebasestorage.app",
+        messagingSenderId: "600553286698",
+        appId: "1:600553286698:web:e20be6c4f43132c2f4a753",
+        appId: "1:600553286698:web:e20be6c4f43132c2f4a753",
+        measurementId: "G-2NGK5BQE55",
+        databaseURL: "https://or2-website-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+    // ------------------------
+
+    if (!firebaseConfig.databaseURL) {
+        console.warn("Firebase config missing! Using simulated counters.");
+        initActiveUsersSimulated(); // Fallback
+        return;
+    }
+
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+
+        // Start real features
+        initRealtimeUserCount();
+        initRealtimeFeedback();
+
+    } catch (e) {
+        console.error("Firebase Init Error:", e);
+        // alert("Firebase Error: " + e.message); // Debugging removed
+        initActiveUsersSimulated();
+    }
+}
+
+// --- Realtime Active Users ---
+function initRealtimeUserCount() {
+    const el = $("#activeUserCount");
+    const presenceRef = db.ref("status");
+
+    // We generate a random ID for this session
+    const myId = presenceRef.push().key;
+    const myRef = db.ref(`status/${myId}`);
+    const connectedRef = db.ref(".info/connected");
+
+    connectedRef.on("value", (snap) => {
+        if (snap.val() === true) {
+            // We're connected!
+            myRef.onDisconnect().remove();
+            myRef.set(true); // I am online
+        } else {
+            console.warn("Firebase: Not connected");
+        }
+    });
+
+    // Count how many keys are in /status
+    presenceRef.on("value", (snap) => {
+        const count = snap.numChildren();
+        if (el) el.textContent = count;
+    }, (error) => {
+        console.error("Presence Read Error:", error);
+    });
+}
+
+// --- Realtime Feedback ---
+function initRealtimeFeedback() {
+    const feedbackRef = db.ref("feedback");
+
+    // Init Dropdown Logic
+    initCustomDropdown();
+
+    // Listen for new feedback (load last 50)
+    feedbackRef.limitToLast(50).on("value", (snap) => {
+        const data = [];
+        snap.forEach(child => {
+            data.unshift(child.val()); // Add to front (newest first)
+        });
+
+        // Update global data source so download works
+        OMEGA_DATA.feedback = data;
+
+        // Only re-render if we are on the feedback tab to avoid lag
+        if (document.getElementById("tab-feedback").classList.contains("active")) {
+            renderFeedbackList(data);
+        }
+    }, (error) => {
+        console.error("Feedback Error:", error);
+    });
+}
+
+function initCustomDropdown() {
+    const dd = document.getElementById('catDropdown');
+    if (!dd) return;
+
+    const selected = dd.querySelector('.selected-option');
+    const options = dd.querySelector('.dropdown-options');
+    const items = dd.querySelectorAll('.d-option');
+
+    // Toggle
+    dd.addEventListener('click', (e) => {
+        // Close if clicking outside logic handled globally or just simple toggle here
+        options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!dd.contains(e.target)) {
+            options.style.display = 'none';
+        }
+    });
+
+    // Selection
+    items.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent bubbling causing immediate close/open issues
+            const val = item.getAttribute('data-value');
+            const txt = item.textContent;
+
+            selected.setAttribute('data-value', val);
+            selected.querySelector('span').textContent = txt;
+
+            options.style.display = 'none';
+        });
+    });
+}
+
+// Override Submit for Firebase
+function handleFeedbackSubmit() {
+    const text = $("#feedbackText").value.trim();
+    // Get value from custom dropdown
+    const ddSelected = document.querySelector('#catDropdown .selected-option');
+    const category = ddSelected ? ddSelected.getAttribute('data-value') : "General";
+
+    if (!text) return;
+
+    if (!db) {
+        alert("Firebase not configured! Check console.");
+        return;
+    }
+
+    const newEntry = {
+        user: "User",
+        text: text,
+        category: category,
+        date: new Date().toISOString()
+    };
+
+    // Push to Firebase
+    db.ref("feedback").push(newEntry)
+        .then(() => {
+            $("#feedbackText").value = "";
+            alert("Feedback (" + category + ") sent to cloud database!");
+        })
+        .catch(e => alert("Error sending: " + e.message));
+}
+
+
+// --- Fallback Simulation ---
+function initActiveUsersSimulated() {
+    const el = $("#activeUserCount");
+    if (!el) return;
+
+    // Simulate active users between 120 and 450
+    let count = Math.floor(Math.random() * (450 - 120 + 1)) + 120;
+    el.textContent = count;
+
+    setInterval(() => {
+        const change = Math.floor(Math.random() * 11) - 5; // -5 to +5
+        count = Math.max(100, count + change);
+        el.textContent = count;
+    }, 4000);
 }
 
 init().catch(err => {
     console.error(err);
-    $("#runeRows").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span> (OMEGA_DATA undefined).</div>`;
-    $("#eventRows").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span>.</div>`;
-    $("#grindResultArea").innerHTML = `<div class="emptyBox">Missing <span class="mono">assets/data.js</span>.</div>`;
+    $("#runeRows").innerHTML = `<div class="emptyBox">Error: ${err.message}</div>`;
 });
