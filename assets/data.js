@@ -621,7 +621,7 @@ const OMEGA_DATA = {
             "worldNo": "Galactic",
             "rune": "Cosmic Ember",
             "chance": "1/250SxVt",
-            "stats": ["x60 Meteors", "x60 Singularity", "x4No Luck"]
+            "stats": ["x60 Meteors", "x60 Singularity", "x? Luck"]
         }
     ],
     "eventRunes": [
@@ -679,6 +679,32 @@ const OMEGA_DATA = {
             "chance": "1/900Qd",
             "stats": ["x40Qn Luck", "x8 Singularity", "x8 Meteors", "x6.8 Rune Bulk", "x6.8 Rune Luck", "x2 Passive"]
         }
+    ],
+    "changelog": [
+        {
+            "version": "v1.1.0",
+            "date": "2026-02-15",
+            "changes": [
+                "Added Changelog tab.",
+                "Added Feedback system.",
+                "Added Rune Cap toggle (Max / Reborn 5)."
+            ]
+        },
+        {
+            "version": "v1.0.0",
+            "date": "2026-02-08",
+            "changes": [
+                "Initial release of Rune Hub.",
+                "Added Rune Calculator.",
+                "Added Event Runes."
+            ]
+        }
+    ],
+    "feedback": [
+        {
+            "user": "System",
+            "text": "Welcome to the Feedback section! Example feedback will appear here.",
+            "date": "2026-02-15"
+        }
     ]
 };
-
