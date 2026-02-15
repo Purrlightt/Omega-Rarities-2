@@ -61,48 +61,127 @@
     <div class="logoFade" aria-hidden="true"></div>
   </div>
 
-  <header class="topbar">
+  <nav class="sidebar">
     <div class="brand">
       <div class="logo" aria-hidden="true">Ω</div>
       <div class="brandText">
         <div class="kicker">Omega Rarities 2</div>
         <h1>Rune Hub</h1>
       </div>
-      <span class="pill">Static Data</span>
     </div>
 
-    <nav class="actions">
-      <a class="btn ghost" href="https://discord.com/channels/1327972266356768800/1467144703190241291" target="_blank"
-        rel="noreferrer">
+    <div class="navLinks">
+      <div class="navLabel">Menu</div>
+      <button class="navBtn active" data-tab="runes">
+        <span class="navIcon"><svg>
+            <use href="#i-runes" />
+          </svg></span>
+        <span>Runes</span>
+      </button>
+      <button class="navBtn" data-tab="events">
+        <span class="navIcon"><svg>
+            <use href="#i-event" />
+          </svg></span>
+        <span>Event Runes</span>
+      </button>
+      <button class="navBtn" data-tab="grind">
+        <span class="navIcon"><svg>
+            <use href="#i-grind" />
+          </svg></span>
+        <span>Rare Rune Grind</span>
+      </button>
+      <button class="navBtn" data-tab="utility">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M7 2v11h3v9l7-12h-4l3-8z" />
+          </svg></span>
+        <span>Utility</span>
+      </button>
+      <button class="navBtn" data-tab="dropcalc">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M19,19H5V5H19V19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.03,7.06L14.09,8.12L11.41,10.8L14.09,13.47L13.03,14.53L10.35,11.86L7.67,14.53L6.61,13.47L9.29,10.8L6.61,8.12L7.67,7.06L10.35,9.74L13.03,7.06Z" />
+          </svg></span>
+        <span>Drop Calc</span>
+      </button>
+
+      <div class="navLabel">Info</div>
+      <button class="navBtn" data-tab="info">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M11 9h2V7h-2v2Zm0 8h2v-6h-2v6Zm1-15C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z" />
+          </svg></span>
+        <span>Quick Info</span>
+      </button>
+      <button class="navBtn" data-tab="tutorial">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M11 18h2v-2h-2v2Zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4Z" />
+          </svg></span>
+        <span>Tutorial</span>
+      </button>
+      <button class="navBtn" data-tab="changelog">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+          </svg></span>
+        <span>Changelog</span>
+      </button>
+      <button class="navBtn" data-tab="feedback">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z" />
+          </svg></span>
+        <span>Feedback</span>
+      </button>
+
+      <div class="navLabel">Roblox Users</div>
+      <a class="navBtn roprofile" href="https://www.roblox.com/users/1408344502/profile" target="_blank">
+        <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1408344502-png/150/150/AvatarHeadshot/Png/noFilter" alt=""
+          class="pfp">
+        <span>Purrlight</span>
+      </a>
+      <a class="navBtn roprofile" href="https://www.roblox.com/users/644143396/profile" target="_blank">
+        <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-644143396-png/150/150/AvatarHeadshot/Png/noFilter" alt=""
+          class="pfp">
+        <span>mafia_faka</span>
+      </a>
+    </div>
+
+    <div class="activeUsers" style="margin-top:auto; padding-top: 20px; text-align: center;">
+      <div
+        style="font-size: 11px; color: var(--muted2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;">
+        Active Users</div>
+      <div
+        style="font-family: var(--mono); color: #4ecfff; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span
+          style="display: inline-block; width: 8px; height: 8px; background: #4ecfff; border-radius: 50%; box-shadow: 0 0 10px #4ecfff;"></span>
+        <span id="activeUserCount">...</span>
+      </div>
+    </div>
+
+    <div class="sidebarFooter">
+      <a class="btn ghost tiny" href="https://discord.com/channels/1327972266356768800/1467144703190241291"
+        target="_blank">
         <span class="btnIcon"><svg>
             <use href="#i-discord" />
           </svg></span>
-        <span>Discord Community</span>
+        <span>Discord</span>
       </a>
-      <a class="btn ghost" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank"
-        rel="noreferrer">
+      <a class="btn ghost tiny" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank">
         <span class="btnIcon"><svg>
             <use href="#i-game" />
           </svg></span>
-        <span>Open Game</span>
+        <span>Game</span>
       </a>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
-  <main class="wrap">
-    <section class="hero card">
+  <main class="main-content">
+    <section class="hero card mobile-hero">
       <div class="heroLeft">
-        <div class="badgeRow">
-          <span class="badge"
-            style="background: rgba(124, 77, 255, 0.2); border-color: rgba(124, 77, 255, 0.3);">Created by
-            Purrlight & mafia_faka</span>
-        </div>
-        <h2>Runes • Events • Grind</h2>
-        <p class="muted">
-          Comprehensive database for Omega Rarities 2.
-        </p>
+        <h2>Rune Hub Stats</h2>
+        <p class="muted">Static database for OR2.</p>
       </div>
-
       <div class="heroRight">
         <div class="stat">
           <div class="statLabel">Normal Runes</div>
@@ -119,49 +198,19 @@
       </div>
     </section>
 
-    <section class="tabs card">
-      <div class="tabbar" role="tablist" aria-label="Views">
-        <div class="tabIndicator" id="tabIndicator"></div>
-        <button class="tab active" data-tab="runes" role="tab" aria-selected="true">
-          <span class="tabIcon"><svg>
-              <use href="#i-runes" />
-            </svg></span><span>Runes</span>
-        </button>
-        <button class="tab" data-tab="events" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg>
-              <use href="#i-event" />
-            </svg></span><span>Event Runes</span>
-        </button>
-        <button class="tab" data-tab="grind" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg>
-              <use href="#i-grind" />
-            </svg></span><span>RRM RPS Calc</span>
-        </button>
-        <button class="tab" data-tab="utility" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg viewBox="0 0 24 24">
-              <path fill="currentColor" d="M7 2v11h3v9l7-12h-4l3-8z" />
-            </svg></span><span>Utility</span>
-        </button>
-        <button class="tab" data-tab="info" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg viewBox="0 0 24 24">
-              <path fill="currentColor"
-                d="M11 9h2V7h-2v2Zm0 8h2v-6h-2v6Zm1-15C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z" />
-            </svg></span><span>Quick Info</span>
-        </button>
-        <button class="tab" data-tab="tutorial" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg viewBox="0 0 24 24">
-              <path fill="currentColor"
-                d="M11 18h2v-2h-2v2Zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4Z" />
-            </svg></span><span>Tutorial</span>
-        </button>
-        <button class="tab" data-tab="dropcalc" role="tab" aria-selected="false">
-          <span class="tabIcon"><svg viewBox="0 0 24 24">
-              <path fill="currentColor"
-                d="M19,19H5V5H19V19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.03,7.06L14.09,8.12L11.41,10.8L14.09,13.47L13.03,14.53L10.35,11.86L7.67,14.53L6.61,13.47L9.29,10.8L6.61,8.12L7.67,7.06L10.35,9.74L13.03,7.06Z" />
-            </svg></span><span>Drop Calc</span>
-        </button>
-      </div>
+    <!-- RUNE CAP TOGGLE (Moved here for better mobile layout) -->
+    <div class="controls controls-1" style="margin-bottom: 20px;">
+      <label class="field"
+        style="flex-direction: row; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <span class="fieldLabel" style="margin: 0; font-size: 14px; color: #fff;">Rune Cap Mode</span>
+        <div class="toggleWrap">
+          <button class="toggleBtn active" data-cap="max">Max Cap</button>
+          <button class="toggleBtn" data-cap="reborn5">Reborn 5 (/4)</button>
+        </div>
+      </label>
+    </div>
 
+    <section class="content-area">
       <!-- RUNES -->
       <div class="tabpane active" id="tab-runes" role="tabpanel">
         <div class="controls controls-4">
@@ -309,7 +358,8 @@
             <h3 class="h3">1M Absolute Caps</h3>
             <p class="muted">Specific info regarding the 1M Absolute rune's maximum potential:</p>
             <ul style="color: var(--muted); padding-left: 20px; line-height: 1.6;">
-              <li>This Rune (1M Event) <span class="mono" style="color: #fff;">Stays Forever</span>, because the Update (Upd 1)
+              <li>This Rune (1M Event) <span class="mono" style="color: #fff;">Stays Forever</span>, because the Update
+                (Upd 1)
                 Was Balanced using this rune.</li>
               <li>At around <span class="mono" style="color: #fff;">108k</span>, it maxes out **everything except
                 Luck**.</li>
@@ -326,7 +376,6 @@
               <span class="pillStat">Gamepasses</span>
               <span class="pillStat">Potions</span>
               <span class="pillStat">The Rune itself</span>
-              <span class="pillStat">Rune Caps</span>
             </div>
             <p class="muted" style="margin-top: 12px; font-size: 13px;">Other external multipliers do not apply to event
               rune stats.</p>
@@ -402,17 +451,64 @@
         </div>
         <div id="dropCalcResultArea"></div>
       </div>
-    </section>
 
-    <footer class="footer muted">Omega Rarities 2 • Rune Hub</footer>
+      <!-- CHANGELOG -->
+      <div class="tabpane" id="tab-changelog" role="tabpanel">
+        <div class="tutWrap" id="changelogArea"></div>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div class="tabpane" id="tab-feedback" role="tabpanel">
+        <div class="tutWrap">
+          <div class="tutSection">
+            <h3 class="h3">Submit Feedback</h3>
+            <p class="muted">Found a bug or have a suggestion? Let us know!</p>
+
+            <div class="field" style="margin-top: 15px;">
+
+              <!-- Custom Dropdown -->
+              <div id="catDropdown" class="custom-dropdown calcInput"
+                style="margin-bottom: 10px; cursor: pointer; padding: 0; height: auto; position: relative;">
+                <div class="selected-option" data-value="General"
+                  style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                  <span>General / Other</span>
+                  <span style="opacity: 0.5;">▼</span>
+                </div>
+                <div class="dropdown-options"
+                  style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: #1a1f35; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; z-index: 100; overflow: hidden; margin-top: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+                  <div class="d-option" data-value="General"
+                    style="padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">General / Other</div>
+                  <div class="d-option" data-value="Suggestion"
+                    style="padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">Suggestion 💡</div>
+                  <div class="d-option" data-value="Bug" style="padding: 10px 12px;">Bug Report 🪲</div>
+                </div>
+              </div>
+
+              <textarea id="feedbackText" rows="4" placeholder="Type your feedback here..." class="calcInput"
+                style="height: auto; padding: 12px; border-radius: 14px; resize: vertical;"></textarea>
+            </div>
+            <button class="btn" id="submitFeedback" style="margin-top: 10px; width: 100%;">Submit Feedback</button>
+          </div>
+
+          <div class="tutSection">
+            <h3 class="h3">Recent Feedback</h3>
+            <div id="feedbackList" class="feedbackList"></div>
+            <button class="btn ghost tiny" id="downloadFeedback" style="margin-top: 15px;">Download Feedback
+              File</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer muted">Omega Rarities 2 • Rune Hub</footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
   <script src="assets/data.js?v=4"></script>
   <script src="assets/calculator.js?v=4"></script>
 </body>
 
 </html>
-
-
-
-
