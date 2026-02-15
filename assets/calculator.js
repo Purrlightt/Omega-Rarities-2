@@ -499,6 +499,9 @@ async function init() {
     }
 
     const data = OMEGA_DATA;
+    console.log("JS Version: 5");
+    console.log("Changelog Data present:", !!data.changelog);
+
     const normal = Array.isArray(data.normalRunes) ? data.normalRunes : [];
     const events = Array.isArray(data.eventRunes) ? data.eventRunes : [];
 
