@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OR2 - Mod Feedback</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #0b1020;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .feedback-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .feedback-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+
+        .feedback-text {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn-danger {
+            background: rgba(255, 50, 50, 0.2);
+            color: #ff5555;
+            border: 1px solid rgba(255, 50, 50, 0.4);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 50, 50, 0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .badge-bug {
+            background: rgba(255, 80, 80, 0.2);
+            color: #ff6060;
+            border: 1px solid rgba(255, 80, 80, 0.3);
+        }
+
+        .badge-idea {
+            background: rgba(80, 255, 80, 0.2);
+            color: #60ff60;
+            border: 1px solid rgba(80, 255, 80, 0.3);
+        }
+
+        .badge-general {
+            background: rgba(100, 100, 255, 0.2);
+            color: #8080ff;
+            border: 1px solid rgba(100, 100, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
+            <h1>Moderator Feedback View</h1>
+            <a href="index.html" class="btn ghost tiny">Back to Hub</a>
+        </div>
+
+        <div class="controls" style="flex-wrap: wrap; align-items: center;">
+            <input type="text" id="searchInput" placeholder="Search text..."
+                style="padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-right: 10px;">
+
+            <select id="catFilter"
+                style="padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #1a1f35; color: white; margin-right: 10px; cursor: pointer;">
+                <option value="All">All Categories</option>
+                <option value="Bug">Bug Reports</option>
+                <option value="Suggestion">Suggestions</option>
+                <option value="General">General</option>
+            </select>
+
+            <button id="refreshBtn" class="btn tiny">Refresh</button>
+            <div style="flex:1"></div>
+            <button id="deleteSelectedBtn" class="btn btn-danger tiny">Delete Selected</button>
+        </div>
+
+        <div id="feedbackList">
+            <div class="muted">Loading...</div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        const STORAGE_KEY = 'OMEGA_FEEDBACK_V2';
+        let db = null;
+        let allData = []; // Store all data locally for filtering
+
+        // PASTE YOUR FIREBASE CONFIG HERE
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdrPjfVCuuxPlBJZjPjVoOEOWEpQi7flM",
+            authDomain: "or2-website.firebaseapp.com",
+            projectId: "or2-website",
+            storageBucket: "or2-website.firebasestorage.app",
+            messagingSenderId: "600553286698",
+            appId: "1:600553286698:web:e20be6c4f43132c2f4a753",
+            measurementId: "G-2NGK5BQE55",
+            databaseURL: "https://or2-website-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        function init() {
+            if (firebaseConfig.databaseURL) {
+                try {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.database();
+                    console.log("Firebase initialized");
+
+                    // Listen for real-time updates
+                    db.ref("feedback").on("value", (snap) => {
+                        const data = [];
+                        snap.forEach(child => {
+                            // Include key for deletion
+                            data.push({ ...child.val(), id: child.key });
+                        });
+                        allData = data;
+                        render();
+                    });
+                } catch (e) {
+                    console.error("Firebase Error", e);
+                    renderLocalStorage();
+                }
+            } else {
+                renderLocalStorage();
+            }
+        }
+
+        function renderLocalStorage() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) {
+                allData = [];
+                render();
+                return;
+            }
+            try {
+                allData = JSON.parse(raw);
+                render();
+            } catch (e) {
+                allData = [];
+                render();
+            }
+        }
+
+        function render() {
+            const list = document.getElementById('feedbackList');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const cat = document.getElementById('catFilter').value;
+
+            // Filter
+            let filtered = allData.filter(item => {
+                const matchText = (item.text || "").toLowerCase().includes(search) || (item.user || "").toLowerCase().includes(search);
+                const matchCat = cat === "All" || (item.category || "General") === cat;
+                return matchText && matchCat;
+            });
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="muted">No matching feedback found.</div>';
+                return;
+            }
+
+            // Sort newest first
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            list.innerHTML = filtered.map(item => {
+                let badgeClass = "badge-general";
+                if (item.category === "Bug") badgeClass = "badge-bug";
+                if (item.category === "Suggestion") badgeClass = "badge-idea";
+
+                const catLabel = item.category || "General";
+
+                return `
+                <div class="feedback-card" style="display:flex; gap: 15px; align-items: flex-start;">
+                    <div style="padding-top: 4px;">
+                        <input type="checkbox" class="del-check" data-id="${item.id}">
+                    </div>
+                    <div style="flex:1">
+                        <div class="feedback-meta">
+                            <span>${escapeHtml(item.date)}</span>
+                            <span>${escapeHtml(item.user)}</span>
+                            <span class="badge ${badgeClass}">${escapeHtml(catLabel)}</span>
+                        </div>
+                        <div class="feedback-text">${escapeHtml(item.text)}</div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Event Listeners for Filters
+        document.getElementById('searchInput').addEventListener('input', render);
+        document.getElementById('catFilter').addEventListener('change', render);
+        document.getElementById('refreshBtn').addEventListener('click', () => location.reload());
+
+        // Batch Delete
+        document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
+            if (!db) return alert("Delete only works with Firebase in this version.");
+
+            const checks = document.querySelectorAll('.del-check:checked');
+            if (checks.length === 0) return alert("No items selected.");
+
+            if (confirm(`Delete ${checks.length} selected items?`)) {
+                checks.forEach(box => {
+                    const id = box.getAttribute('data-id');
+                    if (id) db.ref("feedback/" + id).remove();
+                });
+            }
+        });
+
+        // Init
+        init();
+    </script>
+</body>
+
+</html>
+```
