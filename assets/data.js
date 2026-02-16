@@ -685,7 +685,8 @@ const OMEGA_DATA = {
             "version": "v1.1.2",
             "date": "2026-02-16",
             "changes": [
-                "Fixed a Typo in a Rune."
+                "Fixed a Typo in a Rune.",
+                "Renamed Tutorial to RRM Tutorial for better understanding"
             ]
         },
         {
@@ -723,6 +724,7 @@ const OMEGA_DATA = {
         }
     ]
 };
+
 
 
 
