@@ -635,7 +635,7 @@ const OMEGA_DATA = {
             "event": "1M Event World 2",
             "rune": "1M Rookie",
             "chance": "1/2.5k",
-            "stats": ["x160 Fire", "x36.8 Rune Bulk", "x33.8 Rune Luck"]
+            "stats": ["x160 Fire", "x36.8 Rune Bulk", "x33.6 Rune Luck"]
         },
         {
             "event": "1M Event World 2",
@@ -716,5 +716,6 @@ const OMEGA_DATA = {
         }
     ]
 };
+
 
 
