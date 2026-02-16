@@ -682,6 +682,13 @@ const OMEGA_DATA = {
     ],
     "changelog": [
         {
+            "version": "v1.1.1",
+            "date": "2026-02-16",
+            "changes": [
+                "Fixed a Security Vulnerability."
+            ]
+        },
+        {
             "version": "v1.1.0",
             "date": "2026-02-15",
             "changes": [
