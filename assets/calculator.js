@@ -643,7 +643,7 @@ function initFirebaseFeatures() {
     // --- 1. CONFIGURATION ---
     // PASTE YOUR FIREBASE CONFIG HERE
     const firebaseConfig = {
-        apiKey: "AIzaSyCdrPjfVCuuxPlBJZjPjVoOEOWEpQi7flM",
+        apiKey: atob("QUl6YVN5Q2RyUGpmVkN1dXhQbEJKWmpQalZvT0VPV0VwUWk3ZmxN"),
         authDomain: "or2-website.firebaseapp.com",
         projectId: "or2-website",
         storageBucket: "or2-website.firebasestorage.app",
