@@ -278,7 +278,7 @@ const OMEGA_DATA = {
             "worldNo": "Snow",
             "rune": "Blizzardcore",
             "chance": "1/4t",
-            "stats": ["x6.4k Luck", "x5.4k XP", "x12 Frost"]
+            "stats": ["x6.4k Luck", "x6.4k XP", "x12 Frost"]
         },
         {
             "world": "Snow",
@@ -715,3 +715,4 @@ const OMEGA_DATA = {
         }
     ]
 };
+
