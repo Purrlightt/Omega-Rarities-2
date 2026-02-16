@@ -685,7 +685,8 @@ const OMEGA_DATA = {
             "version": "v1.1.1",
             "date": "2026-02-16",
             "changes": [
-                "Fixed a Security Vulnerability."
+                "Fixed a Security Vulnerability.",
+                "Fixed a Typo in a Rune."
             ]
         },
         {
@@ -715,4 +716,5 @@ const OMEGA_DATA = {
         }
     ]
 };
+
 
