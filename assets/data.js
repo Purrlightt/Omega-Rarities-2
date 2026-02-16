@@ -682,6 +682,13 @@ const OMEGA_DATA = {
     ],
     "changelog": [
         {
+            "version": "v1.1.2",
+            "date": "2026-02-16",
+            "changes": [
+                "Fixed a Typo in a Rune."
+            ]
+        },
+        {
             "version": "v1.1.1",
             "date": "2026-02-16",
             "changes": [
@@ -716,6 +723,7 @@ const OMEGA_DATA = {
         }
     ]
 };
+
 
 
 
