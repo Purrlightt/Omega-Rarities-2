@@ -377,40 +377,70 @@ function renderFeedbackList(items) {
         return;
     }
 
-    list.innerHTML = items.slice().reverse().map((f, idx) => `
-    <div class="fbItem" style="animation-delay: ${idx * 0.05}s">
-        <div class="fbHeader">
-            <span style="color: #448aff; font-weight:700;">${esc(f.user)}</span>
-            <span>${esc(f.date)}</span>
+    list.innerHTML = items.slice().reverse().map((f, idx) => {
+        const creator = (f.user && f.user !== "User") ? f.user : (f.ign || "User");
+        return `
+        <div class="fbItem" style="animation-delay: ${idx * 0.05}s">
+            <div class="fbHeader">
+                <span style="color: #448aff; font-weight:700;">${esc(creator)}</span>
+                <span style="opacity: 0.5; font-size: 11px;">${esc(f.category || "General")}</span>
+                <span>${esc(f.date)}</span>
+            </div>
+            <div class="fbText">${esc(f.text)}</div>
+            ${f.fileName ? `<div style="font-size: 11px; margin-top: 5px; color: #7c4dff;">📎 ${esc(f.fileName)}</div>` : ''}
         </div>
-        <div class="fbText">${esc(f.text)}</div>
-    </div>
-    `).join("");
+        `;
+    }).join("");
 }
 
 function handleFeedbackSubmit() {
     const text = $("#feedbackText").value.trim();
+    const ign = $("#feedbackIGN").value.trim();
+    const fileInput = $("#fileInput");
+    const ddSelected = document.querySelector('#catDropdown .selected-option');
+    const category = ddSelected ? ddSelected.getAttribute('data-value') : "General";
+
     if (!text) return;
 
+    if (!db) {
+        alert("Firebase not configured! Check console.");
+        return;
+    }
+
     const newEntry = {
-        user: "User", // We could add a name field if needed
+        user: "User",
+        ign: ign || "Unknown Noob",
         text: text,
+        category: category,
         date: new Date().toISOString()
     };
 
-    // Save to LocalStorage
-    const STORAGE_KEY = 'OMEGA_FEEDBACK_V2';
-    try {
-        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-        existing.push(newEntry);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-    } catch (e) {
-        console.error("Storage limit or error", e);
+    // Add file metadata if present
+    if (fileInput.files.length > 0) {
+        newEntry.fileName = fileInput.files[0].name;
     }
 
-    $("#feedbackText").value = "";
-    alert("Feedback saved locally! (Moderators can view it in mod.html)");
+    // Push to Firebase
+    db.ref("feedback").push(newEntry)
+        .then(() => {
+            $("#feedbackText").value = "";
+            $("#feedbackIGN").value = "";
+            $("#fileInput").value = "";
+            $("#fileName").textContent = "Upload Image/Video (Optional)";
+            alert("Feedback sent! Thank you, " + (ign || "Anonymous") + ".");
+        })
+        .catch(e => alert("Error sending: " + e.message));
 }
+
+// File name indicator
+document.addEventListener('change', e => {
+    if (e.target && e.target.id === 'fileInput') {
+        const label = document.getElementById('fileName');
+        if (label && e.target.files.length > 0) {
+            label.textContent = "Selected: " + e.target.files[0].name;
+        }
+    }
+});
 
 function downloadFeedback() {
     const STORAGE_KEY = 'OMEGA_FEEDBACK_V2';
@@ -528,7 +558,7 @@ async function init() {
     renderEvents(events);
     renderGrind("");
     renderUtility(normal, events);
-    renderChangelog(data.changelog);
+    renderChangelog(typeof OMEGA_CHANGELOG !== 'undefined' ? OMEGA_CHANGELOG : data.changelog);
     renderFeedbackList(data.feedback);
 
     // Feedback events
@@ -609,33 +639,9 @@ async function init() {
 
     // Initialize Firebase features
     initFirebaseFeatures();
-
-    // Load Roblox Avatars
-    loadRobloxAvatars();
 }
 
-function loadRobloxAvatars() {
-    const users = [
-        { id: 1408344502, el: document.querySelector('.roprofile[href*="1408344502"] img') },
-        { id: 644143396, el: document.querySelector('.roprofile[href*="644143396"] img') }
-    ];
 
-    const ids = users.map(u => u.id).join(",");
-    // Use Roblox Thumbnails API
-    fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=false`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.data && Array.isArray(data.data)) {
-                data.data.forEach(item => {
-                    const target = users.find(u => u.id === item.targetId);
-                    if (target && target.el && item.state === "Completed") {
-                        target.el.src = item.imageUrl;
-                    }
-                });
-            }
-        })
-        .catch(e => console.warn("Failed to load avatars", e));
-}
 
 let db = null;
 
