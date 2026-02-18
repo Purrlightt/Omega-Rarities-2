@@ -4,259 +4,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OR2 - Mod Feedback</title>
+    <title>OR2 - Moderator Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            background-color: #0b1020;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            padding: 40px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .feedback-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-
-        .feedback-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 8px;
-            font-family: monospace;
-        }
-
-        .feedback-text {
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        .controls {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .btn-danger {
-            background: rgba(255, 50, 50, 0.2);
-            color: #ff5555;
-            border: 1px solid rgba(255, 50, 50, 0.4);
-        }
-
-        .btn-danger:hover {
-            background: rgba(255, 50, 50, 0.3);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-left: 10px;
-        }
-
-        .badge-bug {
-            background: rgba(255, 80, 80, 0.2);
-            color: #ff6060;
-            border: 1px solid rgba(255, 80, 80, 0.3);
-        }
-
-        .badge-idea {
-            background: rgba(80, 255, 80, 0.2);
-            color: #60ff60;
-            border: 1px solid rgba(80, 255, 80, 0.3);
-        }
-
-        .badge-general {
-            background: rgba(100, 100, 255, 0.2);
-            color: #8080ff;
-            border: 1px solid rgba(100, 100, 255, 0.3);
-        }
-    </style>
+    <link rel="stylesheet" href="mod.css">
 </head>
 
 <body>
-
-    <div class="container">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
-            <h1>Moderator Feedback View</h1>
-            <a href="index.html" class="btn ghost tiny">Back to Hub</a>
-        </div>
-
-        <div class="controls" style="flex-wrap: wrap; align-items: center;">
-            <input type="text" id="searchInput" placeholder="Search text..."
-                style="padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-right: 10px;">
-
-            <select id="catFilter"
-                style="padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #1a1f35; color: white; margin-right: 10px; cursor: pointer;">
-                <option value="All">All Categories</option>
-                <option value="Bug">Bug Reports</option>
-                <option value="Suggestion">Suggestions</option>
-                <option value="General">General</option>
-            </select>
-
-            <button id="refreshBtn" class="btn tiny">Refresh</button>
-            <div style="flex:1"></div>
-            <button id="deleteSelectedBtn" class="btn btn-danger tiny">Delete Selected</button>
-        </div>
-
-        <div id="feedbackList">
-            <div class="muted">Loading...</div>
+    <div class="bg">
+        <div class="grid"></div>
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"
+            style="right: 10%; bottom: 20%; background: radial-gradient(circle, rgba(78, 207, 255, 0.2), transparent 70%);">
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <div class="main-content" style="margin-left:0; max-width: 1100px; margin: 0 auto; padding-top: 20px;">
+        <header class="mod-header">
+            <div>
+                <h1 class="mod-title">Moderator Dashboard</h1>
+                <p class="muted" style="font-size: 16px; margin-top: 4px;">Review and manage community insights</p>
+            </div>
+            <div class="partner-group">
+                <img src="assets/BrosDevs.webp" alt="BrosDevs" class="partner-logo">
+                <img src="assets/PurrlightStudios.png" alt="PurrlightStudios" class="partner-logo">
+            </div>
+        </header>
 
-    <script>
-        const STORAGE_KEY = 'OMEGA_FEEDBACK_V2';
-        let db = null;
-        let allData = []; // Store all data locally for filtering
+        <section class="mod-stats">
+            <div class="mod-card">
+                <div class="statLabel">Total Signals</div>
+                <div class="statValue" id="statTotal" style="color: #7c4dff; font-size: 32px; font-weight: 800;">—</div>
+            </div>
+            <div class="mod-card">
+                <div class="statLabel">Bug Alerts</div>
+                <div class="statValue" id="statBugs" style="color: #ff4d4d; font-size: 32px; font-weight: 800;">—</div>
+            </div>
+            <div class="mod-card">
+                <div class="statLabel">Suggestions</div>
+                <div class="statValue" id="statIdeas" style="color: #4ecfff; font-size: 32px; font-weight: 800;">—</div>
+            </div>
+        </section>
 
-        // PASTE YOUR FIREBASE CONFIG HERE
-        const firebaseConfig = {
-            apiKey: atob("QUl6YVN5Q2RyUGpmVkN1dXhQbEJKWmpQalZvT0VPV0VwUWk3ZmxN"),
-            authDomain: "or2-website.firebaseapp.com",
-            projectId: "or2-website",
-            storageBucket: "or2-website.firebasestorage.app",
-            messagingSenderId: "600553286698",
-            appId: "1:600553286698:web:e20be6c4f43132c2f4a753",
-            measurementId: "G-2NGK5BQE55",
-            databaseURL: "https://or2-website-default-rtdb.europe-west1.firebasedatabase.app"
-        };
+        <div class="mod-controls">
+            <div class="mod-search-wrap">
+                <span class="search-icon-mod">
+                    <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                    </svg>
+                </span>
+                <input type="text" id="modSearch" class="mod-search-input"
+                    placeholder="Search feedback text, names, or IGNs...">
+            </div>
 
-        function init() {
-            if (firebaseConfig.databaseURL) {
-                try {
-                    firebase.initializeApp(firebaseConfig);
-                    db = firebase.database();
-                    console.log("Firebase initialized");
-
-                    // Listen for real-time updates
-                    db.ref("feedback").on("value", (snap) => {
-                        const data = [];
-                        snap.forEach(child => {
-                            // Include key for deletion
-                            data.push({ ...child.val(), id: child.key });
-                        });
-                        allData = data;
-                        render();
-                    });
-                } catch (e) {
-                    console.error("Firebase Error", e);
-                    renderLocalStorage();
-                }
-            } else {
-                renderLocalStorage();
-            }
-        }
-
-        function renderLocalStorage() {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (!raw) {
-                allData = [];
-                render();
-                return;
-            }
-            try {
-                allData = JSON.parse(raw);
-                render();
-            } catch (e) {
-                allData = [];
-                render();
-            }
-        }
-
-        function render() {
-            const list = document.getElementById('feedbackList');
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const cat = document.getElementById('catFilter').value;
-
-            // Filter
-            let filtered = allData.filter(item => {
-                const matchText = (item.text || "").toLowerCase().includes(search) || (item.user || "").toLowerCase().includes(search);
-                const matchCat = cat === "All" || (item.category || "General") === cat;
-                return matchText && matchCat;
-            });
-
-            if (filtered.length === 0) {
-                list.innerHTML = '<div class="muted">No matching feedback found.</div>';
-                return;
-            }
-
-            // Sort newest first
-            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            list.innerHTML = filtered.map(item => {
-                let badgeClass = "badge-general";
-                if (item.category === "Bug") badgeClass = "badge-bug";
-                if (item.category === "Suggestion") badgeClass = "badge-idea";
-
-                const catLabel = item.category || "General";
-
-                return `
-                <div class="feedback-card" style="display:flex; gap: 15px; align-items: flex-start;">
-                    <div style="padding-top: 4px;">
-                        <input type="checkbox" class="del-check" data-id="${item.id}">
-                    </div>
-                    <div style="flex:1">
-                        <div class="feedback-meta">
-                            <span>${escapeHtml(item.date)}</span>
-                            <span>${escapeHtml(item.user)}</span>
-                            <span class="badge ${badgeClass}">${escapeHtml(catLabel)}</span>
-                        </div>
-                        <div class="feedback-text">${escapeHtml(item.text)}</div>
-                    </div>
+            <div class="custom-dd-mod" id="modCatSelect">
+                <div class="dd-selected-mod">
+                    <span id="ddLabel">All Categories</span>
+                    <svg style="width:18px;height:18px;margin-left:10px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </svg>
                 </div>
-            `}).join('');
-        }
+                <div class="dd-options-mod">
+                    <div class="dd-item-mod" data-value="All">All Categories</div>
+                    <div class="dd-item-mod" data-value="Bug">Bug Report 🪲</div>
+                    <div class="dd-item-mod" data-value="Suggestion">Suggestion 💡</div>
+                    <div class="dd-item-mod" data-value="General">General / Other 💬</div>
+                </div>
+            </div>
 
-        function escapeHtml(text) {
-            if (!text) return "";
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
+            <button id="delSelected" class="btn tiny mod-batch-btn">Delete Selected</button>
+            <a href="index.html" class="btn ghost tiny" style="border-radius:12px">Back to Hub</a>
+            </header>
 
-        // Event Listeners for Filters
-        document.getElementById('searchInput').addEventListener('input', render);
-        document.getElementById('catFilter').addEventListener('change', render);
-        document.getElementById('refreshBtn').addEventListener('click', () => location.reload());
+            <div id="modList">
+                <div class="muted" style="text-align: center; padding: 100px;">Establishing connection to the cloud...
+                </div>
+            </div>
 
-        // Batch Delete
-        document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
-            if (!db) return alert("Delete only works with Firebase in this version.");
+            <div style="height: 100px;"></div>
+        </div>
 
-            const checks = document.querySelectorAll('.del-check:checked');
-            if (checks.length === 0) return alert("No items selected.");
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-            if (confirm(`Delete ${checks.length} selected items?`)) {
-                checks.forEach(box => {
-                    const id = box.getAttribute('data-id');
-                    if (id) db.ref("feedback/" + id).remove();
+        <script>
+            const firebaseConfig = {
+                apiKey: atob("QUl6YVN5Q2RyUGpmVkN1dXhQbEJKWmpQalZvT0VPV0VwUWk3ZmxN"),
+                authDomain: "or2-website.firebaseapp.com",
+                projectId: "or2-website",
+                storageBucket: "or2-website.firebasestorage.app",
+                messagingSenderId: "600553286698",
+                appId: "1:600553286698:web:e20be6c4f43132c2f4a753",
+                measurementId: "G-2NGK5BQE55",
+                databaseURL: "https://or2-website-default-rtdb.europe-west1.firebasedatabase.app"
+            };
+
+            let db = null;
+            let masterData = [];
+            let activeCategory = "All";
+
+            function init() {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+
+                db.ref("feedback").on("value", (snap) => {
+                    const results = [];
+                    snap.forEach(child => {
+                        results.push({ ...child.val(), id: child.key });
+                    });
+                    masterData = results;
+                    updateView();
+                    updateStats();
+                });
+
+                // Custom Dropdown Logic
+                const dd = document.getElementById('modCatSelect');
+                const ddLabel = document.getElementById('ddLabel');
+
+                dd.addEventListener('click', () => dd.classList.toggle('active'));
+
+                document.querySelectorAll('.dd-item-mod').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        activeCategory = item.dataset.value;
+                        ddLabel.textContent = item.textContent;
+                        dd.classList.remove('active');
+                        updateView();
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!dd.contains(e.target)) dd.classList.remove('active');
                 });
             }
-        });
 
-        // Init
-        init();
-    </script>
+            function updateStats() {
+                document.getElementById('statTotal').textContent = masterData.length;
+                document.getElementById('statBugs').textContent = masterData.filter(i => i.category === 'Bug').length;
+                document.getElementById('statIdeas').textContent = masterData.filter(i => i.category === 'Suggestion').length;
+            }
+
+            function updateView() {
+                const list = document.getElementById('modList');
+                const query = document.getElementById('modSearch').value.toLowerCase();
+
+                let filtered = masterData.filter(item => {
+                    const searchStr = ((item.text || "") + (item.ign || "") + (item.user || "")).toLowerCase();
+                    const matchText = searchStr.includes(query);
+                    const matchCat = activeCategory === "All" || (item.category || "General") === activeCategory;
+                    return matchText && matchCat;
+                });
+
+                filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                if (filtered.length === 0) {
+                    list.innerHTML = `<div class="mod-card" style="text-align:center; color: var(--muted2); padding: 60px;">No incoming signals found in this frequency.</div>`;
+                    return;
+                }
+
+                list.innerHTML = filtered.map((item, index) => {
+                    const bClass = (item.category === "Bug") ? "badge-bug" : (item.category === "Suggestion" ? "badge-suggestion" : "badge-general");
+                    const dateStr = item.date ? new Date(item.date).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : "Unknown Time";
+
+                    return `
+                <div class="mod-card fb-item-mod" style="animation-delay: ${index * 0.05}s">
+                    <input type="checkbox" class="fb-checkbox del-check" data-id="${item.id}">
+                    <div>
+                        <div class="fb-meta-mod">
+                            <span class="ign-gradient">${esc(item.ign || "Anonymous User")}</span>
+                            <span>•</span>
+                            <span>${dateStr}</span>
+                            <span class="badge-mod ${bClass}">${esc(item.category || "General")}</span>
+                        </div>
+                        <div style="color: rgba(255,255,255,0.95); font-size: 16px; line-height: 1.6; white-space: pre-wrap; font-weight: 500;">${esc(item.text)}</div>
+                        ${item.fileName ? `<div style="margin-top: 14px; font-size: 13px; color: #4ecfff; display:flex; align-items:center; gap:8px; background: rgba(78, 207, 255, 0.05); padding: 8px 12px; border-radius: 10px; width: fit-content; border: 1px solid rgba(78, 207, 255, 0.2);">
+                            <svg style="width:16px;height:16px" viewBox="0 0 24 24"><path fill="currentColor" d="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z" /></svg>
+                            <span style="font-family: var(--mono)">${esc(item.fileName)}</span>
+                        </div>` : ''}
+                    </div>
+                </div>
+                `;
+                }).join('');
+            }
+
+            function esc(str) {
+                if (!str) return "";
+                return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+            }
+
+            document.getElementById('modSearch').addEventListener('input', updateView);
+
+            document.getElementById('delSelected').addEventListener('click', () => {
+                const checks = document.querySelectorAll('.del-check:checked');
+                if (checks.length === 0) return alert("Select signals to terminate.");
+                if (confirm(`Confirm permanent deletion of ${checks.length} signals?`)) {
+                    checks.forEach(c => db.ref("feedback/" + c.dataset.id).remove());
+                }
+            });
+
+            init();
+        </script>
 </body>
 
 </html>
-```
