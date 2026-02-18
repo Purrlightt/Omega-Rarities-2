@@ -117,7 +117,7 @@
             <path fill="currentColor"
               d="M11 18h2v-2h-2v2Zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4Z" />
           </svg></span>
-        <span>RRM Tutorial</span>
+        <span>Tutorial</span>
       </button>
       <button class="navBtn" data-tab="changelog">
         <span class="navIcon"><svg viewBox="0 0 24 24">
@@ -136,13 +136,11 @@
 
       <div class="navLabel">Roblox Users</div>
       <a class="navBtn roprofile" href="https://www.roblox.com/users/1408344502/profile" target="_blank">
-        <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1408344502-png/150/150/AvatarHeadshot/Png/noFilter" alt=""
-          class="pfp">
+        <img src="assets/PurrlightStudios.png" alt="Purrlight" class="pfp">
         <span>Purrlight</span>
       </a>
       <a class="navBtn roprofile" href="https://www.roblox.com/users/644143396/profile" target="_blank">
-        <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-644143396-png/150/150/AvatarHeadshot/Png/noFilter" alt=""
-          class="pfp">
+        <img src="assets/BrosDevs.webp" alt="mafia_faka" class="pfp">
         <span>mafia_faka</span>
       </a>
     </div>
@@ -253,8 +251,11 @@
             <div>Stats</div>
           </div>
           <div class="muted"
-            style="padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255, 255, 255, .05);">
-            Note: All rune stats are calculated with the max rune cap.
+            style="padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255, 255, 255, .05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <span>Note: The Reborn 5 setting could have wrong values, Let us know by Sending a Feedback with your
+              rune stats!</span>
+            <span style="color: #7c4dff; font-weight: 600;">🪲 Found a bug? Let us know in the <strong>Feedback</strong>
+              tab!</span>
           </div>
           <div id="runeRows" class="rows"></div>
         </div>
@@ -383,34 +384,69 @@
         </div>
       </div>
 
-      <!-- TUTORIAL -->
+
+      <!-- TUTORIAL HUB -->
       <div class="tabpane" id="tab-tutorial" role="tabpanel">
-        <div class="tutWrap">
-          <div class="tutSection" style="border-color: rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05);">
-            <h3 class="h3" style="color: #ff4d4d;">⚠️ Important: RPS Limit</h3>
-            <p class="muted">Your actual <strong>RPS amount</strong> must be <strong>equal to or below</strong> the
-              calculated number for your Rune Clones. If your RPS is higher than the requirement, it will not work!</p>
+        <div class="tut-hub">
+          <!-- Rare Rune Milestone Tutorial -->
+          <div class="tut-item">
+            <div class="tut-bar" onclick="this.classList.toggle('active')">
+              <div class="tut-name">Rare Rune Milestone</div>
+              <div class="tut-purpose">A tutorial for the rare rune milestone, merging RPS limits, luck settings, and
+                bulk optimization.</div>
+              <div class="tut-author">Created by <strong>Purrlight</strong></div>
+            </div>
+            <div class="tut-content">
+              <div class="tutSection"
+                style="border-color: rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 class="h3" style="color: #ff4d4d; margin-top: 0;">⚠️ Important: RPS Limit</h3>
+                <p class="muted">Your actual <strong>RPS amount</strong> must be <strong>equal to or below</strong> the
+                  calculated number for your Rune Clones. If your RPS is higher than the requirement, it will not work!
+                </p>
+              </div>
+
+              <div class="tutSection" style="margin-bottom: 20px;">
+                <h3 class="h3">1. Find Your Rune Clones</h3>
+                <p class="muted">To use the calculator, you need your exact <strong>Rune Clone</strong> count. You can
+                  find this in your <strong>Profile</strong> menu inside the game.</p>
+                <div class="tutImg"><img src="assets/ProfileTut.png" alt="Profile Tutorial"></div>
+              </div>
+
+              <div class="tutSection" style="margin-bottom: 20px;">
+                <h3 class="h3">2. Turn Off Luck</h3>
+                <p class="muted">For the Rune Grind calculations to be accurate, you MUST have your <strong>Luck turned
+                    OFF</strong>. This ensures the base drop rates are used.</p>
+                <div class="tutImg"><img src="assets/RuneLuck.png" alt="Rune Luck Settings"></div>
+              </div>
+
+              <div class="tutSection">
+                <h3 class="h3">3. Tweak Your Bulk</h3>
+                <p class="muted">Before starting your grind, ensure you tweak your <strong>Bulk amount</strong> in the
+                  settings to optimize your efficiency.</p>
+                <div class="tutImg"><img src="assets/RuneBulk.png" alt="Rune Bulk Settings"></div>
+              </div>
+            </div>
           </div>
 
-          <div class="tutSection">
-            <h3 class="h3">1. Find Your Rune Clones</h3>
-            <p class="muted">To use the calculator, you need your exact <strong>Rune Clone</strong> count. You can
-              find this in your <strong>Profile</strong> menu inside the game.</p>
-            <div class="tutImg"><img src="assets/ProfileTut.png" alt="Profile Tutorial"></div>
-          </div>
-
-          <div class="tutSection">
-            <h3 class="h3">2. Turn Off Luck</h3>
-            <p class="muted">For the Rune Grind calculations to be accurate, you MUST have your <strong>Luck turned
-                OFF</strong>. This ensures the base drop rates are used.</p>
-            <div class="tutImg"><img src="assets/RuneLuck.png" alt="Rune Luck Settings"></div>
-          </div>
-
-          <div class="tutSection">
-            <h3 class="h3">3. Tweak Your Bulk</h3>
-            <p class="muted">Before starting your grind, ensure you tweak your <strong>Bulk amount</strong> in the
-              settings to optimize your efficiency.</p>
-            <div class="tutImg"><img src="assets/RuneBulk.png" alt="Rune Bulk Settings"></div>
+          <!-- Rune Clones Tutorial -->
+          <div class="tut-item">
+            <div class="tut-bar" onclick="this.classList.toggle('active')">
+              <div class="tut-name">Rune Clones Tutorial</div>
+              <div class="tut-purpose">How to get more rune clones tutorial.</div>
+              <div class="tut-author">Created by <strong>Purrlight</strong></div>
+            </div>
+            <div class="tut-content">
+              <p class="muted" style="line-height: 1.6; margin-bottom: 20px;">
+                Getting more rune clones is essential for progression. But the only way to get them is Via Passives.
+                To get passives you have to go into World 3 and roll your passives using Passive Keys, which can be
+                obtained from rolling runes.
+                With Anomaly you max out at 23, the only way to get higher is geting a better passive, (as of right now
+                its Supernova)
+                This got suggested by someone but we didn't have a "Input your name" system so we couldnt know who it
+                was, thank you tho.
+              </p>
+              <div class="tutImg"><img src="assets/Passives.png" alt="Passives Tutorial"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -466,6 +502,9 @@
 
             <div class="field" style="margin-top: 15px;">
 
+              <input id="feedbackIGN" type="text" placeholder="Your In-game Name (IGN)" class="calcInput"
+                style="margin-bottom: 10px; width: 100%; border-radius: 12px; padding: 12px;">
+
               <!-- Custom Dropdown -->
               <div id="catDropdown" class="custom-dropdown calcInput"
                 style="margin-bottom: 10px; cursor: pointer; padding: 0; height: auto; position: relative;">
@@ -485,7 +524,17 @@
               </div>
 
               <textarea id="feedbackText" rows="4" placeholder="Type your feedback here..." class="calcInput"
-                style="height: auto; padding: 12px; border-radius: 14px; resize: vertical;"></textarea>
+                style="height: auto; padding: 12px; border-radius: 14px; resize: vertical; margin-bottom: 10px;"></textarea>
+
+              <div class="file-upload-wrap">
+                <label for="fileInput" class="file-label">
+                  <svg style="width:20px;height:20px;" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
+                  </svg>
+                  <span id="fileName">Upload Image/Video (Optional)</span>
+                </label>
+                <input type="file" id="fileInput" accept="image/*,video/*">
+              </div>
             </div>
             <button class="btn" id="submitFeedback" style="margin-top: 10px; width: 100%;">Submit Feedback</button>
           </div>
@@ -508,9 +557,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
   <script src="assets/data.js?v=6"></script>
+  <script src="assets/changelog.js?v=6"></script>
   <script src="assets/calculator.js?v=6"></script>
 </body>
 
 </html>
-
-
