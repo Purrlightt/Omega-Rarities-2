@@ -260,7 +260,7 @@ body {
 @keyframes paneIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
 
   to {
@@ -730,13 +730,11 @@ select {
   from {
     opacity: 0;
     transform: translateY(15px) scale(0.97);
-    filter: blur(4px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -911,9 +909,12 @@ select {
   box-shadow: 0 4px 15px rgba(124, 77, 255, 0.3);
 }
 
-.multiChip[data-val="__all"].active {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+.multiChip[data-val="__all"].active,
+.multiChip[data-val="__all"]:hover {
+  background: linear-gradient(135deg, #448aff, #4ecfff) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(68, 138, 255, 0.4) !important;
 }
 
 /* ===== Tutorial ===== */
@@ -1154,25 +1155,16 @@ select {
   animation: shine 3s linear infinite;
 }
 
-.rune-slime {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #66ff00, #00ff15, #66ff00);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
 .multiChip[data-val="Slime"].active,
 .multiChip[data-val="Slime"]:hover {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #66ff00, #00ff15, #66ff00);
+  background: linear-gradient(90deg, #66ff00, #00ff15, #66ff00) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+  border-color: rgba(0, 255, 21, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(0, 255, 21, 0.2) !important;
 }
 
 /* Fire World */
@@ -1246,6 +1238,18 @@ select {
   animation: shine 3s linear infinite;
 }
 
+.multiChip[data-val="Fire"].active,
+.multiChip[data-val="Fire"]:hover {
+  background: linear-gradient(90deg, #fffb00, #ffae00) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(255, 174, 0, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(255, 174, 0, 0.2) !important;
+}
+
 /* Water World */
 .rune-coral {
   color: #f06292;
@@ -1299,6 +1303,18 @@ select {
   background-image: linear-gradient(90deg, #00f7ff, #78fbff, #00f7ff);
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+}
+
+.multiChip[data-val="Water"].active,
+.multiChip[data-val="Water"]:hover {
+  background: linear-gradient(90deg, #00f7ff, #78fbff, #00f7ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(0, 247, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(0, 247, 255, 0.2) !important;
 }
 
 /* Plasma World */
@@ -1368,6 +1384,18 @@ select {
   animation: shine 3s linear infinite;
 }
 
+.multiChip[data-val="Plasma"].active,
+.multiChip[data-val="Plasma"]:hover {
+  background: linear-gradient(90deg, #b700ff, #cc00ff, #b700ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(183, 0, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(183, 0, 255, 0.2) !important;
+}
+
 /* Snow World */
 .rune-glacial {
   color: #e1f5fe;
@@ -1426,6 +1454,18 @@ select {
   background-image: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff);
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+}
+
+.multiChip[data-val="Snow"].active,
+.multiChip[data-val="Snow"]:hover {
+  background: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(191, 224, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(191, 224, 255, 0.2) !important;
 }
 
 /* Frost World */
@@ -1491,6 +1531,18 @@ select {
   background-image: linear-gradient(90deg, #57d8ff, #c9e5ff);
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+}
+
+.multiChip[data-val="Frost"].active,
+.multiChip[data-val="Frost"]:hover {
+  background: linear-gradient(90deg, #57d8ff, #c9e5ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(87, 216, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(87, 216, 255, 0.2) !important;
 }
 
 /* Snowflakes World */
@@ -1574,6 +1626,18 @@ select {
   animation: shine 3s linear infinite;
 }
 
+.multiChip[data-val="Snowflakes"].active,
+.multiChip[data-val="Snowflakes"]:hover {
+  background: linear-gradient(90deg, #57d8ff, #c9e5ff, #57d8ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(87, 216, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(87, 216, 255, 0.2) !important;
+}
+
 /* Stardust World */
 .rune-stardust-core {
   color: #d6d6d6;
@@ -1633,6 +1697,18 @@ select {
   animation: shine 3s linear infinite;
 }
 
+.multiChip[data-val="Stardust"].active,
+.multiChip[data-val="Stardust"]:hover {
+  background: linear-gradient(90deg, #fff09d, #ffee8a) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(255, 240, 157, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(255, 240, 157, 0.2) !important;
+}
+
 /* Comets World */
 .rune-cosmic-frost {
   color: #b3f6ff;
@@ -1690,6 +1766,18 @@ select {
   background-image: linear-gradient(90deg, #ca45ff, #33f1ff);
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+}
+
+.multiChip[data-val="Comets"].active,
+.multiChip[data-val="Comets"]:hover {
+  background: linear-gradient(90deg, #ca45ff, #33f1ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(202, 69, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(202, 69, 255, 0.2) !important;
 }
 
 /* Meteors World */
@@ -1755,6 +1843,18 @@ select {
   background-image: linear-gradient(90deg, #78e4ff, #33beff);
   background-size: 150% auto;
   animation: shine 3s linear infinite;
+}
+
+.multiChip[data-val="Meteors"].active,
+.multiChip[data-val="Meteors"]:hover {
+  background: linear-gradient(90deg, #78e4ff, #33beff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(120, 228, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(120, 228, 255, 0.2) !important;
 }
 
 /* Event Runes */
@@ -1828,6 +1928,43 @@ select {
   animation: shine 3s linear infinite;
 }
 
+/* ===== Category Gradients ===== */
+
+.multiChip[data-val="Spawn"].active,
+.multiChip[data-val="Spawn"]:hover {
+  background: linear-gradient(90deg, #009e00, #89f0fd) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(0, 158, 0, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(0, 158, 0, 0.2) !important;
+}
+
+.multiChip[data-val="Snow"].active,
+.multiChip[data-val="Snow"]:hover {
+  background: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(191, 224, 255, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(191, 224, 255, 0.2) !important;
+}
+
+.multiChip[data-val="Galactic"].active,
+.multiChip[data-val="Galactic"]:hover {
+  background: linear-gradient(90deg, #690dfc, #110dff) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 150% auto;
+  animation: shine 3s linear infinite;
+  border-color: rgba(105, 13, 252, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(105, 13, 252, 0.2) !important;
+}
 
 /* ===== Rune Gradients ===== */
 @keyframes shine {
@@ -1866,7 +2003,7 @@ select {
   padding: 20px;
   margin-bottom: 20px;
   position: relative;
-  animation: paneIn 0.4s ease forwards;
+  /* Removed animation to prevent flicker with tab transition */
 }
 
 .versionTag {
@@ -1912,7 +2049,7 @@ select {
   border: 1px solid rgba(255, 255, 255, .08);
   border-radius: 12px;
   padding: 14px;
-  animation: rowIn 0.3s ease forwards;
+  /* Removed animation to prevent flicker with tab transition */
 }
 
 .fbHeader {
@@ -1959,4 +2096,125 @@ select {
 
 .toggleBtn:hover:not(.active) {
   color: rgba(255, 255, 255, .8);
+}
+
+/* ===== Tutorial Hub & Bars ===== */
+.tut-hub {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.tut-bar {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px 24px;
+  gap: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.tut-bar:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(6px);
+  border-color: rgba(124, 77, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.tut-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.tut-purpose {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.tut-author {
+  text-align: right;
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+.tut-author strong {
+  color: #7c4dff;
+  font-weight: 700;
+}
+
+.tut-content {
+  display: none;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 24px;
+  margin-top: -8px;
+  animation: paneIn 0.4s ease-out;
+}
+
+.tut-bar.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: rgba(124, 77, 255, 0.6);
+  background: rgba(124, 77, 255, 0.05);
+}
+
+.tut-bar.active+.tut-content {
+  display: block;
+}
+
+/* ===== Feedback Enhancements ===== */
+.file-upload-wrap {
+  margin-top: 10px;
+  position: relative;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  padding: 12px 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.file-label:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #7c4dff;
+  color: #fff;
+}
+
+#fileInput {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+@media (max-width: 800px) {
+  .tut-bar {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .tut-author {
+    text-align: left;
+    margin-top: 4px;
+  }
 }
