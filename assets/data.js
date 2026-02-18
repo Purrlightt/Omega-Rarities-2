@@ -278,7 +278,7 @@ const OMEGA_DATA = {
             "worldNo": "Snow",
             "rune": "Blizzardcore",
             "chance": "1/4t",
-            "stats": ["x6.4k Luck", "x6.4k XP", "x12 Frost"]
+            "stats": ["x6.4k Luck", "x5.4k XP", "x12 Frost"]
         },
         {
             "world": "Snow",
@@ -635,7 +635,7 @@ const OMEGA_DATA = {
             "event": "1M Event World 2",
             "rune": "1M Rookie",
             "chance": "1/2.5k",
-            "stats": ["x160 Fire", "x36.8 Rune Bulk", "x33.6 Rune Luck"]
+            "stats": ["x160 Fire", "x36.8 Rune Bulk", "x33.8 Rune Luck"]
         },
         {
             "event": "1M Event World 2",
@@ -680,42 +680,6 @@ const OMEGA_DATA = {
             "stats": ["x40Qn Luck", "x8 Singularity", "x8 Meteors", "x6.8 Rune Bulk", "x6.8 Rune Luck", "x2 Passive"]
         }
     ],
-    "changelog": [
-        {
-            "version": "v1.1.2",
-            "date": "2026-02-16",
-            "changes": [
-                "Fixed a Typo in a Rune.",
-                "Renamed Tutorial to RRM Tutorial for better understanding"
-            ]
-        },
-        {
-            "version": "v1.1.1",
-            "date": "2026-02-16",
-            "changes": [
-                "Fixed a Security Vulnerability.",
-                "Fixed a Typo in a Rune."
-            ]
-        },
-        {
-            "version": "v1.1.0",
-            "date": "2026-02-15",
-            "changes": [
-                "Added Changelog tab.",
-                "Added Feedback system.",
-                "Added Rune Cap toggle (Max / Reborn 5)."
-            ]
-        },
-        {
-            "version": "v1.0.0",
-            "date": "2026-02-08",
-            "changes": [
-                "Initial release of Rune Hub.",
-                "Added Rune Calculator.",
-                "Added Event Runes."
-            ]
-        }
-    ],
     "feedback": [
         {
             "user": "System",
@@ -724,8 +688,3 @@ const OMEGA_DATA = {
         }
     ]
 };
-
-
-
-
-
