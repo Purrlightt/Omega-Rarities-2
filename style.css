@@ -1,2220 +1,564 @@
-:root {
-  --bg0: #070A12;
-  --bg1: #0B1020;
-
-  --text: rgba(255, 255, 255, .92);
-  --muted: rgba(255, 255, 255, .70);
-  --muted2: rgba(255, 255, 255, .55);
-
-  --shadow: 0 24px 80px rgba(0, 0, 0, .55);
-  --shadow2: 0 10px 30px rgba(0, 0, 0, .4);
-  --r2: 24px;
-
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scrollbar-gutter: stable;
-}
-
-body {
-  margin: 0;
-  font-family: var(--sans);
-  color: var(--text);
-  background:
-    radial-gradient(1100px 650px at 20% 0%, rgba(124, 77, 255, .14), transparent 58%),
-    radial-gradient(900px 600px at 85% 15%, rgba(77, 255, 136, .12), transparent 60%),
-    radial-gradient(900px 700px at 50% 110%, rgba(45, 212, 255, .10), transparent 60%),
-    linear-gradient(180deg, var(--bg0), var(--bg1));
-  overflow: hidden;
-  /* Prevent body scroll */
-  height: 100vh;
-  /* Fixed height */
-}
-
-/* ===== Background FX ===== */
-.bg {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-}
-
-.grid {
-  position: absolute;
-  inset: -2px;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, .06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, .06) 1px, transparent 1px);
-  background-size: 56px 56px;
-  opacity: .14;
-}
-
-.orb {
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  border-radius: 999px;
-  filter: blur(40px);
-  opacity: .28;
-  mix-blend-mode: screen;
-}
-
-.o1 {
-  left: -140px;
-  top: -160px;
-  background: radial-gradient(circle at 30% 30%, rgba(124, 77, 255, .9), transparent 55%);
-}
-
-.o2 {
-  right: -180px;
-  top: 40px;
-  background: radial-gradient(circle at 30% 30%, rgba(77, 255, 136, .9), transparent 55%);
-}
-
-.o3 {
-  left: 25%;
-  bottom: -260px;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 77, 216, .8), transparent 60%);
-}
-
-/* ===== STATIC LOGO watermark (no movement) ===== */
-.logoFade {
-  position: absolute;
-  inset: 0;
-  background-image: url("assets/logo.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  opacity: .10;
-
-  transform: none !important;
-  will-change: auto;
-
-  -webkit-mask-image: radial-gradient(circle at 50% 22%,
-      rgba(0, 0, 0, .95) 0%,
-      rgba(0, 0, 0, .62) 36%,
-      rgba(0, 0, 0, 0) 72%);
-  mask-image: radial-gradient(circle at 50% 22%,
-      rgba(0, 0, 0, .95) 0%,
-      rgba(0, 0, 0, .62) 36%,
-      rgba(0, 0, 0, 0) 72%);
-}
-
-/* ===== Sidebar Navigation ===== */
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 260px;
-  background: rgba(11, 16, 32, 0.95);
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  z-index: 100;
-  backdrop-filter: blur(14px);
-  overflow-y: auto;
-}
-
-.sidebar .brand {
-  margin-bottom: 30px;
-  padding-left: 8px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.sidebar .logo {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(77, 255, 136, .18), rgba(124, 77, 255, .18));
-  border: 1px solid rgba(255, 255, 255, .14);
-  box-shadow: var(--shadow2);
-  font-weight: 900;
-  font-size: 22px;
-}
-
-.brandText .kicker {
-  font-size: 12px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted2);
-}
-
-.brandText h1 {
-  margin: 2px 0 0;
-  font-size: 18px;
-  letter-spacing: .02em;
-}
-
-.navLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.navLabel {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  color: var(--muted2);
-  margin: 16px 0 8px 12px;
-  font-weight: 700;
-}
-
-.navBtn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.65);
-  cursor: pointer;
-  transition: all .2s ease;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.navBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  transform: translateX(4px);
-}
-
-.navBtn.active {
-  background: linear-gradient(90deg, rgba(124, 77, 255, 0.15), rgba(45, 212, 255, 0.1));
-  color: #fff;
-  border-left: 3px solid #7c4dff;
-}
-
-.navIcon,
-.navBtn span {
-  pointer-events: none;
-}
-
-.navIcon {
-  display: grid;
-  place-items: center;
-}
-
-.navIcon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.roprofile {
-  margin-top: 4px;
-}
-
-.pfp {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.sidebarFooter {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* ===== Main Content ===== */
-.main-content {
-  margin-left: 260px;
-  padding: 30px 40px;
-  max-width: 1400px;
-  height: 100vh;
-  /* Full viewport height */
-  overflow-y: auto;
-  /* Scroll internally */
-}
-
-.tabpane {
-  display: none;
-  padding: 12px 6px 6px;
-}
-
-.tabpane.active {
-  display: block !important;
-  animation: paneIn .3s ease-out;
-}
-
-@keyframes paneIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===== Buttons & Cards ===== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: rgba(255, 255, 255, .92);
-  background: linear-gradient(135deg, rgba(124, 77, 255, .24), rgba(45, 212, 255, .16));
-  border: 1px solid rgba(255, 255, 255, .14);
-  box-shadow: var(--shadow2);
-  transition: transform .15s cubic-bezier(0.4, 0, 0.2, 1), filter .15s ease, background .15s ease;
-  cursor: pointer;
-}
-
-.btn:hover {
-  transform: translateY(-2px) scale(1.02);
-  filter: brightness(1.15);
-  background: linear-gradient(135deg, rgba(124, 77, 255, .35), rgba(45, 212, 255, .25));
-}
-
-.btn:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.btn.ghost {
-  background: rgba(255, 255, 255, .06);
-}
-
-.btn.tiny {
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 13px;
-}
-
-.btnIcon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .06));
-  border: 1px solid rgba(255, 255, 255, .14);
-  border-radius: var(--r2);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-  margin-bottom: 24px;
-}
-
-/* ===== Hero ===== */
-.hero {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 18px;
-  margin-bottom: 14px;
-}
-
-.hero h2 {
-  margin: 8px 0 8px;
-  font-size: 20px;
-}
-
-.hero p {
-  margin: 0;
-  line-height: 1.5;
-}
-
-.heroRight {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.stat {
-  min-width: 160px;
-  padding: 12px;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, .22);
-  border: 1px solid rgba(255, 255, 255, .12);
-}
-
-.statLabel {
-  font-size: 12px;
-  color: var(--muted2);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.statValue {
-  margin-top: 8px;
-  font-family: var(--mono);
-  font-size: 18px;
-}
-
-/* ===== Responsive Mobile ===== */
-@media (max-width: 1000px) {
-  .sidebar {
-    width: 80px;
-    padding: 16px 8px;
-    overflow-x: hidden;
-  }
-
-  .sidebar .brandText,
-  .navLabel,
-  .navBtn span:last-child {
-    display: none;
-  }
-
-  .navBtn {
-    justify-content: center;
-    padding: 14px;
-  }
-
-  .sidebarFooter {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebarFooter span:last-child {
-    display: none;
-  }
-
-  .main-content {
-    margin-left: 80px;
-    padding: 20px;
-  }
-}
-
-@media (max-width: 650px) {
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 70px;
-    flex-direction: row;
-    overflow-y: hidden;
-    overflow-x: auto;
-    z-index: 900;
-    padding: 8px;
-    justify-content: space-evenly;
-    border-right: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(11, 16, 32, 0.98);
-  }
-
-  .sidebar .logo,
-  .sidebar .brand,
-  .sidebarFooter,
-  .navLabel {
-    display: none;
-  }
-
-  .navLinks {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-evenly;
-  }
-
-  .navBtn {
-    padding: 10px;
-    flex-direction: column;
-    gap: 4px;
-    border-radius: 8px;
-  }
-
-  .navBtn svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .navBtn.active {
-    border-left: none;
-    border-bottom: 3px solid #7c4dff;
-    background: transparent;
-  }
-
-  /* Hide Roblox users on tiny navbar */
-  .roprofile {
-    display: none;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding: 16px 16px 100px;
-    /* offset for bottom nav */
-  }
-
-  .hero {
-    flex-direction: column;
-    gap: 15px;
-  }
-}
-
-
-.h3 {
-  margin: 8px 6px 6px;
-  font-size: 16px;
-}
-
-.muted {
-  color: var(--muted);
-}
-
-.footer {
-  margin-top: 16px;
-  text-align: center;
-}
-
-.hint {
-  padding: 10px 6px 4px;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.mono {
-  font-family: var(--mono);
-}
-
-/* ===== Controls ===== */
-.controls {
-  display: grid;
-  gap: 12px;
-  padding: 12px 6px;
-  align-items: end;
-  /* Prevent items sticking out */
-}
-
-/* 4-item grid (Runes tab) */
-.controls-4 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) auto;
-}
-
-/* 5-item grid (Drop Calc tab) */
-.controls-5 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) auto;
-}
-
-.controls .btn {
-  margin-bottom: 2px;
-  white-space: nowrap;
-  /* Prevent button text wrap */
-  flex-shrink: 0;
-}
-
-.controlsSmall {
-  grid-template-columns: 1.4fr 1.4fr auto;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.fieldLabel {
-  font-size: 12px;
-  color: var(--muted2);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-input[type="search"],
-select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(0, 0, 0, .22);
-  color: rgba(255, 255, 255, .92);
-  outline: none;
-}
-
-input[type="search"]::placeholder {
-  color: rgba(255, 255, 255, .35);
-}
-
-select {
-  cursor: pointer;
-}
-
-.inputIcon {
-  position: relative;
-}
-
-.inputIcon .ii {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255, 255, 255, .55);
-  pointer-events: none;
-}
-
-.inputIcon .ii svg {
-  width: 16px;
-  height: 16px;
-}
-
-.inputIcon input {
-  padding-left: 38px;
-  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.inputIcon input:focus {
-  border-color: rgba(124, 77, 255, 0.5);
-  background: rgba(124, 77, 255, 0.05);
-  box-shadow: 0 0 20px rgba(124, 77, 255, 0.15);
-}
-
-/* Specialized Calculator Input */
-.calcInput {
-  border-radius: 999px !important;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  padding-left: 44px !important;
-  font-size: 16px !important;
-  font-weight: 600;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.calcInput:focus {
-  background: rgba(124, 77, 255, 0.08) !important;
-  border-color: rgba(124, 77, 255, 0.6) !important;
-  box-shadow:
-    0 0 20px rgba(124, 77, 255, 0.2),
-    inset 0 0 10px rgba(124, 77, 255, 0.1) !important;
-  transform: translateY(-1px);
-}
-
-/* ===== LIST (Grid Rows) - fixes alignment ===== */
-.listWrap {
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(0, 0, 0, .20);
-}
-
-.rowHeader {
-  display: grid;
-  grid-template-columns: 140px 280px 1fr;
-  text-align: center;
-  padding: 12px 14px;
-  background: rgba(0, 0, 0, .55);
-  border-bottom: 1px solid rgba(255, 255, 255, .12);
-  gap: 16px;
-  font-size: 12px;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .78);
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  backdrop-filter: blur(10px);
-}
-
-.rowHeaderEvents {
-  grid-template-columns: 260px 280px 1fr;
-}
-
-.rows {
-  display: block;
-  min-height: 400px;
-  transition: opacity .3s ease;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: 140px 280px 1fr;
-  align-items: center;
-  text-align: center;
-  padding: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
-  gap: 16px;
-  transition: all .45s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: rowIn .5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-  will-change: transform, opacity;
-}
-
-/* ===== Mobile Responsiveness ===== */
-@media (max-width: 1000px) {
-  .hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .navActions {
-    justify-content: center;
-  }
-
-  .controls,
-  .controls-4,
-  .controls-5 {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .controls>*:last-child,
-  .controls-4>*:last-child,
-  .controls-5>*:last-child {
-    grid-column: span 2;
-  }
-
-  .rowHeader,
-  .row {
-    grid-template-columns: 80px 180px 1fr;
-    font-size: 13px;
-    gap: 8px;
-    padding: 10px 4px;
-  }
-
-  .worldNote {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 650px) {
-  .rowHeader {
-    display: none;
-  }
-
-  .row {
-    grid-template-columns: 1fr;
-    text-align: left;
-    gap: 10px;
-    padding: 20px 15px;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .row:hover {
-    transform: translateY(-2px);
-  }
-
-  .rname {
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .stats {
-    justify-content: flex-start;
-  }
-
-  .worldNote {
-    display: inline-block;
-    margin-left: 10px;
-  }
-}
-
-@keyframes rowIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px) scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.rowEvents {
-  grid-template-columns: 260px 280px 1fr;
-}
-
-.row:hover {
-  background: rgba(255, 255, 255, .08);
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, .4);
-  border-color: rgba(255, 255, 255, .2);
-  z-index: 5;
-  position: relative;
-  border-radius: 12px;
-}
-
-.rname {
-  font-weight: 900;
-  letter-spacing: .01em;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, .1);
-}
-
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(255, 255, 255, .06);
-  color: rgba(255, 255, 255, .88);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.chip.small {
-  padding: 6px 8px;
-  min-width: 36px;
-  justify-content: center;
-}
-
-.pillStat {
-  font-family: var(--mono);
-  font-size: 12px;
-  padding: 6px 9px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: linear-gradient(135deg, rgba(45, 212, 255, .12), rgba(255, 77, 216, .10));
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
-  transition: all .2s ease;
-  cursor: default;
-}
-
-.pillStat:hover {
-  border-color: rgba(255, 255, 255, .3);
-  transform: translateY(-1px);
-  filter: brightness(1.1);
-}
-
-.emptyBox {
-  padding: 18px;
-  color: rgba(255, 255, 255, .65);
-  text-align: center;
-}
-
-/* ===== Grind ===== */
-.grindWrap {
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(0, 0, 0, .20);
-}
-
-.grindNote {
-  padding: 12px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
-}
-
-.grindTable {
-  padding: 10px;
-}
-
-.ggrid {
-  display: grid;
-  grid-template-columns: repeat(var(--cols), minmax(180px, 1fr));
-  gap: 8px;
-}
-
-.gth {
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .78);
-  padding: 10px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, .12);
-  background: rgba(0, 0, 0, .35);
-}
-
-.gtd {
-  padding: 10px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, .10);
-  background: rgba(255, 255, 255, .04);
-  color: rgba(255, 255, 255, .86);
-  overflow-wrap: anywhere;
-}
-
-/* ===== Data pane ===== */
-.sourceBox {
-  padding: 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(0, 0, 0, .22);
-}
-
-.note {
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(255, 255, 255, .04);
-}
-
-.worldNote {
-  font-size: 11px;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 4px;
-}
-
-/* ===== Filter Chips ===== */
-.chipGroup {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 4px 0;
-}
-
-.multiChip {
-  padding: 6px 14px;
-  border-radius: 50px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
-}
-
-.multiChip:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
-}
-
-.multiChip.active {
-  background: linear-gradient(135deg, #7c4dff, #448aff);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(124, 77, 255, 0.3);
-}
-
-.multiChip[data-val="__all"].active,
-.multiChip[data-val="__all"]:hover {
-  background: linear-gradient(135deg, #448aff, #4ecfff) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  color: #fff !important;
-  box-shadow: 0 4px 15px rgba(68, 138, 255, 0.4) !important;
-}
-
-/* ===== Tutorial ===== */
-.tutWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 10px 4px;
-}
-
-.tutSection {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 20px;
-}
-
-.tutSection h3 {
-  margin-top: 0;
-  color: #fff;
-}
-
-.tutSection p {
-  margin-bottom: 16px;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.tutImg {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.tutImg img {
-  width: 100%;
-  display: block;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 980px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .actions {
-    width: 100%;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .hero {
-    flex-direction: column;
-  }
-
-  .heroRight {
-    justify-content: flex-start;
-  }
-
-  .controls,
-  .controlsSmall {
-    grid-template-columns: 1fr;
-  }
-
-  .rowHeader,
-  .row {
-    grid-template-columns: 140px 52px 1fr;
-  }
-
-  .rowHeader div:nth-child(4),
-  .row div:nth-child(4) {
-    grid-column: 1 / -1;
-    margin-top: 8px;
-  }
-
-  .rowHeaderEvents,
-  .rowEvents {
-    grid-template-columns: 180px 1fr;
-  }
-
-  .rowHeaderEvents div:nth-child(3),
-  .rowEvents div:nth-child(3) {
-    grid-column: 1 / -1;
-    margin-top: 8px;
-  }
-}
-
-/* ===== Custom Dropdown Revamp ===== */
-.customDropdown {
-  position: relative;
-  width: 100%;
-}
-
-.dropInputWrap {
-  position: relative;
-  width: 100%;
-}
-
-.dropInputWrap .ii {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted2);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.dropInputWrap .ii svg {
-  width: 18px;
-  height: 18px;
-}
-
-.dropList {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  max-height: 300px;
-  overflow-y: auto;
-  background: rgba(11, 16, 32, 0.98);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 18px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
-  z-index: 9999;
-  padding: 8px;
-  display: none;
-  animation: paneIn 0.2s ease-out;
-}
-
-.dropList.active {
-  display: block;
-}
-
-.dropItem {
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.dropItem:hover,
-.dropItem.highlight {
-  background: rgba(124, 77, 255, 0.15);
-  color: #fff;
-}
-
-.dropItem .itemChance {
-  font-family: var(--mono);
-  font-size: 11px;
-  opacity: 0.5;
-}
-
-/* Custom Scrollbar for DropList */
-.dropList::-webkit-scrollbar {
-  width: 6px;
-}
-
-.dropList::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.dropList::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.dropList::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.rune-grad {
-  font-weight: 800;
-}
-
-/* Slime World */
-.rune-clear {
-  color: #4dd0e1;
-}
-
-.rune-cloud {
-  color: #e0e0e0;
-}
-
-.rune-butter {
-  color: #ffd54f;
-}
-
-.rune-crunchy {
-  color: #8bc34a;
-}
-
-.rune-icee {
-  color: #b39ddb;
-}
-
-.rune-jelly-cube {
-  color: #ffab91;
-}
-
-.rune-glossy {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(0deg, #ff1cff, #fa9aff, #ff1cff);
-  background-size: auto 150%;
-  animation: shineVertical 3s linear infinite;
-}
-
-.rune-prismatic {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff15ff, #28fff4);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-genesis {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #7c09ff, #00c3ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Slime"].active,
-.multiChip[data-val="Slime"]:hover {
-  background: linear-gradient(90deg, #66ff00, #00ff15, #66ff00) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(0, 255, 21, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(0, 255, 21, 0.2) !important;
-}
-
-/* Fire World */
-.rune-ember {
-  color: #ff9800;
-}
-
-.rune-smoke {
-  color: #9e9e9e;
-}
-
-.rune-flame {
-  color: #ffd54f;
-}
-
-.rune-charcoal {
-  color: #757575;
-}
-
-.rune-inferno {
-  color: #ff6e40;
-}
-
-.rune-lava-core {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ffd900f3, #f6ff7e, #ffd900f3);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-phoenix {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff0ccaf3, #ffd000f3);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-hades {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #530000f3, #940000f3, #530000f3);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-hellstorm-core {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff7300f3, #fffb00f3);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-fire {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #fffb00, #ffae00);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Fire"].active,
-.multiChip[data-val="Fire"]:hover {
-  background: linear-gradient(90deg, #fffb00, #ffae00) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(255, 174, 0, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(255, 174, 0, 0.2) !important;
-}
-
-/* Water World */
-.rune-coral {
-  color: #f06292;
-}
-
-.rune-mist {
-  color: #e0e0e0;
-}
-
-.rune-stream {
-  color: #0078bd;
-}
-
-.rune-tide {
-  color: #006b9c;
-}
-
-.rune-tsunami {
-  color: #00bcd4;
-}
-
-.rune-abyss {
-  color: #0e002e;
-}
-
-.rune-leviathan {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff00ea, #ff00bf, #ff00ea);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-poseidon {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #00fff2, #fbff00, #ffee00);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-water {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #00f7ff, #78fbff, #00f7ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Water"].active,
-.multiChip[data-val="Water"]:hover {
-  background: linear-gradient(90deg, #00f7ff, #78fbff, #00f7ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(0, 247, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(0, 247, 255, 0.2) !important;
-}
-
-/* Plasma World */
-.rune-spark {
-  color: #f291ff;
-}
-
-.rune-ionized {
-  color: #d40000;
-}
-
-.rune-voltage {
-  color: #4dd0e1;
-}
-
-.rune-charged {
-  color: #33ff00;
-}
-
-.rune-supernova {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #e5ff00, #ff00c8, #e5ff00);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-nebula {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #38005e, #8700a8, #c300ff);
-  background-size: auto 150%;
-  animation: shineVertical 3s linear infinite;
-}
-
-.rune-quasar {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(0deg, #ea00ff, #fffb00);
-  background-size: auto 150%;
-  animation: shineVertical 3s linear infinite;
-}
-
-.rune-celestial {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(0deg, #38005e, #8700a8, #c300ff);
-  background-size: auto 150%;
-  animation: shineVertical 3s linear infinite;
-}
-
-.rune-plasma {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #b700ff, #cc00ff, #b700ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Plasma"].active,
-.multiChip[data-val="Plasma"]:hover {
-  background: linear-gradient(90deg, #b700ff, #cc00ff, #b700ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(183, 0, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(183, 0, 255, 0.2) !important;
-}
-
-/* Snow World */
-.rune-glacial {
-  color: #e1f5fe;
-}
-
-.rune-powder {
-  color: #ffffff;
-}
-
-.rune-rime {
-  color: #b3e5fc;
-}
-
-.rune-sleet {
-  color: #81d4fa;
-}
-
-.rune-permafrost {
-  color: #4fc3f7;
-}
-
-.rune-blizzardcore {
-  color: #29b6f6;
-}
-
-.rune-aurora-borealis {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #e100ff, #80d0ff);
-  background-size: 200% auto;
-  animation: shine 4s linear infinite;
-}
-
-.rune-polar-vortex {
-  color: #8cd7ff;
-}
-
-.rune-absolute-zero {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #f5a6ff, #98bcff);
-  background-size: 200% auto;
-  animation: shine 4s linear infinite;
-  text-shadow: 0 0 15px rgba(160, 232, 255, 0.8);
-}
-
-.rune-snow {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Snow"].active,
-.multiChip[data-val="Snow"]:hover {
-  background: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(191, 224, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(191, 224, 255, 0.2) !important;
-}
-
-/* Frost World */
-.rune-frostbite {
-  color: #b3e5fc;
-}
-
-.rune-icicle {
-  color: #45c4ff;
-}
-
-.rune-frozen {
-  color: #afe6ff;
-}
-
-.rune-cryogenic {
-  color: #ff8aef;
-}
-
-.rune-subzero {
-  color: #b3ff00;
-}
-
-.rune-frostcore {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #4662ad, #522180, #4662ad);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-crystalline {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #2243a0, #a200ff, #ee9bff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-deep-freeze {
-  color: #00d9ff;
-}
-
-.rune-eternal-ice {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff00ea, #b8b8b8, #3d7bff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-frost {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #57d8ff, #c9e5ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Frost"].active,
-.multiChip[data-val="Frost"]:hover {
-  background: linear-gradient(90deg, #57d8ff, #c9e5ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(87, 216, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(87, 216, 255, 0.2) !important;
-}
-
-/* Snowflakes World */
-.rune-needle {
-  color: #9adfff;
-}
-
-.rune-column {
-  color: #5eccff;
-}
-
-.rune-plate {
-  color: #81d4fa;
-}
-
-.rune-stellar {
-  color: #dc6bff;
-}
-
-.rune-sectored {
-  color: #84d8ff;
-}
-
-.rune-fernlike {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #adedfd, #56befa);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-radiating {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #adedfd, #df56fa);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-capped {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #adedfd, #56faec);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-crystal {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #fdffa1, #fcff55);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-cosmic-ice {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #9645ff, #150031);
-  background-size: 200% auto;
-  animation: shine 5s linear infinite;
-}
-
-.rune-snowflake {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #57d8ff, #c9e5ff, #57d8ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Snowflakes"].active,
-.multiChip[data-val="Snowflakes"]:hover {
-  background: linear-gradient(90deg, #57d8ff, #c9e5ff, #57d8ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(87, 216, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(87, 216, 255, 0.2) !important;
-}
-
-/* Stardust World */
-.rune-stardust-core {
-  color: #d6d6d6;
-}
-
-.rune-stardust-shard {
-  color: #5fbdfc;
-}
-
-.rune-stardust-relic {
-  color: #2bdfff;
-}
-
-.rune-stardust-fragment {
-  color: #4b0088;
-}
-
-.rune-stardust-sigil {
-  color: #cf00be;
-}
-
-.rune-stardust-ember {
-  color: #f951ff;
-}
-
-.rune-stardust-nexus {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #1d006b, #bfeaf1);
-  background-size: 200% auto;
-  animation: shine 5s linear infinite;
-}
-
-.rune-stardust-essence {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #bcffff, #00d6cb);
-  background-size: 200% auto;
-  animation: shine 5s linear infinite;
-}
-
-.rune-stardust-remnant {
-  color: #c23fff;
-}
-
-.rune-stardust {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #fff09d, #ffee8a);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Stardust"].active,
-.multiChip[data-val="Stardust"]:hover {
-  background: linear-gradient(90deg, #fff09d, #ffee8a) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(255, 240, 157, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(255, 240, 157, 0.2) !important;
-}
-
-/* Comets World */
-.rune-cosmic-frost {
-  color: #b3f6ff;
-}
-
-.rune-stellar-ice {
-  color: #b384c5;
-}
-
-.rune-orbital-debris {
-  color: #8f6a9e;
-}
-
-.rune-drift-fragment {
-  color: #734399;
-}
-
-.rune-velocity-mark {
-  color: #a055cc;
-}
-
-.rune-atmospheric-burn {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #f4c6ff, #e167ff);
-  background-size: 200% auto;
-  animation: shine 5s linear infinite;
-}
-
-.rune-impact-horizon {
-  color: #f4c7ff;
-}
-
-.rune-extinction-core {
-  color: #d6b3ff;
-}
-
-.rune-astral-flux {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ce63ff, #eabbff);
-  background-size: 300% auto;
-  animation: shine 6s linear infinite;
-}
-
-.rune-comets {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ca45ff, #33f1ff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Comets"].active,
-.multiChip[data-val="Comets"]:hover {
-  background: linear-gradient(90deg, #ca45ff, #33f1ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(202, 69, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(202, 69, 255, 0.2) !important;
-}
-
-/* Meteors World */
-.rune-iron-fragment {
-  color: #f8c0ff;
-}
-
-.rune-molten-stone {
-  color: #acacac;
-}
-
-.rune-crater-dust {
-  color: #f4c9ff;
-}
-
-.rune-scorched-trail {
-  color: #ff00c8;
-}
-
-.rune-blazing-core {
-  color: #27f8ff;
-}
-
-.rune-fireball-spark {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ffae00, #ff3c00);
-  background-size: 300% auto;
-  animation: shine 6s linear infinite;
-}
-
-.rune-shockwave-echo {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff9abc, #762dff);
-  background-size: 300% auto;
-  animation: shine 6s linear infinite;
-}
-
-.rune-cataclysm-shard {
-  color: #53c0ff;
-}
-
-.rune-cosmic-ember {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #8c00ff, #3700ff);
-  background-size: 200% auto;
-  animation: shine 4s linear infinite;
-}
-
-.rune-meteors {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #78e4ff, #33beff);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-.multiChip[data-val="Meteors"].active,
-.multiChip[data-val="Meteors"]:hover {
-  background: linear-gradient(90deg, #78e4ff, #33beff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(120, 228, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(120, 228, 255, 0.2) !important;
-}
-
-/* Event Runes */
-.rune-1m-noob {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff8eec, #ffe397);
-  background-size: 200% auto;
-  animation: shine 4s linear infinite;
-}
-
-.rune-1m-rookie {
-  color: #41d3ff;
-}
-
-.rune-1m-skilled {
-  color: #42a5f5;
-}
-
-.rune-1m-expert {
-  color: #47a5bc;
-}
-
-.rune-1m-master {
-  color: #ffa2e3;
-}
-
-.rune-1m-elite {
-  color: #36f4eb;
-}
-
-.rune-1m-mythic {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #fffb00, #ffbb00);
-  background-size: 200% auto;
-  animation: shine 4s linear infinite;
-}
-
-.rune-1m-god {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #fff4b3, #ffc43b);
-  background-size: 200% auto;
-  animation: shine 3s linear infinite;
-}
-
-.rune-1m-absolute {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ffdd00, #4ecfff, #00ff88, #448aff);
-  background-size: 300% auto;
-  animation: shine 5s linear infinite;
-}
-
-.rune-1m {
-  display: inline-block;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, #ff39d4, #ff0d92);
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-}
-
-/* ===== Category Gradients ===== */
-
-.multiChip[data-val="Spawn"].active,
-.multiChip[data-val="Spawn"]:hover {
-  background: linear-gradient(90deg, #009e00, #89f0fd) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(0, 158, 0, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(0, 158, 0, 0.2) !important;
-}
-
-.multiChip[data-val="Snow"].active,
-.multiChip[data-val="Snow"]:hover {
-  background: linear-gradient(90deg, #bfe0ff, #a8d5ff, #bfe0ff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(191, 224, 255, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(191, 224, 255, 0.2) !important;
-}
-
-.multiChip[data-val="Galactic"].active,
-.multiChip[data-val="Galactic"]:hover {
-  background: linear-gradient(90deg, #690dfc, #110dff) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-size: 150% auto;
-  animation: shine 3s linear infinite;
-  border-color: rgba(105, 13, 252, 0.4) !important;
-  box-shadow: 0 4px 15px rgba(105, 13, 252, 0.2) !important;
-}
-
-/* ===== Rune Gradients ===== */
-@keyframes shine {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes shineVertical {
-  0% {
-    background-position: 50% 0%;
-  }
-
-  50% {
-    background-position: 50% 100%;
-  }
-
-  100% {
-    background-position: 50% 0%;
-  }
-}
-
-/* ===== Changelog ===== */
-.changelogItem {
-  background: rgba(0, 0, 0, .22);
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-  position: relative;
-  /* Removed animation to prevent flicker with tab transition */
-}
-
-.versionTag {
-  display: inline-block;
-  background: rgba(124, 77, 255, 0.2);
-  border: 1px solid rgba(124, 77, 255, 0.3);
-  color: #b388ff;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  font-family: var(--mono);
-}
-
-.chDate {
-  font-size: 13px;
-  color: var(--muted);
-  margin-left: 10px;
-}
-
-.chList {
-  margin: 10px 0 0 20px;
-  padding: 0;
-  color: rgba(255, 255, 255, .85);
-  line-height: 1.6;
-}
-
-.chList li {
-  margin-bottom: 6px;
-}
-
-/* ===== Feedback ===== */
-.feedbackList {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.fbItem {
-  background: rgba(255, 255, 255, .04);
-  border: 1px solid rgba(255, 255, 255, .08);
-  border-radius: 12px;
-  padding: 14px;
-  /* Removed animation to prevent flicker with tab transition */
-}
-
-.fbHeader {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: var(--muted2);
-}
-
-.fbText {
-  color: rgba(255, 255, 255, .9);
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
-
-/* ===== Toggle ===== */
-.toggleWrap {
-  display: flex;
-  background: rgba(0, 0, 0, .4);
-  border-radius: 10px;
-  padding: 4px;
-  gap: 4px;
-}
-
-.toggleBtn {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, .5);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all .2s ease;
-  font-weight: 600;
-  font-family: var(--sans);
-}
-
-.toggleBtn.active {
-  background: rgba(124, 77, 255, 0.3);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
-}
-
-.toggleBtn:hover:not(.active) {
-  color: rgba(255, 255, 255, .8);
-}
-
-/* ===== Tutorial Hub & Bars ===== */
-.tut-hub {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 10px;
-}
-
-.tut-bar {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
-  align-items: center;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 16px 24px;
-  gap: 20px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-}
-
-.tut-bar:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateX(6px);
-  border-color: rgba(124, 77, 255, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.tut-name {
-  font-size: 18px;
-  font-weight: 800;
-  color: #fff;
-}
-
-.tut-purpose {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-.tut-author {
-  text-align: right;
-  font-size: 12px;
-  color: var(--muted2);
-}
-
-.tut-author strong {
-  color: #7c4dff;
-  font-weight: 700;
-}
-
-.tut-content {
-  display: none;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-top: none;
-  border-radius: 0 0 16px 16px;
-  padding: 24px;
-  margin-top: -8px;
-  animation: paneIn 0.4s ease-out;
-}
-
-.tut-bar.active {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-color: rgba(124, 77, 255, 0.6);
-  background: rgba(124, 77, 255, 0.05);
-}
-
-.tut-bar.active+.tut-content {
-  display: block;
-}
-
-/* ===== Feedback Enhancements ===== */
-.file-upload-wrap {
-  margin-top: 10px;
-  position: relative;
-}
-
-.file-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  padding: 12px 20px;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.file-label:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #7c4dff;
-  color: #fff;
-}
-
-#fileInput {
-  position: absolute;
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  z-index: -1;
-}
-
-@media (max-width: 800px) {
-  .tut-bar {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 20px;
-  }
-
-  .tut-author {
-    text-align: left;
-    margin-top: 4px;
-  }
-}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Omega Rarities 2 • Rune Hub</title>
+  <link rel="stylesheet" href="style.css?v=8" />
+  <meta name="color-scheme" content="dark" />
+</head>
+
+<body>
+  <!-- ICON SPRITE -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="i-game" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M7 16a1 1 0 0 1-1-1v-2H4a1 1 0 1 1 0-2h2V9a1 1 0 1 1 2 0v2h2a1 1 0 1 1 0 2H8v2a1 1 0 0 1-1 1Zm10-6a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1Zm-2 3a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1Z" />
+      <path fill="currentColor"
+        d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4h-1.2a3 3 0 0 1-2.6-1.5l-.6-1a2 2 0 0 0-3.2 0l-.6 1A3 3 0 0 1 7.2 18H6a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v3a2 2 0 0 0 2 2h1.2a1 1 0 0 0 .87-.5l.6-1a4 4 0 0 1 6.62 0l.6 1a1 1 0 0 0 .87.5H18a2 2 0 0 0 2-2v-3a3 3 0 0 0-3-3H7Z" />
+    </symbol>
+
+    <symbol id="i-runes" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M12 2 3 6.5V17.5L12 22l9-4.5V6.5L12 2Zm0 2.2 6.8 3.4L12 11 5.2 7.6 12 4.2ZM5 9.6l6 3V19l-6-3V9.6Zm14 0V16l-6 3v-6.8l6-2.6Z" />
+    </symbol>
+
+    <symbol id="i-event" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7Zm0 9.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+    </symbol>
+
+    <symbol id="i-grind" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M4 4h16v4H4V4Zm0 6h16v10H4V10Zm3 2v2h10v-2H7Zm0 4v2h7v-2H7Z" />
+    </symbol>
+
+    <symbol id="i-source" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Zm0 12L3 9v9l9 4 9-4V9l-9 5Z" />
+    </symbol>
+
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M10 2a8 8 0 1 1 5.3 14l4.2 4.2a1 1 0 0 1-1.4 1.4L14 17.4A8 8 0 0 1 10 2Zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z" />
+    </symbol>
+
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M18.3 5.7a1 1 0 0 1 0 1.4L13.4 12l4.9 4.9a1 1 0 0 1-1.4 1.4L12 13.4l-4.9 4.9a1 1 0 0 1-1.4-1.4l4.9-4.9-4.9-4.9A1 1 0 0 1 7.1 5.7L12 10.6l4.9-4.9a1 1 0 0 1 1.4 0Z" />
+    </symbol>
+
+    <symbol id="i-discord" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M19.3 4.5a16.3 16.3 0 0 0-4-1.2l-.2.4c1.5.4 2.8 1.1 4 2-1-.6-2-1-3.2-1.3l-.8-.2h-6.2l-.8.2c-1.2.3-2.3.7-3.2 1.3 1.2-.9 2.5-1.6 4-2l-.2-.4c-1.4.2-2.7.6-4 1.2a18.2 18.2 0 0 0-3.3 7.8c.8 1.4 2.2 2.4 3.8 2.8l.8-1c-1-.3-1.8-.8-2.5-1.5l.3.2c.8.5 1.7.9 2.6 1.2 1 .3 2.1.5 3.2.5s2.2-.2 3.2-.5a11.9 11.9 0 0 0 2.6-1.2 8.6 8.6 0 0 0 .6-.4c-.7.7-1.5 1.2-2.5 1.5l.8 1c1.6-.4 3-1.4 3.8-2.8 1.1-3.6.5-6.5-3.3-7.8ZM8.5 13c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5Zm7 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5Z" />
+    </symbol>
+  </svg>
+
+  <div class="bg">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="grid"></div>
+    <div class="logoFade" aria-hidden="true"></div>
+  </div>
+
+  <nav class="sidebar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">Ω</div>
+      <div class="brandText">
+        <div class="kicker">Omega Rarities 2</div>
+        <h1>Rune Hub</h1>
+      </div>
+    </div>
+
+    <div class="navLinks">
+      <div class="navLabel">Menu</div>
+      <button class="navBtn active" data-tab="runes">
+        <span class="navIcon"><svg>
+            <use href="#i-runes" />
+          </svg></span>
+        <span>Runes</span>
+      </button>
+      <button class="navBtn" data-tab="events">
+        <span class="navIcon"><svg>
+            <use href="#i-event" />
+          </svg></span>
+        <span>Event Runes</span>
+      </button>
+      <button class="navBtn" data-tab="grind">
+        <span class="navIcon"><svg>
+            <use href="#i-grind" />
+          </svg></span>
+        <span>Rare Rune Grind</span>
+      </button>
+      <button class="navBtn" data-tab="utility">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor" d="M7 2v11h3v9l7-12h-4l3-8z" />
+          </svg></span>
+        <span>Utility</span>
+      </button>
+      <button class="navBtn" data-tab="dropcalc">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M19,19H5V5H19V19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.03,7.06L14.09,8.12L11.41,10.8L14.09,13.47L13.03,14.53L10.35,11.86L7.67,14.53L6.61,13.47L9.29,10.8L6.61,8.12L7.67,7.06L10.35,9.74L13.03,7.06Z" />
+          </svg></span>
+        <span>Drop Calc</span>
+      </button>
+
+      <div class="navLabel">Info</div>
+      <button class="navBtn" data-tab="info">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M11 9h2V7h-2v2Zm0 8h2v-6h-2v6Zm1-15C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Z" />
+          </svg></span>
+        <span>Quick Info</span>
+      </button>
+      <button class="navBtn" data-tab="tutorial">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M11 18h2v-2h-2v2Zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8Zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4Z" />
+          </svg></span>
+        <span>Tutorial</span>
+      </button>
+      <button class="navBtn" data-tab="changelog">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+          </svg></span>
+        <span>Changelog</span>
+      </button>
+      <button class="navBtn" data-tab="feedback">
+        <span class="navIcon"><svg viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z" />
+          </svg></span>
+        <span>Feedback</span>
+      </button>
+
+      <div class="navLabel">Roblox Users</div>
+      <a class="navBtn roprofile" href="https://www.roblox.com/users/1408344502/profile" target="_blank">
+        <img src="assets/PurrlightStudios.png" alt="Purrlight" class="pfp">
+        <span>Purrlight</span>
+      </a>
+      <a class="navBtn roprofile" href="https://www.roblox.com/users/644143396/profile" target="_blank">
+        <img src="assets/BrosDevs.webp" alt="mafia_faka" class="pfp">
+        <span>mafia_faka</span>
+      </a>
+    </div>
+
+    <div class="activeUsers" style="margin-top:auto; padding-top: 20px; text-align: center;">
+      <div
+        style="font-size: 11px; color: var(--muted2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px;">
+        Active Users</div>
+      <div
+        style="font-family: var(--mono); color: #4ecfff; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span
+          style="display: inline-block; width: 8px; height: 8px; background: #4ecfff; border-radius: 50%; box-shadow: 0 0 10px #4ecfff;"></span>
+        <span id="activeUserCount">...</span>
+      </div>
+    </div>
+
+    <div class="sidebarFooter">
+      <a class="btn ghost tiny" href="https://discord.com/channels/1327972266356768800/1467144703190241291"
+        target="_blank">
+        <span class="btnIcon"><svg>
+            <use href="#i-discord" />
+          </svg></span>
+        <span>Discord</span>
+      </a>
+      <a class="btn ghost tiny" href="https://www.roblox.com/games/113717254672132/Omega-Rarities-2" target="_blank">
+        <span class="btnIcon"><svg>
+            <use href="#i-game" />
+          </svg></span>
+        <span>Game</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="hero card mobile-hero">
+      <div class="heroLeft">
+        <h2>Rune Hub Stats</h2>
+        <p class="muted">Static database for OR2.</p>
+      </div>
+      <div class="heroRight">
+        <div class="stat">
+          <div class="statLabel">Normal Runes</div>
+          <div class="statValue" id="countRunes">—</div>
+        </div>
+        <div class="stat">
+          <div class="statLabel">Event Runes</div>
+          <div class="statValue" id="countEvents">—</div>
+        </div>
+        <div class="stat">
+          <div class="statLabel">Max Rune Clones</div>
+          <div class="statValue">47</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RUNE CAP TOGGLE (Moved here for better mobile layout) -->
+    <div class="controls controls-1" style="margin-bottom: 20px;">
+      <label class="field"
+        style="flex-direction: row; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <span class="fieldLabel" style="margin: 0; font-size: 14px; color: #fff;">Rune Cap Mode</span>
+        <div class="toggleWrap">
+          <button class="toggleBtn active" data-cap="max">Max Cap</button>
+          <button class="toggleBtn" data-cap="reborn5">Reborn 5 (/4)</button>
+        </div>
+      </label>
+    </div>
+
+    <section class="content-area">
+      <!-- RUNES -->
+      <div class="tabpane active" id="tab-runes" role="tabpanel">
+        <div class="controls controls-4">
+          <label class="field">
+            <span class="fieldLabel">Rune Category</span>
+            <div id="runeChips" class="chipGroup">
+              <div class="multiChip active" data-val="__all">All</div>
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="fieldLabel">World</span>
+            <div id="worldChips" class="chipGroup">
+              <div class="multiChip active" data-val="__all">All</div>
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="fieldLabel">Search stats</span>
+            <div class="inputIcon">
+              <span class="ii"><svg>
+                  <use href="#i-search" />
+                </svg></span>
+              <input id="statsSearch" type="search" placeholder="x12 Speed, Rune Luck, Plasma..." autocomplete="off" />
+            </div>
+          </label>
+
+          <button class="btn tiny ghost" id="clearRunes" title="Clear filters">
+            <span class="btnIcon"><svg>
+                <use href="#i-x" />
+              </svg></span>
+            <span>Clear</span>
+          </button>
+        </div>
+
+        <div class="listWrap">
+          <div class="rowHeader">
+            <div>World</div>
+            <div>Rune</div>
+            <div>Stats</div>
+          </div>
+          <div class="muted"
+            style="padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(255, 255, 255, .05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <span>Note: The Reborn 5 setting could have wrong values, Let us know by Sending a Feedback with your
+              rune stats!</span>
+            <span style="color: #7c4dff; font-weight: 600;">🪲 Found a bug? Let us know in the <strong>Feedback</strong>
+              tab!</span>
+          </div>
+          <div id="runeRows" class="rows"></div>
+        </div>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="tabpane" id="tab-events" role="tabpanel">
+        <div class="controls controlsSmall">
+          <label class="field">
+            <span class="fieldLabel">Event</span>
+            <div id="eventChips" class="chipGroup">
+              <div class="multiChip active" data-val="__all">All Events</div>
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="fieldLabel">Search stats</span>
+            <div class="inputIcon">
+              <span class="ii"><svg>
+                  <use href="#i-search" />
+                </svg></span>
+              <input id="eventStatsSearch" type="search" placeholder="Singularity, Passive, Rune Luck..."
+                autocomplete="off" />
+            </div>
+          </label>
+
+          <button class="btn tiny ghost" id="clearEvents" title="Clear filters">
+            <span class="btnIcon"><svg>
+                <use href="#i-x" />
+              </svg></span>
+            <span>Clear</span>
+          </button>
+        </div>
+
+        <div class="listWrap">
+          <div class="rowHeader rowHeaderEvents">
+            <div>Event</div>
+            <div>Rune</div>
+            <div>Stats</div>
+          </div>
+          <div id="eventRows" class="rows"></div>
+        </div>
+      </div>
+
+      <div class="tabpane" id="tab-grind" role="tabpanel">
+        <div class="controls" style="grid-template-columns: 1fr auto;">
+          <label class="field">
+            <span class="fieldLabel">Your Rune Clones</span>
+            <div class="inputIcon">
+              <span class="ii"><svg>
+                  <use href="#i-search" />
+                </svg></span>
+              <input id="grindSearch" class="calcInput" type="number" placeholder="Enter exact number (e.g. 10)"
+                autocomplete="off" />
+            </div>
+          </label>
+
+          <button class="btn tiny ghost" id="clearGrind" title="Clear">
+            <span class="btnIcon"><svg>
+                <use href="#i-x" />
+              </svg></span>
+            <span>Reset</span>
+          </button>
+        </div>
+
+        <div id="grindResultArea"></div>
+      </div>
+
+      <!-- UTILITY -->
+      <div class="tabpane" id="tab-utility" role="tabpanel">
+        <div class="tutWrap" id="utilityArea"></div>
+      </div>
+
+      <!-- QUICK INFO -->
+      <div class="tabpane" id="tab-info" role="tabpanel">
+        <div class="tutWrap">
+          <div class="tutSection">
+            <h3 class="h3">Astral Flux Mechanics</h3>
+            <p class="muted">Astral Flux stats do not increase immediately. They start scaling at specific thresholds:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+              <div class="card" style="padding: 12px 16px; background: rgba(255, 255, 255, 0.03);">
+                <span class="fieldLabel" style="color: #448aff;">Bulk</span>
+                <div style="font-size: 18px; font-weight: 700;">Starts scaling at <span class="mono">100,000</span>
+                </div>
+              </div>
+              <div class="card" style="padding: 12px 16px; background: rgba(255, 255, 255, 0.03);">
+                <span class="fieldLabel" style="color: #448aff;">Speed</span>
+                <div style="font-size: 18px; font-weight: 700;">Starts scaling at <span class="mono">10,000,000</span>
+                  (10M)</div>
+              </div>
+              <div class="card" style="padding: 12px 16px; background: rgba(255, 255, 255, 0.03);">
+                <span class="fieldLabel" style="color: #448aff;">Luck</span>
+                <div style="font-size: 18px; font-weight: 700;">Starts scaling at <span
+                    class="mono">10,000,000,000</span> (10B)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tutSection">
+            <h3 class="h3">1M Absolute Caps</h3>
+            <p class="muted">Specific info regarding the 1M Absolute rune's maximum potential:</p>
+            <ul style="color: var(--muted); padding-left: 20px; line-height: 1.6;">
+              <li>This Rune (1M Event) <span class="mono" style="color: #fff;">Stays Forever</span>, because the Update
+                (Upd 1)
+                Was Balanced using this rune.</li>
+              <li>At around <span class="mono" style="color: #fff;">108k</span>, it maxes out **everything except
+                Luck**.</li>
+              <li>At around <span class="mono" style="color: #fff;">76.25k</span>, it maxes out **Rune Luck** and **Rune
+                Bulk**.
+              </li>
+            </ul>
+          </div>
+
+          <div class="tutSection" style="border-left: 4px solid #448aff; padding-left: 20px;">
+            <h3 class="h3">Event Rune Boost Rules</h3>
+            <p style="color: #fff; font-weight: 600;">Event Runes are unique and ONLY receive boosts from:</p>
+            <div class="stats" style="margin-top: 10px; justify-content: flex-start;">
+              <span class="pillStat">Gamepasses</span>
+              <span class="pillStat">Potions</span>
+              <span class="pillStat">The Rune itself</span>
+            </div>
+            <p class="muted" style="margin-top: 12px; font-size: 13px;">Other external multipliers do not apply to event
+              rune stats.</p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- TUTORIAL HUB -->
+      <div class="tabpane" id="tab-tutorial" role="tabpanel">
+        <div class="tut-hub">
+          <!-- Rare Rune Milestone Tutorial -->
+          <div class="tut-item">
+            <div class="tut-bar" onclick="this.classList.toggle('active')">
+              <div class="tut-name">Rare Rune Milestone</div>
+              <div class="tut-purpose">A tutorial for the rare rune milestone, merging RPS limits, luck settings, and
+                bulk optimization.</div>
+              <div class="tut-author">Created by <strong>Purrlight</strong></div>
+            </div>
+            <div class="tut-content">
+              <div class="tutSection"
+                style="border-color: rgba(255, 77, 77, 0.3); background: rgba(255, 77, 77, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 class="h3" style="color: #ff4d4d; margin-top: 0;">⚠️ Important: RPS Limit</h3>
+                <p class="muted">Your actual <strong>RPS amount</strong> must be <strong>equal to or below</strong> the
+                  calculated number for your Rune Clones. If your RPS is higher than the requirement, it will not work!
+                </p>
+              </div>
+
+              <div class="tutSection" style="margin-bottom: 20px;">
+                <h3 class="h3">1. Find Your Rune Clones</h3>
+                <p class="muted">To use the calculator, you need your exact <strong>Rune Clone</strong> count. You can
+                  find this in your <strong>Profile</strong> menu inside the game.</p>
+                <div class="tutImg"><img src="assets/ProfileTut.png" alt="Profile Tutorial"></div>
+              </div>
+
+              <div class="tutSection" style="margin-bottom: 20px;">
+                <h3 class="h3">2. Turn Off Luck</h3>
+                <p class="muted">For the Rune Grind calculations to be accurate, you MUST have your <strong>Luck turned
+                    OFF</strong>. This ensures the base drop rates are used.</p>
+                <div class="tutImg"><img src="assets/RuneLuck.png" alt="Rune Luck Settings"></div>
+              </div>
+
+              <div class="tutSection">
+                <h3 class="h3">3. Tweak Your Bulk</h3>
+                <p class="muted">Before starting your grind, ensure you tweak your <strong>Bulk amount</strong> in the
+                  settings to optimize your efficiency.</p>
+                <div class="tutImg"><img src="assets/RuneBulk.png" alt="Rune Bulk Settings"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rune Clones Tutorial -->
+          <div class="tut-item">
+            <div class="tut-bar" onclick="this.classList.toggle('active')">
+              <div class="tut-name">Rune Clones Tutorial</div>
+              <div class="tut-purpose">How to get more rune clones tutorial.</div>
+              <div class="tut-author">Created by <strong>Purrlight</strong></div>
+            </div>
+            <div class="tut-content">
+              <p class="muted" style="line-height: 1.6; margin-bottom: 20px;">
+                Getting more rune clones is essential for progression. But the only way to get them is Via Passives.
+                To get passives you have to go into World 3 and roll your passives using Passive Keys, which can be
+                obtained from rolling runes.
+                With Anomaly you max out at 23, the only way to get higher is geting a better passive, (as of right now
+                its Supernova)
+                This got suggested by someone but we didn't have a "Input your name" system so we couldnt know who it
+                was, thank you tho.
+              </p>
+              <div class="tutImg"><img src="assets/Passives.png" alt="Passives Tutorial"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DROP CALCULATOR -->
+      <div class="tabpane" id="tab-dropcalc" role="tabpanel">
+        <div class="controls controls-5">
+          <label class="field">
+            <span class="fieldLabel">Your RPS</span>
+            <input id="calcRPS" type="text" placeholder="e.g. 35.6Sx" class="calcInput" />
+          </label>
+          <label class="field">
+            <span class="fieldLabel">Rune Luck</span>
+            <input id="calcLuck" type="text" placeholder="e.g. 2.5Qd" class="calcInput" />
+          </label>
+          <label class="field">
+            <span class="fieldLabel">Target Quantity</span>
+            <input id="calcTarget" type="text" placeholder="e.g. 100k" class="calcInput" />
+          </label>
+          <label class="field">
+            <span class="fieldLabel">Select Rune</span>
+            <div class="customDropdown" id="calcRuneDropdown">
+              <div class="dropInputWrap">
+                <span class="ii"><svg>
+                    <use href="#i-search" />
+                  </svg></span>
+                <input type="text" id="calcRuneSearch" class="calcInput" placeholder="Search..." autocomplete="off" />
+              </div>
+              <ul class="dropList" id="calcRuneList"></ul>
+            </div>
+          </label>
+          <button class="btn tiny ghost" id="clearDropCalc" title="Clear">
+            <span class="btnIcon"><svg>
+                <use href="#i-x" />
+              </svg></span>
+            <span>Reset</span>
+          </button>
+        </div>
+        <div id="dropCalcResultArea"></div>
+      </div>
+
+      <!-- CHANGELOG -->
+      <div class="tabpane" id="tab-changelog" role="tabpanel">
+        <div class="tutWrap" id="changelogArea"></div>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div class="tabpane" id="tab-feedback" role="tabpanel">
+        <div class="tutWrap">
+          <div class="tutSection">
+            <h3 class="h3">Submit Feedback</h3>
+            <p class="muted">Found a bug or have a suggestion? Let us know!</p>
+
+            <div class="field" style="margin-top: 15px;">
+
+              <input id="feedbackIGN" type="text" placeholder="Your In-game Name (IGN)" class="calcInput"
+                style="margin-bottom: 10px; width: 100%; border-radius: 12px; padding: 12px;">
+
+              <!-- Custom Dropdown -->
+              <div id="catDropdown" class="custom-dropdown calcInput"
+                style="margin-bottom: 10px; cursor: pointer; padding: 0; height: auto; position: relative;">
+                <div class="selected-option" data-value="General"
+                  style="padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                  <span>General / Other</span>
+                  <span style="opacity: 0.5;">▼</span>
+                </div>
+                <div class="dropdown-options"
+                  style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: #1a1f35; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; z-index: 100; overflow: hidden; margin-top: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+                  <div class="d-option" data-value="General"
+                    style="padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">General / Other</div>
+                  <div class="d-option" data-value="Suggestion"
+                    style="padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">Suggestion 💡</div>
+                  <div class="d-option" data-value="Bug" style="padding: 10px 12px;">Bug Report 🪲</div>
+                </div>
+              </div>
+
+              <textarea id="feedbackText" rows="4" placeholder="Type your feedback here..." class="calcInput"
+                style="height: auto; padding: 12px; border-radius: 14px; resize: vertical; margin-bottom: 10px;"></textarea>
+
+              <div class="file-upload-wrap">
+                <label for="fileInput" class="file-label">
+                  <svg style="width:20px;height:20px;" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
+                  </svg>
+                  <span id="fileName">Upload Image/Video (Optional)</span>
+                </label>
+                <input type="file" id="fileInput" accept="image/*,video/*">
+              </div>
+            </div>
+            <button class="btn" id="submitFeedback" style="margin-top: 10px; width: 100%;">Submit Feedback</button>
+          </div>
+
+          <div class="tutSection">
+            <h3 class="h3">Recent Feedback</h3>
+            <div id="feedbackList" class="feedbackList"></div>
+            <button class="btn ghost tiny" id="downloadFeedback" style="margin-top: 15px;">Download Feedback
+              File</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer muted">Omega Rarities 2 • Rune Hub</footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+  <script src="assets/data.js?v=8"></script>
+  <script src="assets/changelog.js?v=8"></script>
+  <script src="assets/calculator.js?v=8"></script>
+</body>
+
+</html>
