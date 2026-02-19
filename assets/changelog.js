@@ -1,5 +1,12 @@
 const OMEGA_CHANGELOG = [
     {
+        "version": "v1.1.3",
+        "date": "2026-02-19",
+        "changes": [
+            "Added Mobile Support."
+        ]
+    },
+    {
         "version": "v1.1.2",
         "date": "2026-02-18",
         "changes": [
